@@ -1,18 +1,18 @@
-namespace BondDataLayer.Migrations
+namespace templateMvc.Migrations
 {
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<BondDataLayer.BondModel>
+    internal sealed class Configuration : DbMigrationsConfiguration<templateMvc.Models.ApplicationDbContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
         }
 
-        protected override void Seed(BondDataLayer.BondModel context)
+        protected override void Seed(templateMvc.Models.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

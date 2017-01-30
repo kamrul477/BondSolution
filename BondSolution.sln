@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bond.Mvc", "Bond.Mvc\Bond.M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "templateMvc", "templateMvc\templateMvc.csproj", "{31AF42D0-449C-4AB9-88A3-482A519E5E10}"
 EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BondMvcCore", "BondMvcCore\BondMvcCore.xproj", "{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BondApiCore", "BondApiCore\BondApiCore.xproj", "{EDF171DE-061D-4E1F-A8C0-6697C855926A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{31AF42D0-449C-4AB9-88A3-482A519E5E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31AF42D0-449C-4AB9-88A3-482A519E5E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31AF42D0-449C-4AB9-88A3-482A519E5E10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

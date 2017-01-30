@@ -87,7 +87,6 @@
     <Compile Include="ClassFrmDb\INSURANCEINFO.cs" />
     <Compile Include="ClassFrmDb\INTRATEINFO.cs" />
     <Compile Include="ClassFrmDb\PAYMENTBB.cs" />
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClassFrmDb\RATEINFO.cs" />
     <Compile Include="ClassFrmDb\SCRIPTDENOINFO.cs" />
