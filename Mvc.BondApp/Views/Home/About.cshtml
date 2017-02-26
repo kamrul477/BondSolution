@@ -1,0 +1,69 @@
+﻿@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+@*@(Html.Kendo().DropDownList()
+                      .Name("bondTypeDropDownList") //The name of the DropDownList is mandatory. It specifies the "id" attribute of the widget.
+                      .DataTextField("BONDNAME") //Specify which property of the Product to be used by the DropDownList as a text.
+                      .DataValueField("BONDCODE") //Specify which property of the Product to be used by the DropDownList as a value.
+                      .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("GetBondInfo", "Application"); //Set the Action and Controller names.
+                          })
+                              .ServerFiltering(false); //If true, the DataSource will not filter the data on the client.
+                      })
+                    .SelectedIndex(0) //Select the first item.
+      )*@
+<div id="dropdownlistcustom">
+    @( 
+   Html.Kendo().DropDownList() 
+               .Name("bondTypeDropDownList") 
+               .DataTextField("BONDNAME") 
+               .DataValueField("BONDCODE") 
+               .DataSource(source => 
+               { 
+                 source.Read(read => { read.Action("GetBondInfo", "Application"); }); 
+               }) 
+               .OptionLabel("Select a category")
+) 
+</div>
+
+
+@( 
+   Html.Kendo().DropDownList() 
+               .Name("kdropdownlistajax") 
+               .DataTextField("Text") 
+               .DataValueField("Value") 
+               .Events(events =>events.Change("change"))
+               .DataSource(source =>
+               {
+                   source.Read(read => { read.Action("GetCategories", "Home"); });
+                   
+               }) 
+               
+               .OptionLabel("Select a category") 
+      )
+
+
+
+
+@(Html.Kendo().DatePicker().Name("datepicker"))
+
+@Ajax.ActionLink("kamrul","kamrul",new AjaxOptions(
+    ))
+
+
+@*@(Html.Kendo().DatePicker()
+            .Name("datepicker") //The name of the DatePicker is mandatory. It specifies the "id" attribute of the widget.
+            .Min(new DateTime(1900, 1, 1)) //Set the min date of the DatePicker.
+            .Max(new DateTime(2099, 12, 31)) //Set the min date of the DatePicker.
+            .Value(DateTime.Today) //Set the value of the DatePicker.
+            .HtmlAttributes(new {@class="datepicker"})
+        )*@

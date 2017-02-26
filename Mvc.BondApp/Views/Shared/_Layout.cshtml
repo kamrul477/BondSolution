@@ -1,0 +1,69 @@
+﻿@using System
+@using System.Web.UI.WebControls
+@using Kendo.Mvc.UI
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>@ViewBag.Title - Bond Management Software</title>
+    <link href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet"/>
+	@Styles.Render("~/Content/css")
+	@Styles.Render("~/Content/kendo/css")
+	@Styles.Render("~/Content/menu/css")
+    @*@Styles.Render("~/Content/themes/base")*@
+	@*script section*@
+
+
+    @Scripts.Render("~/bundles/jquery")
+	@Scripts.Render("~/bundles/kendo")
+	@Scripts.Render("~/bundles/menu")
+	@Scripts.Render("~/bundles/custom")
+	@Scripts.Render("~/bundles/bootstrap")
+	@Scripts.Render("~/bundles/jqueryval")
+	@Scripts.Render("~/bundles/jqueryUi")
+	@Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bonnet")
+	<!-- Latest compiled and minified CSS -->
+	@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>
+	<script src="~/Scripts/bootstrap.js"></script>
+	<script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+	<script src="~/Scripts/jquery.validate.min.js"></script>
+	<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+	<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+	<script src="~/Scripts/respond.matchmedia.addListener.min.js"></script>
+	<script src="~/Scripts/respond.min.js"></script>
+	<script src="~/Scripts/menu.js"></script>
+	<script src="~/Scripts/customWrittenScript.js"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/jszip.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/kendo.all.min.js")"></script>
+	<script src="@Url.Content("~/Scripts/kendo/2015.2.902/kendo.aspnetmvc.min.js")"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>*@
+</head>
+<body>
+
+<div class="container body-content">
+	<div class="panel panel-default">
+		<div class="panel-heading">@Html.Partial("_menu")</div>
+		<div class="panel-body">@RenderBody()</div>
+		<div class="panel-footer">
+			<p>&copy; @DateTime.Now.Year - Bond Management Application</p>
+		</div>
+	</div>
+</div>
+
+
+
+	
+	@*<script>
+				$(function() {
+					cbpHorizontalMenu.init();
+
+				});
+		</script>
+	@Scripts.Render("~/bundles/jquery")
+		@Scripts.Render("~/bundles/bootstrap")
+	@RenderSection("scripts", required: false)*@
+</body>
+</html>

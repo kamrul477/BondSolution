@@ -1,0 +1,309 @@
+﻿@*<div  class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Application", "NewApplication", "Application")</li>
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>*@
+<div class="navbar navbar-inverse">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("BMS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                
+                @*File*@
+                <li class="dropdown">
+                    @Html.ActionLink("File", "Index", "Home", new {@class = "dropdown-toggle", id = "dLabel", data_toggle = "dropdown"})
+                    <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                        <li><a href="#">Total Data Entry</a></li>
+                        @*<li class="divider"></li>*@
+                        <li class="dropdown-submenu">
+                            <a tabindex="-1" href="#">Setup</a>
+                            <ul class="dropdown-menu">
+                                @*<li><a tabindex="-1" href="#">Branch Information</a></li>*@
+                                <li>@Html.ActionLink("Branch Information", "BankInfo", "BranchInformation")</li>
+                                <li>@Html.ActionLink("FC Account Information", "Create", "FcAccountInformation")</li>
+                                <li>@Html.ActionLink("Bond Type Information", "Create", "BondTypeInformation")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Currency Information", "ListOfCurrency", "CurrencyInformation")</li>
+                                <li>@Html.ActionLink("Rate Configuration", "CurrencyRateList", "RateConfiguration")</li>
+                                <li>@Html.ActionLink("Country Information", "CountryList", "CountryInformation")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("Interest Rate Configuration", "PresentConfiguration", "InterestRateConfiguration")</li>
+                                <li>@Html.ActionLink("Insurance Rate Configuration", "Index", "Home")</li>
+                                <li class="divider"></li>
+                                <li>@Html.ActionLink("User Information", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Issuing Officer Entry", "Index", "Home")</li>
+                                <li>@Html.ActionLink("Userwise Data Entry", "Index", "Home")</li>
+
+                                @*<li class="dropdown-submenu">
+                                        <a href="#">Even More..</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">3rd level</a></li>
+                                            <li><a href="#">3rd level</a></li>
+                                        </ul>
+                                    </li>*@
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+
+                @*Stock Info*@
+                <li class="dropdown">
+                    @Html.ActionLink("Stock Info", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Stock Entry", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})</li>
+                        <li>@Html.ActionLink("Report", "About", "Home")</li>
+
+                    </ul>
+                </li>
+
+                @*Application*@
+                <li class="dropdown">
+                    @Html.ActionLink("Application", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("New Application", "NewApplication", "Application")</li>
+                        <li>@Html.ActionLink("Edit Application", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Add Signature Card", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Status Change", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Report On Application", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Application Info Update", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Siraj", "Index", "Home")</li>
+                    </ul>
+                </li>
+
+                @*Transaction*@
+                <li class="dropdown">
+                    @Html.ActionLink("Transaction", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Installment Payment", "NewApplication", "Application")</li>
+                        <li>@Html.ActionLink("Encashment", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Re-Investment", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Voucher", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Update Bond Before Payment", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Day Book", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Top N Bond Holder", "Index", "Home")</li>
+                    </ul>
+                </li>
+
+                @*BB Payment*@
+                <li class="dropdown">
+                    @Html.ActionLink("BB Payment", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Data Entry", "NewApplication", "Application")</li>
+                        <li>@Html.ActionLink("Payment Report", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Un-Reconcile Claim Wise", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Un-Reconcile TRA Wise", "Index", "Home")</li>
+                    </ul>
+                </li>
+
+
+                @*Others*@
+                <li class="dropdown">
+                    @Html.ActionLink("Others", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("Search", "NewApplication", "Application")</li>
+                        <li>@Html.ActionLink("Search Claim", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Install Search", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Bond Description", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Claim Report", "Index", "Home")</li>
+                        <li>@Html.ActionLink("Back Data Entry", "Index", "Home")</li>
+                        @*//sub menu have to add*@
+                    </ul>
+                </li>
+
+                @*Tools*@
+                <li class="dropdown">
+                    @Html.ActionLink("Tools", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})
+                    <ul class="dropdown-menu">
+                        <li>@Html.ActionLink("User Management", "NewApplication", "Application")</li>
+                        <li>@Html.ActionLink("Change Password", "Index", "Home")</li>
+                    </ul>
+                </li>
+
+            </ul>
+            @*@Html.Partial("_LoginPartial")*@
+        </div>
+    </div>
+</div>
+
+
+@*<nav id="cbp-hrmenu" class="cbp-hrmenu">
+        <ul>
+            <li>
+                <a href="#">File</a>
+                <div class="cbp-hrsub">
+                    <div class="cbp-hrsub-inner">
+
+                        <div>
+                            <ul>
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Application", "NewApplication", "Application")</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <!-- ... -->
+                        </div>
+                    </div><!-- /cbp-hrsub-inner -->
+                </div><!-- /cbp-hrsub -->
+            </li>
+            <li>
+                <a href="#">Stock Info</a>
+                <div class="cbp-hrsub">
+                    <div class="cbp-hrsub-inner">
+
+                        <div>
+                            <ul class="list-group">
+                                <li class="list-group-item">@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li class="list-group-item">@Html.ActionLink("About", "About", "Home")</li>
+                                <li class="list-group-item">@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                <li class="list-group-item">@Html.ActionLink("Application", "NewApplication", "Application")</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <!-- ... -->
+                        </div>
+                    </div><!-- /cbp-hrsub-inner -->
+                </div><!-- /cbp-hrsub -->
+            </li>
+            <li>
+                <a href="#">Application</a>
+                <div class="cbp-hrsub">
+                    <div class="cbp-hrsub-inner">
+
+                        <div>
+                            <ul>
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Application", "NewApplication", "Application")</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <!-- ... -->
+                        </div>
+                    </div><!-- /cbp-hrsub-inner -->
+                </div><!-- /cbp-hrsub -->
+            </li>
+            <li>
+                <a href="#">Transaction</a>
+                <div class="cbp-hrsub">
+                    <div class="cbp-hrsub-inner">
+
+                        <div>
+                            <ul>
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Application", "NewApplication", "Application")</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <!-- ... -->
+                        </div>
+                    </div><!-- /cbp-hrsub-inner -->
+                </div><!-- /cbp-hrsub -->
+            </li>
+            <li>
+                <a href="#">BB Payment</a>
+                <div class="cbp-hrsub">
+                    <div class="cbp-hrsub-inner">
+
+                        <div>
+                            <ul>
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Application", "NewApplication", "Application")</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <!-- ... -->
+                        </div>
+                    </div><!-- /cbp-hrsub-inner -->
+                </div><!-- /cbp-hrsub -->
+            </li>
+            <li>
+                <a href="#">Others</a>
+                <div class="cbp-hrsub">
+                    <div class="cbp-hrsub-inner">
+
+                        <div>
+                            <ul>
+                                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                                <li>@Html.ActionLink("About", "About", "Home")</li>
+                                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                                <li>@Html.ActionLink("Application", "NewApplication", "Application")</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <!-- ... -->
+                        </div>
+                    </div><!-- /cbp-hrsub-inner -->
+                </div><!-- /cbp-hrsub -->
+            </li>
+            <!-- ... -->
+        </ul>
+    </nav>*@
+
+
+
+
+@*<nav id="cbp-hrmenu" class="cbp-hrmenu">
+        <ul>
+            <li>
+                <a href="#">Products</a>
+                <div class="cbp-hrsub">
+                    <div class="cbp-hrsub-inner">
+                        <div>
+                            <h4>Learning & Games</h4>
+                            <ul>
+                                <li><a href="#">Catch the Bullet</a></li>
+                                <li><a href="#">Snoopydoo</a></li>
+                                <!-- ... -->
+                            </ul>
+                        </div>
+                        <div>
+                            <h4>Utilities</h4>
+                            <ul>
+                                <li><a href="#">Gadget Finder</a></li>
+                                <li><a href="#">Green Tree Express</a></li>
+                                <li><a href="#">Green Tree Pro</a></li>
+                                <li><a href="#">Wobbler 3.0</a></li>
+                                <li><a href="#">Coolkid</a></li>
+                            </ul>
+                        </div>
+                        <div>
+                            <!-- ... -->
+                        </div>
+                    </div><!-- /cbp-hrsub-inner -->
+                </div><!-- /cbp-hrsub -->
+            </li>
+            <li><!-- ... --></li>
+            <li><!-- ... --></li>
+            <!-- ... -->
+        </ul>
+    </nav>*@

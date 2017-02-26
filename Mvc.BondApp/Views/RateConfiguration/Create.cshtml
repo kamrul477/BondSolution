@@ -1,0 +1,68 @@
+﻿@model Mvc.BondApp.RATEINFO
+
+@{
+    ViewBag.Title = "Today's Rate";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create","RateConfiguration", FormMethod.Post, new { @class = "form-horizontal", @id="rateForm"}))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>RATE INFO</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.ENTRYDATE, "Entr Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ENTRYDATE, new { @class = "form-control", @id = "ENTRYDATE" } )
+                @Html.ValidationMessageFor(model => model.ENTRYDATE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Currency Code", new { @class = "control-label col-sm-2" })
+
+            <div class="col-sm-10">
+                @Html.DropDownListFor(x => x.CURRCODE, selectList: new List<SelectListItem>()
+                {
+                    new SelectListItem() {Text = "GBP (Pound Sterling)",Value = "GBP"},
+                    new SelectListItem() {Text = "EUR (Euro)",Value = "EUR"},
+                    new SelectListItem() {Text = "USD (US Doller)",Value = "USD"}
+                }, htmlAttributes: new { @class = "form-control", @placeholder = "Select a Currency" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.RATEAMT, "Rate Amount", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                
+                @Html.EditorFor(model => model.RATEAMT, new {htmlAttributes = new {@class = "form-control"}})
+                @Html.ValidationMessageFor(model => model.RATEAMT, "", new {@class = "text-danger"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-danger"/>
+                <input type="button" value="Reset" onclick="FormResetFunction()" class="btn btn-danger" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "CurrencyRateList", "RateConfiguration")
+</div>
+
+<script>
+   
+        function FormResetFunction() {
+         document.getElementById("rateForm").reset();
+        }
+       
+
+</script>
+
+

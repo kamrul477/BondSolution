@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Mvc.BondApp.BONDINFO>
+
+@{
+    ViewBag.Title = "ListOfBond";
+}
+
+<h2>List Of Bond</h2>
+
+<p>
+    @Html.ActionLink("Create New Bond", "Create","BondTypeInformation",new {@class="btn btn-sm btn-danger"})
+</p>
+<table class="table table-responsive table-bordered table-striped">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BONDNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BONDSNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CURRCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.INTCURRCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DURATION)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.CRACCT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DRACCT)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.SCRIPLENGTH)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.USERID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ENTRYDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TERMINAL)
+        </th>*@
+        <th>
+            @Html.DisplayNameFor(model => model.INSURANCE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.INSTDURATION)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COMPOUNDINT)
+        </th>
+        @*<th>
+            @Html.DisplayNameFor(model => model.CERTIHEAD)
+        </th>*@
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BONDNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BONDSNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.INTCURRCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DURATION)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.CRACCT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DRACCT)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.SCRIPLENGTH)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.USERID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ENTRYDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TERMINAL)
+        </td>*@
+        <td>
+            @Html.DisplayFor(modelItem => item.INSURANCE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.INSTDURATION)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMPOUNDINT)
+        </td>
+        @*<td>
+            @Html.DisplayFor(modelItem => item.CERTIHEAD)
+        </td>*@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BONDCODE },new {@class="btn btn-xs btn-danger "}) 
+            @Html.ActionLink("Details", "Details", new { id=item.BONDCODE },new {@class="btn btn-xs btn-danger "}) 
+            @Html.ActionLink("Delete", "Delete", new { id=item.BONDCODE },new {@class="btn btn-xs btn-danger "})
+        </td>
+    </tr>
+}
+
+</table>

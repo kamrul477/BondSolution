@@ -1,0 +1,166 @@
+﻿@using System.Linq
+@model ICollection<BANKINFO>
+
+
+@*@model Mvc.BondApp.BankInfoListViewModel*@
+
+<h2>BankInfo</h2>
+
+<label>Please Select A Bank From The List Below.</label>
+@*@Html.LabelFor(m => m.SelectedBankCode)
+    @Html.DropDownListFor(m => m.SelectedBankCode, Model.BanksList)*@
+
+@*<select class="itemSelect">
+
+        @foreach (var item in Model)
+        {
+
+                @Ajax.ActionLink(item.BANKNAME.ToString(), "BranchInfo",
+                               new { bankCode = item.BANKCODE },
+                               new AjaxOptions
+                               {
+                                   HttpMethod = "GET",
+                                   InsertionMode = InsertionMode.ReplaceWith,
+                                   UpdateTargetId = "branchInformationDiv"
+                                   //OnComplete = "selectBank();"
+                               })
+
+        }
+
+    </select>*@
+
+@*<div id="branchInformationDiv"></div>*@
+
+<ul class="list-group">
+
+
+    @foreach (var item in Model.OrderBy(b=>b.BANKNAME))
+    {
+ 
+        @Html.ActionLink(item.BANKNAME,"BranchInfo","BranchInformation",
+                new { bankCode = item.BANKCODE }, htmlAttributes: new {@class="list-group-item"})
+    }
+</ul>
+
+    @*<li class="list-group-item">
+        @Html.ActionLink(item.BANKNAME.ToString(), "BranchInfo", "BranchInformation", new { bankCode = item.BANKCODE })
+    </li>*@
+
+
+@*<ul class="list-group">
+        @{
+            foreach (var item in Model)
+            {
+                <li class="list-group-item">
+                    @Ajax.ActionLink(item.BANKNAME.ToString(), "BranchInfo",
+                            new { bankCode = item.BANKCODE },
+                            new AjaxOptions
+                            {
+                                HttpMethod = "GET",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "branchInformationDiv"
+                            })
+                </li>
+            }
+        }
+    </ul>*@
+
+@*@Ajax.ActionLink(item.BANKNAME.ToString(), "BranchInfo", new { bankCode = item.BANKCODE },
+    new AjaxOptions
+    {
+        HttpMethod = "GET",
+        InsertionMode = InsertionMode.Replace,
+        UpdateTargetId = "branchInformationDiv"
+        //OnComplete = "selectBank();"
+    })*@
+
+@*<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        @{ int increase = 0; }
+        @foreach (var item in Model)
+        {
+            increase++;
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="heading+@increase">
+                    <h4 class="panel-title">
+
+                            @Ajax.ActionLink(item.BANKNAME.ToString(), "BranchInfo",
+                           new { bankCode = item.BANKCODE },
+                           new AjaxOptions
+                           {
+                               HttpMethod = "GET",
+                               InsertionMode = InsertionMode.ReplaceWith,
+                               UpdateTargetId = "branchInformationDiv+"+increase
+                               //OnComplete = "selectBank();"
+                           },
+                           new
+                           {
+
+                               role = "button",
+                               data_toggle = "collapse",
+                               data_parent = "#accordion",
+                               href = "#collapseOne+"+increase,
+                               aria_expanded = "false",
+                               aria_controls = "collapseOne+"+increase
+                           })
+
+                    </h4>
+                </div>
+                <div id="collapseOne+@increase" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading+@increase">
+                    <div class="panel-body">
+                        <div id="branchInformationDiv+@increase"></div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>*@
+
+
+
+
+@*<select id="selectBank">
+        @{
+
+            foreach (var item in Model.BanksList)
+            {
+
+                <option value="">
+                    @Html.ActionLink("index","Index","Home")
+                        @Ajax.ActionLink(item.Text.ToString(), "BranchInfo",
+                            new AjaxOptions
+                            {
+                                HttpMethod = "GET",
+                                InsertionMode = InsertionMode.Replace,
+                                UpdateTargetId = "branchInformationDiv",
+                                //OnComplete = "selectBank();"
+                            })
+                    @item.Text.ToString()
+                </option>
+            }
+        }
+
+
+    </select>*@
+
+
+
+<script>
+    $(function () {
+        $("#accordion").accordion();
+
+        //this line activated select2 plugin
+        $('.itemSelect').select2();
+
+        $("#selectBank")
+                 .selectmenu()
+                 .selectmenu("menuWidget")
+                   .addClass("dropdown-menu");
+        $("#selectBank").change(function () {
+            $.get("@Url.Action("BranchInfo", "BranchInformation")",
+                                      { "parameter": $(this).val() },
+                                      function (data) {
+                                          $("#branchInformationDiv").html(data);
+                                      });
+        });
+
+    });
+</script>

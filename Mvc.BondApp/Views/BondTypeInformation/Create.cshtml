@@ -1,0 +1,121 @@
+﻿@model Mvc.BondApp.BONDINFO
+
+
+
+
+@using (Html.BeginForm("Create", "BondTypeInformation", FormMethod.Post, new { @class = "form-horizontal", @id="bondTypeForm"}))
+{
+    <fieldset>
+        <legend>Bond Type Information</legend>
+        <div class="form-group">
+            @Html.LabelFor(x => x.BONDCODE, "Bond Code", new { @class = "control-label col-sm-3" })
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.BONDCODE, new { @class = "form-control", @placeholder = "Bond Code" })
+                @Html.ValidationMessageFor(x=>x.BONDCODE)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.BONDNAME, "Bond Name", new { @class = "control-label col-sm-3" })
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.BONDNAME, new { @class = "form-control", @placeholder = "Bond Name" })
+                @Html.ValidationMessageFor(x => x.BONDNAME)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.BONDSNAME, "Bond Short Name", new { @class = "control-label col-sm-3" })
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.BONDSNAME, new { @class = "form-control", @placeholder = "Bond Short Name" })
+                @Html.ValidationMessageFor(x=>x.BONDSNAME)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.CURRCODE, "Principal in Currency", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.CURRCODE, new {@class = "form-control", @placeholder = "Principal in Currency"})
+                @Html.ValidationMessageFor(x=>x.CURRCODE)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.INTCURRCODE, "Interest in Currency", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.INTCURRCODE, new {@class = "form-control", @placeholder = "Interest in Curr."})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DURATION, "Duration", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.DURATION, new {@class = "form-control", @placeholder = "Duration in YEAR"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.CRACCT, "Credit Account", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.CRACCT, new {@class = "form-control", @placeholder = "Credit Account"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.DRACCT, "Debit Account", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.DRACCT, new {@class = "form-control", @placeholder = "Debit Account"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.SCRIPLENGTH, "Script Length", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.SCRIPLENGTH, new {@class = "form-control", @placeholder = "Script Length"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.INSURANCE, "Total Insurance Slub", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.INSURANCE, new {@class = "form-control", @placeholder = "Total Insurance Slub"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.INSTDURATION, "Interest Duration", new {@class = "control-label col-sm-3"})
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.INSTDURATION, new {@class = "form-control", @placeholder = "Interest Duration"})
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.COMPOUNDINT, "Compound Interest Time", new { @class = "control-label col-sm-3" })
+
+            <div class="col-sm-9">
+                @Html.TextBoxFor(x => x.COMPOUNDINT, new { @class = "form-control", @placeholder = "Compound Interest Time (in Month)" })
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-sm-offset-8">
+            <input class="btn btn-danger btn-sm" type="submit" name="SaveButton" value="Save"/>
+            <input class="btn btn-danger btn-sm" type="button" onclick="FormResetFunction()" value="Reset form">
+            @Html.ActionLink("List Of Bonds Available", "ListOfBond", "BondTypeInformation", new { @class = "btn btn-sm btn-danger" })
+        </div>
+   
+
+        
+    </fieldset>
+
+}
+
+<script>
+  
+        function FormResetFunction() {
+         document.getElementById("bondTypeForm").reset();
+        }
+       
+
+</script>
+
+
+

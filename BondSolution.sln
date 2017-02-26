@@ -3,17 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BondDataLayer", "BondDataLayer\BondDataLayer.csproj", "{40E8181C-BF00-4DBB-949C-7168E9DD389F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BondModel", "BondModel\BondModel.csproj", "{EB7E2418-6019-4BCA-8627-1E39D5969ED5}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bond.Mvc", "Bond.Mvc\Bond.Mvc.csproj", "{A23E8539-9E13-457F-B856-5EDD74F5D22F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "templateMvc", "templateMvc\templateMvc.csproj", "{31AF42D0-449C-4AB9-88A3-482A519E5E10}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BondMvcCore", "BondMvcCore\BondMvcCore.xproj", "{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}"
-EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "BondApiCore", "BondApiCore\BondApiCore.xproj", "{EDF171DE-061D-4E1F-A8C0-6697C855926A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.BondApp", "Mvc.BondApp\Mvc.BondApp.csproj", "{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,30 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{40E8181C-BF00-4DBB-949C-7168E9DD389F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{40E8181C-BF00-4DBB-949C-7168E9DD389F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{40E8181C-BF00-4DBB-949C-7168E9DD389F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{40E8181C-BF00-4DBB-949C-7168E9DD389F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EB7E2418-6019-4BCA-8627-1E39D5969ED5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EB7E2418-6019-4BCA-8627-1E39D5969ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EB7E2418-6019-4BCA-8627-1E39D5969ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EB7E2418-6019-4BCA-8627-1E39D5969ED5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A23E8539-9E13-457F-B856-5EDD74F5D22F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A23E8539-9E13-457F-B856-5EDD74F5D22F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A23E8539-9E13-457F-B856-5EDD74F5D22F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A23E8539-9E13-457F-B856-5EDD74F5D22F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{31AF42D0-449C-4AB9-88A3-482A519E5E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{31AF42D0-449C-4AB9-88A3-482A519E5E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{31AF42D0-449C-4AB9-88A3-482A519E5E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{31AF42D0-449C-4AB9-88A3-482A519E5E10}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FCA7B143-9644-4EE3-9ADC-00CD21D55BE2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EDF171DE-061D-4E1F-A8C0-6697C855926A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Mvc.BondApp.COUNTRYINFO>
+
+@{
+    ViewBag.Title = "Country List";
+}
+
+<h2>Country List</h2>
+
+<p>
+    @Html.ActionLink("Add Country", "Create","CountryInformation",new {@class="btn btn-sm btn-danger"})
+</p>
+<table class="table table-bordered table-striped table-responsive table-condensed">
+    <tr>
+        <th>
+            @Html.DisplayName("Country Code")
+        </th>
+        <th>
+            @Html.DisplayName("Country Name")
+        </th>
+        <th>
+            @Html.DisplayName("User Id")
+        </th>
+        <th>
+            @Html.DisplayName("Entry Date")
+        </th>
+        <th>
+            @Html.DisplayName("Terminal")
+        </th>
+        <th>
+            @Html.DisplayName("Actions")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CNTYCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CNTYNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USERID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ENTRYDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TERMINAL)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id = item.CNTYCODE}, new {@class = "btn btn-sm btn-danger"})
+
+            @Html.ActionLink("Delete", "Delete", new {id = item.CNTYCODE}, new {@class = "btn btn-sm btn-danger"})
+        </td>
+    </tr>
+}
+
+</table>

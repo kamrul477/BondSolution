@@ -1,0 +1,84 @@
+﻿@using Kendo.Mvc.UI
+@using Mvc.BondApp
+@model ICollection<BRANCHINFO>
+
+
+@*<ul class="list-group">
+        @{
+
+            foreach (var item in Model.OrderBy(b => b.BRNAME))
+            {
+                <li class="list-group-item">@item.BRCODE, @item.BRNAME, @item.BRADDRESS, @item.ACTIVESTATUS</li>
+                @(Html.Kendo().Grid<item>>().Name("grid").Columns(column =>
+                  {
+
+                  }))
+            }
+        }
+
+    </ul>*@
+<div>
+    <div class="col-md-3">
+        <h1 class="text-capitalize">Branch List</h1>
+    </div>
+    <div class="col-md-offset-2 col-md-6">
+        @Html.ActionLink("Back to Bank List", "BankInfo", "BranchInformation", new { }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Add Another Branch", "", "BranchInformation", new { }, new { @class = "btn btn-primary" })
+    </div>
+</div>
+
+<hr />
+<table class="table table-bordered table-striped">
+    @{
+        <tr>
+            <th>Branch Code</th>
+            <th>Branch Name</th>
+            <th>Branch Address</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+        foreach (var item in Model.OrderBy(b => b.BRNAME))
+        {
+            <tr>
+                <td>@Html.ActionLink(@item.BRCODE, "", "", new { }, new { })</td>
+                <td> @item.BRNAME</td>
+                <td>@item.BRADDRESS</td>
+                <td> @item.ACTIVESTATUS</td>
+                <td>
+                    @Html.ActionLink("Edit", "", "BranchInformation", new { }, new { @class = "btn btn-primary btn-sm" })
+                    @Html.ActionLink("Delete", "", "BranchInformation", new { }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+
+            </tr>
+        }
+    }
+</table>
+
+@*@(Html.Kendo().Grid<BRANCHINFO>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.BRCODE).Title("Branch Code").Width(20);
+        columns.Bound(c => c.BRNAME).Title("Branch Name").Width(20);
+        columns.Bound(c => c.BRADDRESS).Title("Branch Address").Width(50);
+        columns.Bound(c => c.ACTIVESTATUS).Title("Status").Width(15);
+    })
+    .HtmlAttributes(new { style = "height: 550px;" })
+    .Scrollable()
+    .Groupable()
+    .Sortable()
+    .Pageable(pageable => pageable
+        .Refresh(true)
+        .PageSizes(true)
+        .ButtonCount(5))
+        .DataSource(ds=>ds.Custom().PageSize(20)).BindTo(Model)
+    )*@
+
+
+
+
+
+
+
+
+

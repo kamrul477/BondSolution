@@ -1,0 +1,150 @@
+﻿@model IEnumerable<Mvc.BondApp.INTRATEINFO>
+
+@{
+    ViewBag.Title = "Present Interest Rate Configuration";
+}
+
+<h2>Present Interest Rate Configuration</h2>
+
+<p>
+    @Html.ActionLink("Add Int. Rate Configuration", "Create","InterestRateConfiguration",new {@class="btn btn-sm btn-danger"})
+</p>
+<table class="table table-bordered table-striped table-responsive table-condensed table-hover">
+    <caption class="h4 bg-primary">WAGE Earners Development Bond</caption>
+    <tr class="success">
+        <th>
+            @Html.DisplayName("Bond Code")
+        </th>
+        <th>
+            @Html.DisplayName("Current Slab")
+        </th>
+        <th>
+            @Html.DisplayName("Duration in Months")
+        </th>
+        <th>
+            @Html.DisplayName("Interest Rate in %")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.BONDCODE == "10" && item.SLAB.ToString() == "9")
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BONDCODE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SLAB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DURATION)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.INTRATE)
+                </td>
+            </tr>
+        }
+
+    }
+
+</table>
+
+
+<table class="table table-bordered table-striped table-responsive table-condensed table-hover">
+    <caption class="h4 bg-primary">US Doller Investment Bond</caption>
+    <tr class="success">
+        <th>
+            @Html.DisplayName("Bond Code")
+        </th>
+        <th>
+            @Html.DisplayName("Current Slab")
+        </th>
+        <th>
+            @Html.DisplayName("Duration in Months")
+        </th>
+        <th>
+            @Html.DisplayName("Interest Rate in %")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.BONDCODE == "11" && item.SLAB.ToString() == "1")
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BONDCODE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SLAB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DURATION)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.INTRATE)
+                </td>
+
+
+            </tr>
+        }
+
+    }
+
+</table>
+
+
+<table class="table table-bordered table-striped table-responsive table-condensed table-hover">
+    <caption class="h4 bg-primary">US Doller Premium Bond</caption>
+    <tr class="success">
+        <th>
+            @Html.DisplayName("Bond Code")
+        </th>
+        <th>
+            @Html.DisplayName("Current Slab")
+        </th>
+        <th>
+            @Html.DisplayName("Duration in Months")
+        </th>
+        <th>
+            @Html.DisplayName("Interest Rate in %")
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        if (item.BONDCODE == "12" && item.SLAB.ToString() == "5")
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BONDCODE)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SLAB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DURATION)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.INTRATE)
+                </td>
+
+
+            </tr>
+        }
+
+    }
+
+</table>
+
+
+
+@*<td>
+    @Html.ActionLink("Edit", "Edit", new {/* id=item.PrimaryKey */}) |
+    @Html.ActionLink("Details", "Details", new {/* id=item.PrimaryKey */}) |
+    @Html.ActionLink("Delete", "Delete", new {/* id=item.PrimaryKey */})
+</td>*@

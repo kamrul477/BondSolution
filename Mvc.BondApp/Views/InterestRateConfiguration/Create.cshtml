@@ -1,0 +1,107 @@
+﻿@model Mvc.BondApp.INTRATEINFO
+@using Kendo.Mvc.UI
+
+@{
+    ViewBag.Title = "Interest Rate";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm("Create", "InterestRateConfiguration", FormMethod.Post, new { @class = "form-horizontal", @id = "rateForm" }))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-horizontal">
+        <h4>RATE INFO</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @*BONDCODE*@
+        <div class="form-group">
+            @Html.Label("Type Of Bond", new { @class = "control-label col-sm-2" })
+            <div class="col-sm-10">
+                @Html.DropDownListFor(x => x.BONDCODE, selectList: new List<SelectListItem>()
+                {
+                    new SelectListItem() {Text = "WAGE Earners Development Bond", Value = "10"},
+                    new SelectListItem() {Text = "US Doller Investment Bond", Value = "11"},
+                    new SelectListItem() {Text = "US Doller Premium Bond", Value = "12"}
+                }, htmlAttributes: new { @class = "form-control", @placeholder = "Select a Bond" })
+            </div>
+        </div>
+
+        @*SLAB*@
+        @*<div class="form-group">
+                @Html.LabelFor(model => model.SLAB, "Slab", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-5">
+                    @Html.TextBoxFor(model => model.SLAB, new {@class = "form-control", @id = "Slab", @Value =  })
+                    @Html.ValidationMessageFor(model => model.SLAB, "", new {@class ="text-danger"})
+                </div>
+                 <div class="col-md-5">
+                     @Html.LabelFor(model => model.SLAB,  htmlAttributes: new { @class = "control-label " })
+                 </div>
+            </div>*@
+
+        @*ENTRYDATE*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.ENTRYDATE, "Effective Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.ENTRYDATE, new { @class = "form-control", @id = "INTRATEENTRYDATE" })
+                @Html.ValidationMessageFor(model => model.ENTRYDATE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*END DATE*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.ENDDATE, "End Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10 ui-datepicker">
+                @Html.TextBoxFor(model => model.ENDDATE, new { @class = "form-control ui-datepicker", @id = "INTRATEENDDATE", @onclick = "intRateEndDateFn()"})
+                @Html.ValidationMessageFor(model => model.ENDDATE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*DURATION*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.DURATION, "Duration", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.DURATION, new { @class = "form-control", @id = "Slab" })
+                @Html.ValidationMessageFor(model => model.DURATION, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*INT RATE*@
+        <div class="form-group">
+            @Html.LabelFor(model => model.INTRATE, "Interst Rate", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(model => model.INTRATE, new { @class = "form-control", @id = "Slab" })
+                @Html.ValidationMessageFor(model => model.INTRATE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-danger" />
+                <input type="button" value="Reset"  onclick="FormResetFunction()" class="btn btn-danger" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "PresentConfiguration", "InterestRateConfiguration")
+</div>
+
+<script>
+
+    function FormResetFunction() {
+        document.getElementById("rateForm").reset();
+    }
+
+    function intRateEndDateFn() {
+        $("#INTRATEENDDATE").datepicker();
+    }
+
+</script>
+

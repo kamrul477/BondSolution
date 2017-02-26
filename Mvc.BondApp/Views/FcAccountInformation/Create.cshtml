@@ -1,0 +1,67 @@
+﻿@using System.Collections
+@using System.Web.UI.WebControls
+@model Mvc.BondApp.FcAccountInfoViewModel
+
+
+
+@using (Html.BeginForm("Create", "FcAccountInformation", FormMethod.Post, new { @class = "form-horizontal", @id="fcAcNo"}))
+{
+    <fieldset>
+        <legend>Fc Account Information</legend>
+        <div class="form-group">
+            @Html.LabelFor(x => x.FCACCOUNTNO, "FC Account No", new { @class = "control-label col-sm-2" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.FCACCOUNTNO, new { @class = "form-control", @placeholder = "FC Account No" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.FCACNAME, "Account Holders Name", new { @class = "control-label col-sm-2" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.FCACNAME, new { @class = "form-control", @placeholder = "Account Holders Name" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.FCACADD, "Address", new { @class = "control-label col-sm-2" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.FCACADD, new { @class = "form-control", @placeholder = "Address" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(x => x.FCACPHONE, "Phone or Mobile No", new { @class = "control-label col-sm-2" })
+
+            <div class="col-sm-10">
+                @Html.TextBoxFor(x => x.FCACPHONE, new { @class = "form-control", @placeholder = "Phone or Mobile No" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Account Type", new { @class = "control-label col-sm-2" })
+
+            <div class="col-sm-10">
+                @Html.DropDownListFor(x=> x.AccountType, selectList: new List<SelectListItem>()
+                {
+                    new SelectListItem() {Text = "FCAD",Value = "FCAD"},
+                    new SelectListItem() {Text = "FCAP",Value = "FCAP"}
+                }, htmlAttributes: new { @class = "form-control", @placeholder = "Phone or Mobile No" })
+            </div>
+        </div>
+        <div class="col-md-12 col-md-offset-10">
+            <input class="btn btn-danger btn-sm" type="submit" name="SaveButton" value="Save" />
+            <input class="btn btn-danger btn-sm" type="button" onclick="FormResetFunction()" value="Reset form">
+        </div>
+
+
+    </fieldset>
+
+}
+<script>
+  
+        function FormResetFunction() {
+         document.getElementById("fcAcNo").reset();
+        }
+       
+
+</script>
+

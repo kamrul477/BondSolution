@@ -1,0 +1,52 @@
+﻿@model Mvc.BondApp.CurrencyRateViewModel
+
+
+@{
+    ViewBag.Title = "Currency Rate List";
+}
+
+<h2>Currency Rate List</h2>
+
+<p>
+    @Html.ActionLink("Create Today's Rate", "Create","RateConfiguration",new {},new {@class="btn btn-sm btn-danger"})
+</p>
+<table class="table table-bordered table-striped table-responsive table-condensed">
+    <tr>
+        <th>
+            @Html.DisplayName("Entry Date")
+        </th>
+
+        <th>
+            @Html.DisplayName("Currency Code")
+        </th>
+          <th>
+            @Html.DisplayName("Currency Name")
+        </th>
+        <th>
+            @Html.DisplayName("Rate Amount")
+        </th>
+
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Rateinfos) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ENTRYDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRINFO.CURRNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RATEAMT)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ },new {@class="btn btn-sm btn-danger"})
+        </td>
+    </tr>
+}
+
+</table>

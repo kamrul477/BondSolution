@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Mvc.BondApp.CURRINFO>
+
+@{
+    ViewBag.Title = "Currency Info";
+}
+
+<h2>Currency Information</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create","CurrencyInformation",new {@class="btn btn-sm btn-danger"},new {})
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Currency Code")
+        </th>
+        <th>
+            @Html.DisplayName("Currency Name")
+        </th>
+        <th>
+            @Html.DisplayName("Sign")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRSIGN)
+        </td>
+   
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {id = item.CURRCODE}      ,new {@class="btn btn-xs btn-danger col-sm-1"} ) 
+            @Html.ActionLink("Details", "Details", new {id = item.CURRCODE},new {@class="btn btn-xs btn-danger col-sm-1"} ) 
+            @Html.ActionLink("Delete", "Delete", new {id = item.CURRCODE}  ,new {@class="btn btn-xs btn-danger col-sm-1"} )
+        </td>
+    </tr>
+}
+
+</table>
