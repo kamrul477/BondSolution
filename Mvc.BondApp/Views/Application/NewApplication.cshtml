@@ -8,7 +8,7 @@
 
 <h2>Application Entry</h2>
 
-@using (Html.BeginForm(new { @class = "form-horizontal" }))
+@using (Html.BeginForm("Create", "Application", FormMethod.Post, new { @class = "form-horizontal" }))
 {
     @Html.AntiForgeryToken()
 
@@ -16,120 +16,124 @@
     <hr />
     <div class="panel panel-danger col-md-12">
         <div class="panel-body">
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.FileNo, htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.NewApplication.FileNo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.NewApplication.FileNo, "", new { @class = "text-danger" })
+            <fieldset>
+                <legend class="text-info">Basic Information</legend>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.FileNo, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.NewApplication.FileNo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NewApplication.FileNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.BondAppNo, "Bond App No", htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.NewApplication.BondAppNo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NewApplication.BondAppNo, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.IssueingBranch, "Issuing Branch", htmlAttributes: new { @class = "control-label " })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.NewApplication.IssueingBranch, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NewApplication.IssueingBranch, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.ReInvestmentDate, "Reinvestment Date", htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+                            @Html.TextBoxFor(model => model.NewApplication.ReInvestmentDate,
+                            new { @class = "form-control ui-datepicker", @id = "reInvestmentDate", @onclick = "reInvestmentDateFn()" })
+
+                            @Html.ValidationMessageFor(model => model.NewApplication.ReInvestmentDate, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.BondAppNo, "Bond App No", htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.NewApplication.BondAppNo, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.NewApplication.BondAppNo, "", new { @class = "text-danger" })
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.RespondingDate, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+
+                            @Html.TextBoxFor(model => model.NewApplication.RespondingDate,
+                            new { @class = "form-control ui-datepicker", @id = "respondingDate", @onclick = "respondingDateFn()" })
+
+                            @Html.ValidationMessageFor(model => model.NewApplication.RespondingDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.BondType, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+                            @*@(Html.Kendo().DropDownList()
+                                .Name("bondType")
+                                .DataTextField("BONDNAME") //Specify which property of the Product to be used by the DropDownList as a text.
+                                .DataValueField("BONDCODE") //Specify which property of the Product to be used by the DropDownList as a value.
+                                .DataSource(source =>
+                                     {
+                                         source.Custom()
+                                               .ServerFiltering(true)
+                                               .Type("aspnetmvc-ajax") //Set this type if you want to use DataSourceRequest and ToDataSourceResult instances.
+                                               .Transport(transport =>
+                                               {
+                                                   transport.Read("GetBondInfo", "Application");
+                                               })
+                                               .Schema(schema =>
+                                               {
+                                                   schema.Data("Data") //define the [data](http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-schema.data) option
+                                                         .Total("Total"); //define the [total](http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-schema.total) option
+                                     });
+                                 })*@
+
+
+
+                            @*//.DataSource(source =>
+                                //{
+                                //    source.Read(read =>
+                                //    {
+                                //        read.Action("GetBondInfo", "Application"); //Set the Action and Controller names.
+                                //    })
+                                //        .ServerFiltering(true); //If true, the DataSource will not filter the data on the client.
+                                //})
+                                //.SelectedIndex(0) //Select the first item.
+                                )*@
+
+
+                            @*<select class="form-control" id="bondType" onclick="bondTypeFn()">
+                                    <option selected="selected">Select A Bond Type</option>
+                                </select>*@
+                            @Html.DropDownListFor(m => m.NewApplication.BondType,
+                            new SelectList(Model.BondinfoListForView, "BONDCODE", "BONDNAME"), "====Select Bond Type====", new { @class = "form-control", })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.AppDate, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+                            @*<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>*@
+                            @Html.TextBoxFor(model => model.NewApplication.AppDate,
+                            new { @class = "form-control ui-datepicker", @id = "AppDate", @onclick = "appDateFn()" })
+
+
+                            @Html.ValidationMessageFor(model => model.NewApplication.AppDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.NewApplication.TotalScript, htmlAttributes: new { @class = "control-label" })
+                        <div class="col-md-6">
+                            @Html.EditorFor(model => model.NewApplication.TotalScript, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.NewApplication.TotalScript, "", new { @class = "text-danger" })
+                        </div>
                     </div>
                 </div>
+            </fieldset>
 
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.IssueingBranch, "Issuing Branch", htmlAttributes: new { @class = "control-label " })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.NewApplication.IssueingBranch, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.NewApplication.IssueingBranch, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.ReInvestmentDate, "Reinvestment Date", htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-6">
-                        @Html.TextBoxFor(model => model.NewApplication.ReInvestmentDate,
-                        new { @class = "form-control ui-datepicker", @id = "reInvestmentDate", @onclick = "reInvestmentDateFn()" })
-
-                        @Html.ValidationMessageFor(model => model.NewApplication.ReInvestmentDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
-
-
-            <div class="col-md-6">
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.RespondingDate, htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-6">
-
-                        @Html.TextBoxFor(model => model.NewApplication.RespondingDate,
-                        new { @class = "form-control ui-datepicker", @id = "respondingDate", @onclick = "respondingDateFn()" })
-
-                        @Html.ValidationMessageFor(model => model.NewApplication.RespondingDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.BondType, htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-6">
-                        @*@(Html.Kendo().DropDownList()
-                            .Name("bondType")
-                            .DataTextField("BONDNAME") //Specify which property of the Product to be used by the DropDownList as a text.
-                            .DataValueField("BONDCODE") //Specify which property of the Product to be used by the DropDownList as a value.
-                            .DataSource(source =>
-                                 {
-                                     source.Custom()
-                                           .ServerFiltering(true)
-                                           .Type("aspnetmvc-ajax") //Set this type if you want to use DataSourceRequest and ToDataSourceResult instances.
-                                           .Transport(transport =>
-                                           {
-                                               transport.Read("GetBondInfo", "Application");
-                                           })
-                                           .Schema(schema =>
-                                           {
-                                               schema.Data("Data") //define the [data](http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-schema.data) option
-                                                     .Total("Total"); //define the [total](http://docs.telerik.com/kendo-ui/api/javascript/data/datasource#configuration-schema.total) option
-                                 });
-                             })*@
-
-
-
-                        @*//.DataSource(source =>
-                            //{
-                            //    source.Read(read =>
-                            //    {
-                            //        read.Action("GetBondInfo", "Application"); //Set the Action and Controller names.
-                            //    })
-                            //        .ServerFiltering(true); //If true, the DataSource will not filter the data on the client.
-                            //})
-                            //.SelectedIndex(0) //Select the first item.
-                            )*@
-
-
-                        @*<select class="form-control" id="bondType" onclick="bondTypeFn()">
-                                <option selected="selected">Select A Bond Type</option>
-                            </select>*@
-                        @Html.DropDownListFor(m => m.NewApplication.BondType,
-                        new SelectList(Model.BondinfoListForView, "BONDCODE", "BONDNAME"), new { @class = "form-control" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.AppDate, htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-6">
-                        @*<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>*@
-                        @Html.TextBoxFor(model => model.NewApplication.AppDate,
-                        new { @class = "form-control ui-datepicker", @id = "AppDate", @onclick = "appDateFn()" })
-
-
-                        @Html.ValidationMessageFor(model => model.NewApplication.AppDate, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    @Html.LabelFor(model => model.NewApplication.TotalScript, htmlAttributes: new { @class = "control-label" })
-                    <div class="col-md-6">
-                        @Html.EditorFor(model => model.NewApplication.TotalScript, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.NewApplication.TotalScript, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
 
 
         </div>
@@ -150,114 +154,120 @@
             <div class="tab-content">
                 <div id="applicants" class="tab-pane fade in active">
                     <div class="col-md-6">
+                        <fieldset>
+                            <legend class="text-info">Wage Earners Information</legend>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.FirstName, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.FirstName, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.FirstName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.FirstName, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.FirstName, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.MiddleName, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.MiddleName, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.MiddleName, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.MiddleName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.MiddleName, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.MiddleName, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.LastName, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.LastName, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.LastName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.LastName, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.LastName, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.TextBoxFor(model => model.NewApplication.DateOfBirth,
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.NewApplication.DateOfBirth,
                                 new { @class = "form-control ui-datepicker", @id = "dateOfBirthDate", @onclick = "dateOfBirthDateFn()" })
-                                @Html.ValidationMessageFor(model => model.NewApplication.DateOfBirth, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.DateOfBirth, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.Gender, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @*<div class="col-md-6">
-                                        @(Html.Kendo().RadioButtonFor(m => m.NewApplication.Gender).Label("Male").Value(true))
-                                        @(Html.Kendo().RadioButtonFor(m => m.NewApplication.Gender).Label("Female").Value(false))
-                                    </div>*@
-                                @Html.DropDownListFor(m => m.NewApplication.Gender,
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.Gender, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @*<div class="col-md-6">
+                                            @(Html.Kendo().RadioButtonFor(m => m.NewApplication.Gender).Label("Male").Value(true))
+                                            @(Html.Kendo().RadioButtonFor(m => m.NewApplication.Gender).Label("Female").Value(false))
+                                        </div>*@
+                                    @Html.DropDownListFor(m => m.NewApplication.Gender,
                                     new List<SelectListItem>()
                                     {
                                         new SelectListItem() {Text = "Male",Value = "M"},
                                         new SelectListItem() {Text = "Female", Value = "F"}
                                     }, new { @class = "form-control" })
 
-                                @Html.ValidationMessageFor(model => model.NewApplication.Gender, "", new { @class = "text-danger" })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.Gender, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.Designation, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.Designation, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.Designation, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.Designation, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.Designation, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.Designation, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.Organisation, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.Organisation, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.Organisation, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.Organisation, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.Organisation, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.Organisation, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.CompanyAddress, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.CompanyAddress, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.CompanyAddress, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.CompanyAddress, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.CompanyAddress, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.CompanyAddress, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.ForeignAddress, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.ForeignAddress, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.ForeignAddress, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.ForeignAddress, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.ForeignAddress, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.ForeignAddress, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.Country, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.DropDownListFor(m => m.NewApplication.Country,
-                                    new SelectList(Model.CountryinfoListForView, "CNTYCODE", "CNTYNAME"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.NewApplication.Country, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.Country, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(m => m.NewApplication.Country,
+                                    new SelectList(Model.CountryinfoListForView, "CNTYCODE", "CNTYNAME"), "===Select Country====", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.Country, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.LocalAddress, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.EditorFor(model => model.NewApplication.LocalAddress, new { htmlAttributes = new { @class = "form-control col-md-4" } })
-                                @Html.ValidationMessageFor(model => model.NewApplication.LocalAddress, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.LocalAddress, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.EditorFor(model => model.NewApplication.LocalAddress, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.LocalAddress, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
-                        <div class="form-group">
-                            @Html.LabelFor(model => model.NewApplication.District, htmlAttributes: new { @class = "control-label col-md-4" })
-                            <div class="col-md-8">
-                                @Html.DropDownListFor(m => m.NewApplication.District,
-                                new SelectList(Model.DistinfoListForView, "DISTCODE", "DISTDESC"), new { @class = "form-control" })
-                                @Html.ValidationMessageFor(model => model.NewApplication.District, "", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.NewApplication.District, htmlAttributes: new { @class = "control-label col-md-4" })
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(m => m.NewApplication.District,
+                                new SelectList(Model.DistinfoListForView, "DISTCODE", "DISTDESC"), "===Select District===", new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.NewApplication.District, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </div>
+
+                        </fieldset>
+
                     </div>
 
 
@@ -270,7 +280,7 @@
                                     "Please select a city", new { style = "width:250px", @class = "dropdown1" })*@
 
                                 @Html.DropDownListFor(m => m.NewApplication.Thana,
-                                new SelectList(String.Empty, "ThanaCode", "ThanaName"), new { @class = "form-control" })
+                                new SelectList(String.Empty, "ThanaCode", "ThanaName"), "===Select Thana===", new { @class = "form-control" })
 
                                 @Html.ValidationMessageFor(model => model.NewApplication.Thana, "", new { @class = "text-danger" })
                             </div>
@@ -345,7 +355,7 @@
                                 @Html.LabelFor(model => model.NewApplication.ValueDate, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-8">
                                     @Html.TextBoxFor(model => model.NewApplication.ValueDate,
-                                new { @class = "form-control ui-datepicker" })
+                            new { @class = "form-control ui-datepicker" })
                                     @Html.ValidationMessageFor(model => model.NewApplication.ValueDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -480,46 +490,47 @@
                                 <div class="col-md-6">
                                     @*paying office*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.NewApplication.PayingOffice, htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.LabelFor(model => model.NewApplication.PayingOffice, htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.EditorFor(model => model.NewApplication.PayingOffice, new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.PayingOffice, "", new {@class = "text-danger"})
+                                            @Html.EditorFor(model => model.NewApplication.PayingOffice, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                            @Html.ValidationMessageFor(model => model.NewApplication.PayingOffice, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     @*Denomination*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.NewApplication.Denomination, htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.LabelFor(model => model.NewApplication.Denomination, htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.EditorFor(model => model.NewApplication.Denomination, new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.Denomination, "", new {@class = "text-danger"})
+                                            @Html.DropDownListFor(model => model.NewApplication.Denomination,
+                                            new List<SelectListItem> { new SelectListItem() { Text = "Select Denomination", Value = "-1" } }, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.NewApplication.Denomination, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     @*Nominee Name*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.NewApplication.NomineeName, htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.LabelFor(model => model.NewApplication.NomineeName, htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.EditorFor(model => model.NewApplication.NomineeName, new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.NomineeName, "", new {@class = "text-danger"})
+                                            @Html.EditorFor(model => model.NewApplication.NomineeName, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                            @Html.ValidationMessageFor(model => model.NewApplication.NomineeName, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     @*Relation*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.NewApplication.Realtion, htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.LabelFor(model => model.NewApplication.Relation, htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.EditorFor(model => model.NewApplication.Realtion, new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.Realtion, "", new {@class = "text-danger"})
+                                            @Html.EditorFor(model => model.NewApplication.Relation, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                            @Html.ValidationMessageFor(model => model.NewApplication.Relation, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     @*Total No Of Script for this nominee*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.NewApplication.TotalNoOfScrrptForThisNominee, htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.LabelFor(model => model.NewApplication.TotalNoOfScrrptForThisNominee, htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.EditorFor(model => model.NewApplication.TotalNoOfScrrptForThisNominee, new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.TotalNoOfScrrptForThisNominee, "", new {@class = "text-danger"})
+                                            @Html.EditorFor(model => model.NewApplication.TotalNoOfScrrptForThisNominee, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                            @Html.ValidationMessageFor(model => model.NewApplication.TotalNoOfScrrptForThisNominee, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
@@ -527,39 +538,45 @@
                                 <div class="col-md-6">
                                     @*Total Amount*@
                                     <div class="form-group">
-                                        @Html.Label("Total Amount", htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.Label("Total Amount", htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.Editor("", new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.PayingOffice, "", new {@class = "text-danger"})
+                                            @*value of toatal amount should come from amountforcredit field*@
+                                            @Html.EditorFor(model => model.NewApplication.TotalAmount, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
                                         </div>
                                     </div>
 
                                     @*Total no of script*@
                                     <div class="form-group">
-                                        @Html.Label("Total No Of Script", htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.Label("Total No Of Script", htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.Editor("",
-                                                new {htmlAttributes = new {@class = "form-control col-md-4", @value = "NewApplication_TotalScript.value()"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.Denomination, "", new {@class = "text-danger"})
+                                            @*value of totalnoofscript should come from totalscript field*@
+                                            @Html.EditorFor(model => model.NewApplication.TotalNoOfScript,
+                                                new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
                                         </div>
                                     </div>
 
                                     @*prefix*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.NewApplication.Prefix, htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.LabelFor(model => model.NewApplication.Prefix, htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.EditorFor(model => model.NewApplication.Prefix, new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.Prefix, "", new {@class = "text-danger"})
+                                            @Html.EditorFor(model => model.NewApplication.Prefix,
+                                                new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+                                            @Html.ValidationMessageFor(model => model.NewApplication.Prefix, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
                                     @*Bond script start No*@
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.NewApplication.StartNo, htmlAttributes: new {@class = "control-label col-md-6"})
+                                        @Html.LabelFor(model => model.NewApplication.StartNo, htmlAttributes: new { @class = "control-label col-md-6" })
                                         <div class="col-md-5">
-                                            @Html.EditorFor(model => model.NewApplication.StartNo, new {htmlAttributes = new {@class = "form-control col-md-4"}})
-                                            @Html.ValidationMessageFor(model => model.NewApplication.StartNo, "", new {@class = "text-danger"})
+                                            @Html.EditorFor(model => model.NewApplication.StartNo, new { htmlAttributes = new { @class = "form-control col-md-4" } })
+                                            @Html.ValidationMessageFor(model => model.NewApplication.StartNo, "", new { @class = "text-danger" })
                                         </div>
+                                    </div>
+
+                                    @*Generate Script Button*@
+                                    <div class="form-group">
+                                        <button class="btn btn-sm btn-primary" id="generateScript">Generate Script</button>
                                     </div>
 
 
@@ -568,22 +585,28 @@
                             </fieldset>
                         </div>
                         <div class="panel panel-primary">
-                            <table class="table table-bordered table-striped">
+                            <table id="scriptTable" class="table table-bordered table-striped">
                                 <thead>
-                                <tr>
-                                    <th>Sl No</th>
-                                    <th>Prefix</th>
-                                    <th>Bond No</th>
-                                    <th>Maturity Date</th>
-                                    <th>Nominee Name</th>
-                                    <th>Relation</th>
-                                    <th>Amount Paid</th>
-                                </tr>
+                                    <tr>
+                                        <th>Sl No</th>
+                                        <th>Prefix</th>
+                                        <th>Bond No</th>
+                                        <th>Maturity Date</th>
+                                        <th>Nominee Name</th>
+                                        <th>Relation</th>
+                                        <th>Amount Paid</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                             
-                                    
-                          
+                                    @*@{
+                                            for (int i = 0; i < $(); i++)
+                                            {
+                                                <tr>
+                                                    <td>@i</td>
+                                                </tr>
+                                            }
+                                        }*@
+
                                 </tbody>
 
                             </table>
@@ -594,7 +617,6 @@
 
                     </div>
                 </div>
-
             </div>
 
         </div>
@@ -613,7 +635,7 @@
 
     $(document).ready(function () {
 
-        //Dropdownlist Selectedchange FOR THANA event
+        //=============================Dropdownlist Selectedchange FOR THANA event====================================
 
         $("#NewApplication_District").change(function () {
 
@@ -649,8 +671,9 @@
             return false;
 
         });
+        //==================================================================================================================================
 
-        @*//DROPDOWNLIST FOR PAYMENT MODE
+        @*//==========================================DROPDOWNLIST FOR PAYMENT MODE========================================
 
         $("#NewApplication_PaymentMode").register(function() {
 
@@ -680,7 +703,7 @@
         });*@
 
 
-        //GETTING THE BRANCH INFO IN FIELD FCBRANCH
+        //=====================================GETTING THE BRANCH INFO IN FIELD FCBRANCH============================================
         $.ajax({
             type: "GET",
             url: "@Url.Action("GetFcBranch")",
@@ -702,8 +725,10 @@
             }
 
         });
+        //=======================================================================================================================
 
-        //GETTING THE CURRENCY INFO IN FIELD CURRENCY
+
+        //========================================GETTING THE CURRENCY INFO IN FIELD CURRENCY====================================
         $.ajax({
             type: "GET",
             url: "@Url.Action("GetCurrencyCode")",
@@ -725,8 +750,8 @@
             }
         });
 
-
-        //GETTING THE CURRENCY INFO IN FIELD CURRENCYRATE
+        //========================================================================================================================
+        //===============================GETTING THE CURRENCY INFO IN FIELD CURRENCYRATE============================================
         $("#NewApplication_ValueDate").change(function () {
 
             if (!$("#NewApplication_Currency").isEmpty) {
@@ -763,7 +788,9 @@
                 });
             }
         });
-        //GETTING THE EXHOUSE INFO IN FIELD EXHOUSE AUTOCOMPLETE
+        //=======================================================================================================================
+
+        //===========================GETTING THE EXHOUSE INFO IN FIELD EXHOUSE AUTOCOMPLETE==========================================
         $("#NewApplication_ExHouseOrBank").autocomplete({
             source: function (request, response) {
                 $.ajax({
@@ -783,6 +810,60 @@
                 });
             }
         });
+        //========================================================================================================================
+        //==================================GETTING THE DENOMINATION INFO IN FIELD PREFIX BASED ON BONDTYPE SELECTION VALUE===========
+        $("#NewApplication_BondType").change(function () {
+
+
+            $("#NewApplication_Denomination").empty();
+            $("#NewApplication_Prefix").empty();
+
+
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetBondScriptDenoInfo")",
+                dataType: "json",
+                data: { bondTypeIndex: $("#NewApplication_BondType").val() },
+                success: function (scriptDenos) {
+                    $.each(scriptDenos, function (i, item) {
+                        $("#NewApplication_Denomination").append("<option value=\"" + item.BONDVALUE + "\">" + item.BONDVALUE + "</option>");
+                        //$("#NewApplication_Prefix").append("<option value=\"" + item.BONDPREFIX + "\">" + item.BONDPREFIX + "</option>");
+
+                    });
+                },
+                error: function (ex) {
+                    alert("Failed to retrieve states." + ex);
+                }
+            });
+
+        });
+
+        $("#NewApplication_Denomination").change(function () {
+
+
+            $("#NewApplication_Prefix").empty();
+
+
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetBondScriptPrefixInfo")",
+                dataType: "json",
+                data: { denominationValue: $("#NewApplication_Denomination").val(), bondTypeIndex: $("#NewApplication_BondType").val() },
+                success: function (scriptDenos) {
+                    $.each(scriptDenos, function (i, item) {
+                        $("#NewApplication_Prefix").val(item.BONDPREFIX);
+                        $("#NewApplication_Prefix").text(item.BONDPREFIX);
+                    });
+                },
+                error: function (ex) {
+                    alert("Failed to retrieve states." + ex);
+                }
+            });
+
+        });
+
+        //========================================================================================================================
 
 
         @*$.ajax({
@@ -799,6 +880,79 @@
                 alert("Failed to retrieve states." + ex);
             }
         });*@
+
+        //========================copy value of NewApplication_TotalScript to NewApplication_TotalNoOfScript============================
+        $("#NewApplication_TotalScript").keyup(function () {
+            $("#NewApplication_TotalNoOfScript").val($(this).val());
+        });
+        //==============================================================================================================================
+        //======================copy value of NewApplication_AmountForCredit to NewApplication_TotalAmount==============================
+        $("#NewApplication_AmountForCredit").keyup(function () {
+            $("#NewApplication_TotalAmount").val($(this).val());
+
+        });
+        //==============================================================================================================================
+        //======================generateScript Button Click ==============================
+
+        //$("#generateScript").click(function (e) {
+        //    e.preventDefault();
+        //    if ($("#NewApplication_Prefix").val() != null && $("#NewApplication_StartNo").val() != null &&
+        //        $("#NewApplication_TotalNoOfScriptForThisNominee").val() != null && $("#NewApplication_NomineeName").val() != null) {
+
+        //        var scriptForNominee = $("#NewApplication_TotalNoOfScriptForThisNominee").val();
+        //        var bondStartNo = $("#NewApplication_StartNo").val();
+        //        var nomineeName = $("#NewApplication_NomineeName").val();
+        //        var relation = $("#NewApplication_Relation").val();
+        //        $.each(scriptForNominee, function (i) {
+        //            bondStartNo++;
+        //            var tr = (
+        //                      '<tr>' +
+        //                        '<td>' + i + '</td>' +
+        //                        '<td>' + $("#NewApplication_Prefix").val() + '</td>' +
+        //                        '<td>' + bondStartNo + '</td>' +
+        //                        '<td>' + 'maturitydatecalculation' + '</td>' +
+        //                        '<td>' + nomineeName + '</td>' +
+        //                        '<td>' + relation + '</td>' +
+        //                        '<td>' + 0.00 + '</td>' +
+        //                      '</tr>'
+        //                    );
+        //            $("#scriptTable").append(tr);
+        //        });
+        //    }
+
+        //});
+        $("#generateScript").on("click", function (e) {
+
+            e.preventDefault();
+            var prefix = $("#NewApplication_Prefix").val();
+            var scriptForNominee = $("#NewApplication_TotalNoOfScrrptForThisNominee").val();
+            var bondStartNo = $("#NewApplication_StartNo").val();
+            var nomineeName = $("#NewApplication_NomineeName").val();
+            var relation = $("#NewApplication_Relation").val();
+
+            if (prefix != null && bondStartNo != null && scriptForNominee != null && nomineeName != null) {
+
+                var item = 0;
+                for (var i = 0, l = scriptForNominee; i < l; i++) {
+                    item++;
+                    bondStartNo++;
+                    var tr = (
+                              '<tr>' +
+                                '<td>' + item + '</td>' +
+                                '<td>' + $("#NewApplication_Prefix").val() + '</td>' +
+                                '<td>' + bondStartNo + '</td>' +
+                                '<td>' + 'maturitydatecalculation' + '</td>' +
+                                '<td>' + nomineeName + '</td>' +
+                                '<td>' + relation + '</td>' +
+                                '<td>' + 0.00 + '</td>' +
+                              '</tr>'
+                            );
+                    $("#scriptTable").append(tr);
+                }
+            }
+        });
+        //==============================================================================================================================
+
 
 
 

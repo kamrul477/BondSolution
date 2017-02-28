@@ -3,6 +3,7 @@ using Mvc.BondApp.ViewModels;
 using System;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using templateMvc;
 
 
@@ -10,12 +11,6 @@ namespace Mvc.BondApp.Controllers
 {
     public class ApplicationController : Controller
     {
-        //private IInventoryService inventoryService;
-
-        //public ApplicationController(IInventoryService _inventoryService)
-        //{
-        //    inventoryService = _inventoryService;
-        //}
 
         private BondModel _context = new BondModel();
 
@@ -113,6 +108,19 @@ namespace Mvc.BondApp.Controllers
             return Json(exchangeHouses.Select(p => new { EXCODE = p.EXCODE, EXNAME = p.EXNAME }), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetBondScriptDenoInfo(string bondTypeIndex)
+        {
+            var scriptDenoInfo = _context.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
+            return Json(scriptDenoInfo.Select(p => new { BONDVALUE = p.BONDVALUE, BONDPREFIX = p.BONDPREFIX }),JsonRequestBehavior.AllowGet);
+        }
+
+
+        public JsonResult GetBondScriptPrefixInfo(int denominationValue, string bondTypeIndex)
+        {
+            var scriptDenoInfo = _context.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
+            var scriptPrefix = scriptDenoInfo.Where(x => x.BONDVALUE.Equals(denominationValue));
+            return Json(scriptPrefix.Select(p => new {BONDPREFIX = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
+        }
 
 
 
@@ -130,10 +138,19 @@ namespace Mvc.BondApp.Controllers
 
         // POST: Application/Create
         [HttpPost]
-        public ActionResult Create(NewApplication application)
+        public ActionResult Create(FormCollection application)
         {
             try
             {
+                BONDAPPLICATION app = new BONDAPPLICATION()
+                {
+                    FILENO = application[1].AsInt(),
+                    ABOARDADDR = application[17],
+                    AMOUNTCR = application[32].AsDecimal(),
+                    AMOUNTFC = application[31].AsDecimal(),
+                    BONDCODE = application[6]
+                };
+                var x = application[1].ToString();
                 // TODO: Add insert logic here
 
 

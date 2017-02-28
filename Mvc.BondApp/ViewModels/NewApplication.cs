@@ -114,12 +114,16 @@ namespace templateMvc
         public int TotalNoOfScrrptForThisNominee { get; set; }
 
         [Display(Name = "Relation")]
-        public string Realtion { get; set; }
+        public string Relation { get; set; }
 
 
         public string Prefix { get; set; }
 
         [Display(Name = "Bond Start No")]
         public int StartNo { get; set; }
+
+
+
+
     }
 }
