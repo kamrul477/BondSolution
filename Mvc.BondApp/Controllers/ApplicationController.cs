@@ -1,10 +1,10 @@
 ﻿using Kendo.Mvc.Extensions;
 using Mvc.BondApp.ViewModels;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.WebPages;
-using templateMvc;
 
 
 namespace Mvc.BondApp.Controllers
@@ -111,7 +111,7 @@ namespace Mvc.BondApp.Controllers
         public JsonResult GetBondScriptDenoInfo(string bondTypeIndex)
         {
             var scriptDenoInfo = _context.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
-            return Json(scriptDenoInfo.Select(p => new { BONDVALUE = p.BONDVALUE, BONDPREFIX = p.BONDPREFIX }),JsonRequestBehavior.AllowGet);
+            return Json(scriptDenoInfo.Select(p => new { BONDVALUE = p.BONDVALUE, BONDPREFIX = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
         }
 
 
@@ -119,7 +119,30 @@ namespace Mvc.BondApp.Controllers
         {
             var scriptDenoInfo = _context.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
             var scriptPrefix = scriptDenoInfo.Where(x => x.BONDVALUE.Equals(denominationValue));
-            return Json(scriptPrefix.Select(p => new {BONDPREFIX = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
+            return Json(scriptPrefix.Select(p => new { BONDPREFIX = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
+        }
+        //BOND SCRIPT GENERATION CALL
+        public JsonResult GetBondScriptInfo(string prefix, int bondStartNo, int totalNoOfScriptForThisNominee,
+            string relation, string nomineeName, int totalNoOfScript, int denomination)
+        {
+            List<NewApplicationBondScriptViewModel> model = new List<NewApplicationBondScriptViewModel>();
+
+            for (var i = 0; i < totalNoOfScriptForThisNominee; i++)
+            {
+                model.Add(new NewApplicationBondScriptViewModel()
+                {
+                    SerialNo = i++,
+                    BondNo = bondStartNo++,
+                    NomineeName = nomineeName,
+                    Prefix = prefix,
+                    Relation = relation,
+                    Value = denomination,
+                    AmountPaid = 0,
+                    MaturityDate = DateTime.Now
+
+                });
+            }
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
 
 

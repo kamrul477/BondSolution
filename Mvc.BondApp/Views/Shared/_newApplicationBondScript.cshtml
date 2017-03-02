@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Mvc.BondApp.ViewModels.NewApplicationBondScriptViewModel>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SerialNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Prefix)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BondNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MaturityDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Value)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NomineeName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Relation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AmountPaid)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SerialNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Prefix)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BondNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MaturityDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Value)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NomineeName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Relation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AmountPaid)
+        </td>
+        <td>
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>

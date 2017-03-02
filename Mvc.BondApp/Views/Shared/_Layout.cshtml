@@ -9,13 +9,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@ViewBag.Title - Bond Management Software</title>
     <link href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet"/>
+
 	@Styles.Render("~/Content/css")
 	@Styles.Render("~/Content/kendo/css")
 	@Styles.Render("~/Content/menu/css")
     @*@Styles.Render("~/Content/themes/base")*@
 	@*script section*@
 
-
+   
     @Scripts.Render("~/bundles/jquery")
 	@Scripts.Render("~/bundles/kendo")
 	@Scripts.Render("~/bundles/menu")
@@ -25,6 +26,7 @@
 	@Scripts.Render("~/bundles/jqueryUi")
 	@Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/bonnet")
+     <script src="~/Scripts/moment.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 	<script src="~/Scripts/bootstrap.js"></script>

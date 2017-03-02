@@ -577,6 +577,23 @@
                                     @*Generate Script Button*@
                                     <div class="form-group">
                                         <button class="btn btn-sm btn-primary" id="generateScript">Generate Script</button>
+                                        @*@Ajax.ActionLink("Generate Script", "GetBondScriptInfo", "Application",
+
+                                                 new AjaxOptions()
+                                                 {
+                                                     HttpMethod = "GET",
+                                                     InsertionMode = InsertionMode.Replace,
+                                                     UpdateTargetId = "scriptTable",
+                                                     OnBegin ="getUserInput()",
+                                                   
+                                                     OnComplete =
+                                                     {
+
+                                                     }
+
+                                                 })*@
+                                           
+
                                     </div>
 
 
@@ -585,12 +602,13 @@
                             </fieldset>
                         </div>
                         <div class="panel panel-primary">
-                            <table id="scriptTable" class="table table-bordered table-striped">
+                            <table id="scriptTable" class="table table-bordered table-striped table-hover">
                                 <thead>
-                                    <tr>
+                                    <tr class="bg-primary">
                                         <th>Sl No</th>
                                         <th>Prefix</th>
                                         <th>Bond No</th>
+                                        <th>Value</th>
                                         <th>Maturity Date</th>
                                         <th>Nominee Name</th>
                                         <th>Relation</th>
@@ -882,12 +900,12 @@
         });*@
 
         //========================copy value of NewApplication_TotalScript to NewApplication_TotalNoOfScript============================
-        $("#NewApplication_TotalScript").keyup(function () {
+        $("#NewApplication_TotalScript").keyup(function() {
             $("#NewApplication_TotalNoOfScript").val($(this).val());
         });
         //==============================================================================================================================
         //======================copy value of NewApplication_AmountForCredit to NewApplication_TotalAmount==============================
-        $("#NewApplication_AmountForCredit").keyup(function () {
+        $("#NewApplication_AmountForCredit").keyup(function() {
             $("#NewApplication_TotalAmount").val($(this).val());
 
         });
@@ -921,6 +939,18 @@
         //    }
 
         //});
+
+        @*int totalNoOfScriptForThisNominee,*@
+        function getUserInput() {
+            var prefix = $("#NewApplication_Prefix").val();
+            var scriptForNominee = $("#NewApplication_TotalNoOfScrrptForThisNominee").val();
+            var bondStartNo = $("#NewApplication_StartNo").val();
+            var nomineeName = $("#NewApplication_NomineeName").val();
+            var relation = $("#NewApplication_Relation").val();
+            var totalNoOfScript = $("#NewApplication_TotalNoOfScript").val();
+            var denomination = $("#NewApplication_Denomination").val();
+        }
+
         $("#generateScript").on("click", function (e) {
 
             e.preventDefault();
@@ -929,27 +959,65 @@
             var bondStartNo = $("#NewApplication_StartNo").val();
             var nomineeName = $("#NewApplication_NomineeName").val();
             var relation = $("#NewApplication_Relation").val();
+            var totalNoOfScript = $("#NewApplication_TotalNoOfScript").val();
+            var denomination = $("#NewApplication_Denomination").val();
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("GetBondScriptInfo")",
+                dataType: "json",
+                data: {
+                    prefix: prefix, totalNoOfScriptForThisNominee: scriptForNominee,
+                    bondStartNo: bondStartNo, nomineeName: nomineeName, relation: relation,
+                    totalNoOfScript: totalNoOfScript, denomination: denomination
+                },
+                success: function (scriptDenos) {
+                    $.each(scriptDenos, function (i, item) {
+                        var date = moment(item.MaturityDate);
+                        var tr = (
+                                  '<tr>' +
+                                    '<td>' + item.SerialNo + '</td>' +
+                                    '<td>' + item.Prefix + '</td>' +
+                                    '<td>' + item.BondNo + '</td>' +
+                                    '<td>' + item.Value + '</td>' +
+                                    '<td>' + date.format("DD/MM/YYYY") + '</td>' +
+                                    '<td>' + item.NomineeName + '</td>' +
+                                    '<td>' + item.Relation + '</td>' +
+                                    '<td>' + item.AmountPaid + '</td>' +
+                                  '</tr>'
+                                );
+                        $("#scriptTable").append(tr);
+                    });
 
-            if (prefix != null && bondStartNo != null && scriptForNominee != null && nomineeName != null) {
-
-                var item = 0;
-                for (var i = 0, l = scriptForNominee; i < l; i++) {
-                    item++;
-                    bondStartNo++;
-                    var tr = (
-                              '<tr>' +
-                                '<td>' + item + '</td>' +
-                                '<td>' + $("#NewApplication_Prefix").val() + '</td>' +
-                                '<td>' + bondStartNo + '</td>' +
-                                '<td>' + 'maturitydatecalculation' + '</td>' +
-                                '<td>' + nomineeName + '</td>' +
-                                '<td>' + relation + '</td>' +
-                                '<td>' + 0.00 + '</td>' +
-                              '</tr>'
-                            );
-                    $("#scriptTable").append(tr);
+                },
+                error: function (ex) {
+                    alert("Failed to retrieve states." + ex);
                 }
-            }
+            });
+
+            //if (prefix != null && bondStartNo != null && scriptForNominee != null && nomineeName != null) {
+            //    var condition = $("table#scriptTable").length;
+            //    var item = (condition === 0 || condition === "undefiend") ? 0 : $('table.class tr:last-child td:first-child').html('Value');
+
+            //    for (var i = 0, l = scriptForNominee; i < l; i++) {
+            //        item++;
+            //        bondStartNo++;
+            //        var tr = (
+            //                  '<tr>' +
+            //                    '<td>' + item + '</td>' +
+            //                    '<td>' + $("#NewApplication_Prefix").val() + '</td>' +
+            //                    '<td>' + bondStartNo + '</td>' +
+            //                    '<td>' + 'maturitydatecalculation' + '</td>' +
+            //                    '<td>' + nomineeName + '</td>' +
+            //                    '<td>' + relation + '</td>' +
+            //                    '<td>' + 0.00 + '</td>' +
+            //                  '</tr>'
+            //                );
+            //        $("#scriptTable").append(tr);
+            //    }
+
+
+
+            //}
         });
         //==============================================================================================================================
 
