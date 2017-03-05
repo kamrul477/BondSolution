@@ -153,6 +153,7 @@
     <Compile Include="Controllers\InterestRateConfigurationController.cs" />
     <Compile Include="Controllers\RateConfigurationController.cs" />
     <Compile Include="Controllers\UserInformationController.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\APPSCRIPT.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\AspNetUserClaim.cs" />
     <Compile Include="Models\AspNetUserLogin.cs" />
     <Compile Include="Models\BANKINFO.cs" />
+    <Compile Include="Models\BENEFICIARY.cs" />
     <Compile Include="Models\BONDAPPLICATION.cs" />
     <Compile Include="Models\BONDINFO.cs" />
     <Compile Include="Models\BondModel.cs" />

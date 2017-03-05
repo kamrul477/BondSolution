@@ -1,14 +1,14 @@
-namespace Mvc.BondApp
+namespace WebApplication2
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class BondModel : DbContext
+    public partial class Model1 : DbContext
     {
-        public BondModel()
-            : base("name=BondModelDb")
+        public Model1()
+            : base("name=Model1")
         {
         }
 
@@ -267,12 +267,12 @@ namespace Mvc.BondApp
                 .IsUnicode(false);
 
             modelBuilder.Entity<BONDAPPLICATION>()
-                .HasOptional(e => e.BENEFICIARY)
-                .WithRequired(e => e.BONDAPPLICATION);
-
-            modelBuilder.Entity<BONDAPPLICATION>()
                 .Property(e => e.FBRCODE)
                 .IsUnicode(false);
+
+            modelBuilder.Entity<BONDAPPLICATION>()
+                .HasOptional(e => e.BENEFICIARY)
+                .WithRequired(e => e.BONDAPPLICATION);
 
             modelBuilder.Entity<BONDINFO>()
                 .Property(e => e.BONDCODE)
@@ -622,10 +622,10 @@ namespace Mvc.BondApp
                 .WithOptional(e => e.CURRINFO)
                 .HasForeignKey(e => e.CURRCODE);
 
-            //modelBuilder.Entity<CURRINFO>()
-            //    .HasMany(e => e.BONDINFOes1)
-            //    .WithOptional(e => e.CURRINFO1)
-            //    .HasForeignKey(e => e.INTCURRCODE);
+            modelBuilder.Entity<CURRINFO>()
+                .HasMany(e => e.BONDINFOes1)
+                .WithOptional(e => e.CURRINFO1)
+                .HasForeignKey(e => e.INTCURRCODE);
 
             modelBuilder.Entity<CURRINFO>()
                 .HasMany(e => e.RATEINFOes)
@@ -1066,6 +1066,26 @@ namespace Mvc.BondApp
 
             modelBuilder.Entity<USERINFO>()
                 .Property(e => e.TERMINAL)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BENEFICIARY>()
+                .Property(e => e.BONDSCN)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BENEFICIARY>()
+                .Property(e => e.BENNAME)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BENEFICIARY>()
+                .Property(e => e.BENFNAME)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BENEFICIARY>()
+                .Property(e => e.BENMNAME)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<BENEFICIARY>()
+                .Property(e => e.BENADDR)
                 .IsUnicode(false);
         }
     }

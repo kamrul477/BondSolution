@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc.BondApp", "Mvc.BondApp\Mvc.BondApp.csproj", "{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication2", "WebApplication2\WebApplication2.csproj", "{A4323338-B21E-4991-AAB0-C411306BC122}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9DD000F-DAA5-4DB4-9D72-34FF0A31F1DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4323338-B21E-4991-AAB0-C411306BC122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4323338-B21E-4991-AAB0-C411306BC122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4323338-B21E-4991-AAB0-C411306BC122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4323338-B21E-4991-AAB0-C411306BC122}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

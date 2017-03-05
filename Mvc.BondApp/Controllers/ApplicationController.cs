@@ -13,6 +13,7 @@ namespace Mvc.BondApp.Controllers
     {
 
         private BondModel _context = new BondModel();
+        private int scriptSerialNo;
 
         // GET: Application
         public ActionResult NewApplication()
@@ -121,27 +122,38 @@ namespace Mvc.BondApp.Controllers
             var scriptPrefix = scriptDenoInfo.Where(x => x.BONDVALUE.Equals(denominationValue));
             return Json(scriptPrefix.Select(p => new { BONDPREFIX = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
         }
+
         //BOND SCRIPT GENERATION CALL
+
+
         public JsonResult GetBondScriptInfo(string prefix, int bondStartNo, int totalNoOfScriptForThisNominee,
-            string relation, string nomineeName, int totalNoOfScript, int denomination)
+            string relation, string nomineeName, int totalNoOfScript, int denomination, int rowCount)
         {
             List<NewApplicationBondScriptViewModel> model = new List<NewApplicationBondScriptViewModel>();
-
-            for (var i = 0; i < totalNoOfScriptForThisNominee; i++)
+            if (rowCount <= totalNoOfScript)
             {
-                model.Add(new NewApplicationBondScriptViewModel()
-                {
-                    SerialNo = i++,
-                    BondNo = bondStartNo++,
-                    NomineeName = nomineeName,
-                    Prefix = prefix,
-                    Relation = relation,
-                    Value = denomination,
-                    AmountPaid = 0,
-                    MaturityDate = DateTime.Now
+                scriptSerialNo = rowCount;
 
-                });
+                for (var i = 0; i < totalNoOfScriptForThisNominee; i++)
+                {
+                    ++scriptSerialNo;
+                    model.Add(new NewApplicationBondScriptViewModel()
+                    {
+                        SerialNo = scriptSerialNo,
+                        BondNo = bondStartNo,
+                        NomineeName = nomineeName,
+                        Prefix = prefix,
+                        Relation = relation,
+                        Value = denomination,
+                        AmountPaid = 0,
+                        MaturityDate = DateTime.Now
+
+                    });
+                    bondStartNo++;
+
+                }
             }
+
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
@@ -165,16 +177,60 @@ namespace Mvc.BondApp.Controllers
         {
             try
             {
-                BONDAPPLICATION app = new BONDAPPLICATION()
+                BONDAPPLICATION _bondapplication = new BONDAPPLICATION()
                 {
-                    FILENO = application[1].AsInt(),
-                    ABOARDADDR = application[17],
-                    AMOUNTCR = application[32].AsDecimal(),
-                    AMOUNTFC = application[31].AsDecimal(),
-                    BONDCODE = application[6]
+                    BONDCODE = application[1],
+                    BONDSCN = application[2],//bond applicaiton no===SHOULD BE USED IN MULTIPLE PLACE
+                    FILENO = application[3].AsInt(),
+                    SCNDATE = application[4].AsDateTime(),
+                    REINVDATE = application[5].AsDateTime(),
+                    RESPONDDATE = application[6].AsDateTime(),
+                    FBRCODE = application[7],//issueing branch
+                    TOTALSCRIPT = (short?)application[8].AsInt(),//total script
+                    BUYFNAME = application[9],//buyer first name
+                    BUYMNAME = application[10],//buyier middle name
+                    BUYLNAME = application[11],//buyer lastname
+                    DOB = application[12].AsDateTime(),//buyer date of birth
+                    SEX = application[13],//sex
+                    DESIG = application[14],//designation
+                    COMNAME = application[15],//organisation
+                    COMADDR = application[16],//company address
+                    ABOARDADDR = application[17],//foreign address
+                    CNTYCODE = application[18],//country code
+                    LOCALADDR = application[19],//local address
+                    LOCALDIST = application[20],//district code
+                    LOCALTHANA = application[21],//thana
+                    PASSPORTNO = application[22],//passport no
+                    ISSUEPLACE = application[23], //passport issue place
+                    PASSISSUEDATE = application[24].AsDateTime(),//passport issue date
+                    PAYMODE = application[25],//payment mode
+                    FCACNO = application[26],//fc account no
+                    FCBRCODE = application[27],//fc ac branch
+                    CURRCODE = application[28],//currency code
+                    VALUEDATE = application[29].AsDateTime(),//value date
+                    EXRATE = application[30].AsDecimal(),//currency rate
+                    AMOUNTFC = application[31].AsDecimal(),//amount in fc
+                    AMOUNTCR = application[32].AsDecimal(),// amount for credit
+                    FDDNO = application[33],//demand draft
+                    EXBANKCODE = application[34],//exbankcode or bank
+                    REMARKS = application[35],// remarks
+                    //===================================BENEFICIARY======================================
+                    //===================================OTHERS INFO======================================
+                    FNAME = application[36],//others fathersname
+                    MNAME = application[37],//others mothersname
                 };
-                var x = application[1].ToString();
-                // TODO: Add insert logic here
+                //===============================BOND HOLDERS INFO========================================
+                BENEFICIARY _beneficiary = new BENEFICIARY()
+                {
+                    BONDSCN = application[2],//bond applicaiton no
+                    BENNAME = application[38],//beneficiary name
+                    BENFNAME = application[39], //beneficiary fathers name
+                    BENMNAME = application[40],//beneficiary mothers name
+                    BENDOB = application[42].AsDateTime(),//beneficiary dateofbirth
+                    BENADDR = application[41],//beneficiary address
+                };
+                //==========================BOND SCRIPT======================================================
+
 
 
                 return RedirectToAction("Index");
