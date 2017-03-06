@@ -85,7 +85,8 @@
                     <div class="form-group">
                         @Html.LabelFor(model => model.NewApplication.IssueingBranch, "Issuing Branch", htmlAttributes: new { @class = "control-label " })
                         <div class="col-md-6">
-                            @Html.EditorFor(model => model.NewApplication.IssueingBranch, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.DropDownListFor(m => m.NewApplication.IssueingBranch,
+                            new SelectList(String.Empty, "BRCODE", "BRNAME"), "===Select Issuing Branch===", new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.NewApplication.IssueingBranch, "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -832,9 +833,7 @@
 
         $("#NewApplication_Denomination").change(function () {
 
-
             $("#NewApplication_Prefix").empty();
-
 
             $.ajax({
                 type: "GET",
@@ -885,46 +884,6 @@
         //==============================================================================================================================
         //======================generateScript Button Click ==============================
 
-        //$("#generateScript").click(function (e) {
-        //    e.preventDefault();
-        //    if ($("#NewApplication_Prefix").val() != null && $("#NewApplication_StartNo").val() != null &&
-        //        $("#NewApplication_TotalNoOfScriptForThisNominee").val() != null && $("#NewApplication_NomineeName").val() != null) {
-
-        //        var scriptForNominee = $("#NewApplication_TotalNoOfScriptForThisNominee").val();
-        //        var bondStartNo = $("#NewApplication_StartNo").val();
-        //        var nomineeName = $("#NewApplication_NomineeName").val();
-        //        var relation = $("#NewApplication_Relation").val();
-        //        $.each(scriptForNominee, function (i) {
-        //            bondStartNo++;
-        //            var tr = (
-        //                      '<tr>' +
-        //                        '<td>' + i + '</td>' +
-        //                        '<td>' + $("#NewApplication_Prefix").val() + '</td>' +
-        //                        '<td>' + bondStartNo + '</td>' +
-        //                        '<td>' + 'maturitydatecalculation' + '</td>' +
-        //                        '<td>' + nomineeName + '</td>' +
-        //                        '<td>' + relation + '</td>' +
-        //                        '<td>' + 0.00 + '</td>' +
-        //                      '</tr>'
-        //                    );
-        //            $("#scriptTable").append(tr);
-        //        });
-        //    }
-
-        //});
-
-        @*int totalNoOfScriptForThisNominee,*@
-        function getUserInput() {
-            var prefix = $("#NewApplication_Prefix").val();
-            var scriptForNominee = $("#NewApplication_TotalNoOfScrrptForThisNominee").val();
-            var bondStartNo = $("#NewApplication_StartNo").val();
-            var nomineeName = $("#NewApplication_NomineeName").val();
-            var relation = $("#NewApplication_Relation").val();
-            var totalNoOfScript = $("#NewApplication_TotalNoOfScript").val();
-            var denomination = $("#NewApplication_Denomination").val();
-
-        }
-
         $("#generateScript").on("click", function (e) {
 
             e.preventDefault();
@@ -935,6 +894,8 @@
             var relation = $("#NewApplication_Relation").val();
             var totalNoOfScript = $("#NewApplication_TotalNoOfScript").val();
             var denomination = $("#NewApplication_Denomination").val();
+            var bondScn = $("#NewApplication_BondAppNo").val();
+            var bondCode = $("#NewApplication_BondType").val();
             //var rowCount = $('table#scriptTable tr:last').index() + 1;
             var rowCount = $("#scriptTable > tbody").children().length;
 
@@ -945,7 +906,7 @@
                 data: {
                     prefix: prefix, totalNoOfScriptForThisNominee: scriptForNominee,
                     bondStartNo: bondStartNo, nomineeName: nomineeName, relation: relation,
-                    totalNoOfScript: totalNoOfScript, denomination: denomination, rowCount: rowCount
+                    totalNoOfScript: totalNoOfScript, denomination: denomination, rowCount: rowCount, bondScn: bondScn, bondCode: bondCode
                 },
                 success: function (scriptDenos) {
                     $.each(scriptDenos, function (i, item) {
@@ -971,33 +932,33 @@
                 }
             });
 
-            //if (prefix != null && bondStartNo != null && scriptForNominee != null && nomineeName != null) {
-            //    var condition = $("table#scriptTable").length;
-            //    var item = (condition === 0 || condition === "undefiend") ? 0 : $('table.class tr:last-child td:first-child').html('Value');
-
-            //    for (var i = 0, l = scriptForNominee; i < l; i++) {
-            //        item++;
-            //        bondStartNo++;
-            //        var tr = (
-            //                  '<tr>' +
-            //                    '<td>' + item + '</td>' +
-            //                    '<td>' + $("#NewApplication_Prefix").val() + '</td>' +
-            //                    '<td>' + bondStartNo + '</td>' +
-            //                    '<td>' + 'maturitydatecalculation' + '</td>' +
-            //                    '<td>' + nomineeName + '</td>' +
-            //                    '<td>' + relation + '</td>' +
-            //                    '<td>' + 0.00 + '</td>' +
-            //                  '</tr>'
-            //                );
-            //        $("#scriptTable").append(tr);
-            //    }
-
-
-
-            //}
         });
         //==============================================================================================================================
+        //==========================================DROPDOWNLIST FOR ISSUING BRANCH=====================================================
+        
+        $("#NewApplication_IssueingBranch").change(function () {
 
+             $("#NewApplication_IssueingBranch").empty();
+
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetIssuingBranch")',
+                dataType: "json",
+                success: function (branches) {
+
+                    $.each(branches, function (i, item) {
+
+                        $("#NewApplication_IssueingBranch").append("<option value=\"" + item.BRCODE + "\">" + item.BRNAME + "</option>");
+
+                    });
+                },
+                error: function (ex) {
+                    alert("Failed to retrieve branches." + ex);
+                }
+            });
+
+        });
+        //===============================================================================================================================
 
 
 

@@ -73,6 +73,13 @@ namespace Mvc.BondApp.Controllers
             return Json(paymentMode.Select(p => new { PAYCODE = p.PAYCODE, PAYDESC = p.PAYDESC }), JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult GetIssuingBranch()
+        {
+            var foreignBranch = _context.BRANCHINFOes.ToList().Where(p => p.BRCODE.Contains("15F"));
+            return Json(foreignBranch.Select(p => new { BRCODE = p.BRCODE, BRNAME = p.BRNAME }), JsonRequestBehavior.AllowGet);
+            //SUBSTR(BRCODE, 1, 3) = '15F'
+        }
+
         public JsonResult GetFcBranch()
         {
             var branches = _context.BRANCHINFOes.ToList();
@@ -127,9 +134,11 @@ namespace Mvc.BondApp.Controllers
 
 
         public JsonResult GetBondScriptInfo(string prefix, int bondStartNo, int totalNoOfScriptForThisNominee,
-            string relation, string nomineeName, int totalNoOfScript, int denomination, int rowCount)
+            string relation, string nomineeName, int totalNoOfScript, int denomination, int rowCount, string bondCode, int bondScn)
         {
             List<NewApplicationBondScriptViewModel> model = new List<NewApplicationBondScriptViewModel>();
+            List<APPSCRIPT> _appscripts = new List<APPSCRIPT>();
+            var _bondinfo = _context.BONDINFOes.Find(bondCode);
             if (rowCount <= totalNoOfScript)
             {
                 scriptSerialNo = rowCount;
@@ -146,12 +155,32 @@ namespace Mvc.BondApp.Controllers
                         Relation = relation,
                         Value = denomination,
                         AmountPaid = 0,
-                        MaturityDate = DateTime.Now
+                        MaturityDate = DateTime.Now.AddYears((int)_bondinfo.DURATION)
 
+                    });
+                    _appscripts.Add(new APPSCRIPT()
+                    {
+                        BONDSL = (short)scriptSerialNo,
+                        BONDCODE = bondCode.ToString(),
+                        BONDSCN = bondScn.ToString(),
+                        BONDNO = bondStartNo.ToString(),
+                        BONDPREFIX = prefix,
+                        BONDVALUE = denomination,
+                        NOMNAME = nomineeName,
+                        MATURITYDATE = DateTime.Now.AddYears((int)_bondinfo.DURATION)
+                        //BONDSTATUS = bondStatus
                     });
                     bondStartNo++;
 
                 }
+            }
+            if (Session["appScript"] == null)
+            {
+                Session["appScript"] = _appscripts;
+            }
+            else
+            {
+                Session["appScript"] = null;
             }
 
             return Json(model, JsonRequestBehavior.AllowGet);
@@ -175,70 +204,82 @@ namespace Mvc.BondApp.Controllers
         [HttpPost]
         public ActionResult Create(FormCollection application)
         {
-            try
+            BENEFICIARY _beneficiary = new BENEFICIARY()
             {
-                BONDAPPLICATION _bondapplication = new BONDAPPLICATION()
-                {
-                    BONDCODE = application[1],
-                    BONDSCN = application[2],//bond applicaiton no===SHOULD BE USED IN MULTIPLE PLACE
-                    FILENO = application[3].AsInt(),
-                    SCNDATE = application[4].AsDateTime(),
-                    REINVDATE = application[5].AsDateTime(),
-                    RESPONDDATE = application[6].AsDateTime(),
-                    FBRCODE = application[7],//issueing branch
-                    TOTALSCRIPT = (short?)application[8].AsInt(),//total script
-                    BUYFNAME = application[9],//buyer first name
-                    BUYMNAME = application[10],//buyier middle name
-                    BUYLNAME = application[11],//buyer lastname
-                    DOB = application[12].AsDateTime(),//buyer date of birth
-                    SEX = application[13],//sex
-                    DESIG = application[14],//designation
-                    COMNAME = application[15],//organisation
-                    COMADDR = application[16],//company address
-                    ABOARDADDR = application[17],//foreign address
-                    CNTYCODE = application[18],//country code
-                    LOCALADDR = application[19],//local address
-                    LOCALDIST = application[20],//district code
-                    LOCALTHANA = application[21],//thana
-                    PASSPORTNO = application[22],//passport no
-                    ISSUEPLACE = application[23], //passport issue place
-                    PASSISSUEDATE = application[24].AsDateTime(),//passport issue date
-                    PAYMODE = application[25],//payment mode
-                    FCACNO = application[26],//fc account no
-                    FCBRCODE = application[27],//fc ac branch
-                    CURRCODE = application[28],//currency code
-                    VALUEDATE = application[29].AsDateTime(),//value date
-                    EXRATE = application[30].AsDecimal(),//currency rate
-                    AMOUNTFC = application[31].AsDecimal(),//amount in fc
-                    AMOUNTCR = application[32].AsDecimal(),// amount for credit
-                    FDDNO = application[33],//demand draft
-                    EXBANKCODE = application[34],//exbankcode or bank
-                    REMARKS = application[35],// remarks
-                    //===================================BENEFICIARY======================================
-                    //===================================OTHERS INFO======================================
-                    FNAME = application[36],//others fathersname
-                    MNAME = application[37],//others mothersname
-                };
-                //===============================BOND HOLDERS INFO========================================
-                BENEFICIARY _beneficiary = new BENEFICIARY()
-                {
-                    BONDSCN = application[2],//bond applicaiton no
-                    BENNAME = application[38],//beneficiary name
-                    BENFNAME = application[39], //beneficiary fathers name
-                    BENMNAME = application[40],//beneficiary mothers name
-                    BENDOB = application[42].AsDateTime(),//beneficiary dateofbirth
-                    BENADDR = application[41],//beneficiary address
-                };
-                //==========================BOND SCRIPT======================================================
+                //BONDSCN = application[2],//bond applicaiton no
+                BENNAME = application[38],//beneficiary name
+                BENFNAME = application[39], //beneficiary fathers name
+                BENMNAME = application[40],//beneficiary mothers name
+                BENDOB = application[42].AsDateTime(),//beneficiary dateofbirth
+                BENADDR = application[41],//beneficiary address
+            };
 
-
-
-                return RedirectToAction("Index");
-            }
-            catch
+            BONDAPPLICATION _bondapplication = new BONDAPPLICATION()
             {
-                return View();
-            }
+                BONDCODE = application[1],
+                BONDSCN = application[2],//bond applicaiton no===SHOULD BE USED IN MULTIPLE PLACE
+                FILENO = application[3].AsInt(),
+                SCNDATE = application[4].AsDateTime(),
+                REINVDATE = application[5].AsDateTime(),
+                RESPONDDATE = application[6].AsDateTime(),
+                FBRCODE = application[7],//issueing branch
+                TOTALSCRIPT = (short?)application[8].AsInt(),//total script
+                BUYFNAME = application[9],//buyer first name
+                BUYMNAME = application[10],//buyier middle name
+                BUYLNAME = application[11],//buyer lastname
+                DOB = application[12].AsDateTime(),//buyer date of birth
+                SEX = application[13],//sex
+                DESIG = application[14],//designation
+                COMNAME = application[15],//organisation
+                COMADDR = application[16],//company address
+                ABOARDADDR = application[17],//foreign address
+                CNTYCODE = application[18],//country code
+                LOCALADDR = application[19],//local address
+                LOCALDIST = application[20],//district code
+                LOCALTHANA = application[21],//thana
+                PASSPORTNO = application[22],//passport no
+                ISSUEPLACE = application[23], //passport issue place
+                PASSISSUEDATE = application[24].AsDateTime(),//passport issue date
+                PAYMODE = application[25],//payment mode
+                FCACNO = application[26],//fc account no
+                FCBRCODE = application[27],//fc ac branch
+                CURRCODE = application[28],//currency code
+                VALUEDATE = application[29].AsDateTime(),//value date
+                EXRATE = application[30].AsDecimal(),//currency rate
+                AMOUNTFC = application[31].AsDecimal(),//amount in fc
+                AMOUNTCR = application[32].AsDecimal(),// amount for credit
+                FDDNO = application[33],//demand draft
+                EXBANKCODE = application[34],//exbankcode or bank
+                REMARKS = application[35],// remarks
+                                          //===================================BENEFICIARY======================================
+                                          //===================================OTHERS INFO======================================
+                FNAME = application[36],//others fathersname
+                MNAME = application[37],//others mothersname
+                APPSCRIPTs = Session["appScript"] as List<APPSCRIPT>,
+                BENEFICIARY = _beneficiary
+               
+        };
+            //===============================BOND HOLDERS INFO========================================
+         
+            //==========================BOND SCRIPT======================================================
+            //read the session
+            //var appScript = Session["appScript"] as List<APPSCRIPT>;
+
+
+            //add and save
+            _context.BONDAPPLICATIONs.Add(_bondapplication);
+            _context.SaveChanges();
+            //_context.BENEFICIARies.Add(_beneficiary);
+            //_context.SaveChanges();
+            //_context.APPSCRIPTs.AddRange(appScript);
+            //_context.SaveChanges();
+
+            //clear the session appScript
+            Session["appScript"] = null;
+
+            return RedirectToAction("NewApplication");
+
+
         }
 
         // GET: Application/Edit/5
