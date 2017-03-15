@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ApplicationController.cs" />
+    <Compile Include="Controllers\ApplicationNewController.cs" />
     <Compile Include="Controllers\BondTypeInformationController.cs" />
     <Compile Include="Controllers\BranchInformationController.cs" />
     <Compile Include="Controllers\CountryInformationController.cs" />
@@ -642,6 +643,8 @@
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\kendo\2015.2.902\angular.min.js" />
@@ -1065,6 +1068,7 @@
     <Content Include="Scripts\kendo\2015.2.902\cultures\kendo.culture.zu.min.js" />
     <Content Include="Scripts\kendo\2015.2.902\jquery.min.js" />
     <Content Include="Scripts\kendo\2015.2.902\jszip.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.bootstrap.min.js.map" />
     <None Include="Scripts\kendo\2015.2.902\kendo.all-vsdoc.js" />
     <None Include="Scripts\kendo\2015.2.902\kendo.all.min.intellisense.js" />
     <Content Include="Scripts\kendo\2015.2.902\kendo.all.js" />
@@ -1377,6 +1381,13 @@
     <Content Include="Scripts\kendo\2015.2.902\kendo.web.min.js.map" />
     <Content Include="Scripts\kendo\2015.2.902\kendo.window.min.js.map" />
     <Content Include="Views\Shared\_newApplicationBondScript.cshtml" />
+    <Content Include="Views\Application\Create.cshtml" />
+    <Content Include="Views\Application\Delete.cshtml" />
+    <Content Include="Views\Application\Details.cshtml" />
+    <Content Include="Views\Application\Edit.cshtml" />
+    <Content Include="Views\Application\Index.cshtml" />
+    <Content Include="Views\Application\Succesfull.cshtml" />
+    <Content Include="Views\Application\EditSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -230,7 +230,7 @@
                                 @Html.LabelFor(model => model.NewApplication.District, htmlAttributes: new { @class = "control-label col-md-4" })
                                 <div class="col-md-8">
                                     @Html.DropDownListFor(m => m.NewApplication.District,
-                                new SelectList(Model.DistinfoListForView, "DISTCODE", "DISTDESC"), "===Select District===", new { @class = "form-control" })
+                                        new SelectList(Model.DistinfoListForView, "DISTCODE", "DISTDESC"), "===Select District===", new { @class = "form-control" })
                                     @Html.ValidationMessageFor(model => model.NewApplication.District, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -612,6 +612,7 @@
 </div>
 
 </div>
+
 <div class="form-group">
     <div class="col-md-offset-8 col-md-12">
         <input type="submit" value="Save" class="btn btn-lg btn-danger" />
@@ -928,17 +929,17 @@
 
                 },
                 error: function (ex) {
-                    alert("Failed to retrieve states." + ex);
+                    alert("Select Denomination, Nominee Name, Relation, Total No Of Script, Bond Start No.");
                 }
             });
 
         });
         //==============================================================================================================================
         //==========================================DROPDOWNLIST FOR ISSUING BRANCH=====================================================
-        
-        $("#NewApplication_IssueingBranch").change(function () {
 
-             $("#NewApplication_IssueingBranch").empty();
+        $("#NewApplication_IssueingBranch").focus(function () {
+
+            $("#NewApplication_IssueingBranch").empty();
 
             $.ajax({
                 type: "GET",
@@ -953,7 +954,7 @@
                     });
                 },
                 error: function (ex) {
-                    alert("Failed to retrieve branches." + ex);
+                    alert("Please Try Again." + ex);
                 }
             });
 

@@ -425,10 +425,10 @@ namespace Mvc.BondApp
                 .WithOptional(e => e.BRANCHINFO)
                 .HasForeignKey(e => e.BRCODE);
 
-            modelBuilder.Entity<BRANCHINFO>()
-                .HasMany(e => e.BONDAPPLICATIONs1)
-                .WithOptional(e => e.BRANCHINFO1)
-                .HasForeignKey(e => e.FCBRCODE);
+            //modelBuilder.Entity<BRANCHINFO>()
+            //    .HasMany(e => e.BONDAPPLICATIONs1)
+            //    .WithOptional(e => e.BRANCHINFO1)
+            //    .HasForeignKey(e => e.FCBRCODE);
 
             modelBuilder.Entity<CLAIMINFO>()
                 .Property(e => e.CLAIMNO)
@@ -661,10 +661,10 @@ namespace Mvc.BondApp
                 .WithOptional(e => e.DISTINFO)
                 .HasForeignKey(e => e.ISSUEPLACE);
 
-            modelBuilder.Entity<DISTINFO>()
-                .HasMany(e => e.BONDAPPLICATIONs1)
-                .WithOptional(e => e.DISTINFO1)
-                .HasForeignKey(e => e.LOCALDIST);
+            //modelBuilder.Entity<DISTINFO>()
+            //    .HasMany(e => e.BONDAPPLICATIONs1)
+            //    .WithOptional(e => e.DISTINFO1)
+            //    .HasForeignKey(e => e.LOCALDIST);
 
             modelBuilder.Entity<EXHOUSE_INFO>()
                 .Property(e => e.EXCODE)

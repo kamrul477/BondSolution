@@ -1,0 +1,315 @@
+﻿@model IEnumerable<Mvc.BondApp.BONDAPPLICATION>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BENEFICIARY.BENNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BONDPAYMODE.PAYDESC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BRANCHINFO.BRNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COUNTRYINFO.CNTYNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DISTINFO.DISTDESC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EXHOUSE_INFO.EXNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.STATUSINFO.STATUSDESC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.THANAINFO.THANADESC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SALEADVNO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CLIENTAPPNO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FILENO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BONDCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SCNDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BUYFNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BUYMNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BUYLNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOCALADDR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LOCALDIST)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ABOARDADDR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SEX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DESIG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COMNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.COMADDR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PASSPORTNO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PASSISSUEDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FCACNO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FCBRCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FDDNO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMOUNTFC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CURRCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EXRATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VALUEDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TOTALSCRIPT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REMARKS)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.USERID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ENTRYDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TERMINAL)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AMOUNTCR)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PAYOFF)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ISSUEDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MNAME)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BACKENTRY)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.REINVDATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.OLDFILENO)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FBRCODE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RESPONDDATE)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BENEFICIARY.BENNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BONDPAYMODE.PAYDESC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BRANCHINFO.BRNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COUNTRYINFO.CNTYNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DISTINFO.DISTDESC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EXHOUSE_INFO.EXNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.STATUSINFO.STATUSDESC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.THANAINFO.THANADESC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SALEADVNO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CLIENTAPPNO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FILENO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BONDCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SCNDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BUYFNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BUYMNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BUYLNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LOCALADDR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LOCALDIST)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ABOARDADDR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DOB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SEX)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DESIG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.COMADDR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PASSPORTNO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PASSISSUEDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FCACNO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FCBRCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FDDNO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AMOUNTFC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CURRCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EXRATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VALUEDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TOTALSCRIPT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REMARKS)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.USERID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ENTRYDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TERMINAL)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AMOUNTCR)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PAYOFF)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ISSUEDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MNAME)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BACKENTRY)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.REINVDATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.OLDFILENO)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FBRCODE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RESPONDDATE)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BONDSCN }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BONDSCN }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BONDSCN })
+        </td>
+    </tr>
+}
+
+</table>

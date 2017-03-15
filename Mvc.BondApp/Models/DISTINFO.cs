@@ -4,7 +4,6 @@ namespace Mvc.BondApp
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("BOND.DISTINFO")]
     public partial class DISTINFO
@@ -13,7 +12,7 @@ namespace Mvc.BondApp
         public DISTINFO()
         {
             BONDAPPLICATIONs = new HashSet<BONDAPPLICATION>();
-            BONDAPPLICATIONs1 = new HashSet<BONDAPPLICATION>();
+            //BONDAPPLICATIONs1 = new HashSet<BONDAPPLICATION>();
         }
 
         [Key]
@@ -34,7 +33,7 @@ namespace Mvc.BondApp
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BONDAPPLICATION> BONDAPPLICATIONs { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BONDAPPLICATION> BONDAPPLICATIONs1 { get; set; }
+        //[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        //public virtual ICollection<BONDAPPLICATION> BONDAPPLICATIONs1 { get; set; }
     }
 }

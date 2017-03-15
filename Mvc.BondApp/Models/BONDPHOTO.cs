@@ -13,7 +13,7 @@ namespace Mvc.BondApp
         [StringLength(12)]
         public string BONDSCN { get; set; }
 
-        [Column(TypeName = "long raw")]
+        //[Column(TypeName = "long raw")]
         [MaxLength(2147483647)]
         public byte[] PIC { get; set; }
 

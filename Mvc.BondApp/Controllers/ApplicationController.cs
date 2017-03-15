@@ -2,61 +2,77 @@
 using Mvc.BondApp.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
-using System.Web.WebPages;
-
 
 namespace Mvc.BondApp.Controllers
 {
     public class ApplicationController : Controller
     {
-
-        private BondModel _context = new BondModel();
+        private BondModel db = new BondModel();
         private int scriptSerialNo;
 
         // GET: Application
-        public ActionResult NewApplication()
+        public ActionResult Index()
         {
-            //add new properties to this class if required to initialize the empty form.
-            NewApplicationInitialViewModel bondInfoList = new NewApplicationInitialViewModel()
+            var bONDAPPLICATIONs = db.BONDAPPLICATIONs
+                .Include(b => b.BENEFICIARY).Include(b => b.BONDPAYMODE)
+                .Include(b => b.BRANCHINFO).Include(b => b.COUNTRYINFO)
+                .Include(b => b.DISTINFO).Include(b => b.EXHOUSE_INFO)
+                .Include(b => b.STATUSINFO).Include(b => b.THANAINFO);
+            return View(bONDAPPLICATIONs.ToList());
+        }
+        // GET: Application
+        public ActionResult Succesfull()
+        {
+
+            return View();
+        }
+
+        // GET: Application/Details/5
+        public ActionResult Details(string id)
+        {
+            if (id == null)
             {
-                BondinfoListForView = _context.BONDINFOes.ToList(),
-                CountryinfoListForView = _context.COUNTRYINFOes.ToList(),
-                DistinfoListForView = _context.DISTINFOes.ToList(),
-                BondpaymodeListForView = _context.BONDPAYMODEs.ToList()
-            };
-
-
-            return View(bondInfoList);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BONDAPPLICATION bONDAPPLICATION = db.BONDAPPLICATIONs.Find(id);
+            if (bONDAPPLICATION == null)
+            {
+                return HttpNotFound();
+            }
+            return View(bONDAPPLICATION);
         }
+        #region Helper Ajax Code
 
-        //send the bond info to the view
-        public JsonResult GetBondInfo()
-        {
-            var bondType = from bond in _context.BONDINFOes.ToList()
-                           select new BondTypeViewModel()
-                           {
-                               BONDCODE = bond.BONDCODE,
-                               BONDNAME = bond.BONDNAME
 
-                           };
-            return Json(bondType.ToList(), JsonRequestBehavior.AllowGet);
-            //DataSourceRequest request = new DataSourceRequest();
-            //return Json(bondType.ToDataSourceResult(request));
-        }
+        //public JsonResult GetBondInfo()
+        //{
+        //    var bondType = from bond in db.BONDINFOes.ToList()
+        //                   select new BondTypeViewModel()
+        //                   {
+        //                       BONDCODE = bond.BONDCODE,
+        //                       BONDNAME = bond.BONDNAME
+
+        //                   };
+        //    return Json(bondType.ToList(), JsonRequestBehavior.AllowGet);
+        //    //DataSourceRequest request = new DataSourceRequest();
+        //    //return Json(bondType.ToDataSourceResult(request));
+        //}
 
 
         public JsonResult GetCascadeDistrict()
         {
-            var district = _context.DISTINFOes;
+            var district = db.DISTINFOes;
 
             return Json(district.Select(c => new { CategoryId = c.DISTCODE, CategoryName = c.DISTDESC }), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetCascadeThana(string district)
         {
-            var thanas = _context.THANAINFOes.AsQueryable();
+            var thanas = db.THANAINFOes.AsQueryable();
 
 
             if (district != null)
@@ -64,31 +80,31 @@ namespace Mvc.BondApp.Controllers
                 thanas = thanas.Where(p => p.DISTCODE == district);
             }
 
-            return Json(thanas.Select(p => new { ThanaCode = p.DISTCODE, ThanaName = p.THANADESC }), JsonRequestBehavior.AllowGet);
+            return Json(thanas.Select(p => new { ThanaCode = p.THANACODE, ThanaName = p.THANADESC }), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetPaymentMode()
         {
-            var paymentMode = _context.BONDPAYMODEs.AsQueryable();
+            var paymentMode = db.BONDPAYMODEs.AsQueryable();
             return Json(paymentMode.Select(p => new { PAYCODE = p.PAYCODE, PAYDESC = p.PAYDESC }), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetIssuingBranch()
         {
-            var foreignBranch = _context.BRANCHINFOes.ToList().Where(p => p.BRCODE.Contains("15F"));
+            var foreignBranch = db.BRANCHINFOes.ToList().Where(p => p.BRCODE.Contains("15F"));
             return Json(foreignBranch.Select(p => new { BRCODE = p.BRCODE, BRNAME = p.BRNAME }), JsonRequestBehavior.AllowGet);
             //SUBSTR(BRCODE, 1, 3) = '15F'
         }
 
         public JsonResult GetFcBranch()
         {
-            var branches = _context.BRANCHINFOes.ToList();
+            var branches = db.BRANCHINFOes.ToList();
             return Json(branches.Select(p => new { BRCODE = p.BRCODE, BRNAME = p.BRNAME }), JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult GetCurrencyCode()
         {
-            var currencyCode = _context.CURRINFOes.ToList();
+            var currencyCode = db.CURRINFOes.ToList();
             return Json(currencyCode.Select(p => new { CURRCODE = p.CURRCODE, CURRNAME = p.CURRNAME }), JsonRequestBehavior.AllowGet);
         }
 
@@ -96,7 +112,7 @@ namespace Mvc.BondApp.Controllers
         {
             try
             {
-                var rate = _context.RATEINFOes.Find(date, currencyCode);
+                var rate = db.RATEINFOes.Find(date, currencyCode);
                 return Json(rate.RATEAMT, JsonRequestBehavior.AllowGet);
             }
             catch (Exception)
@@ -110,7 +126,7 @@ namespace Mvc.BondApp.Controllers
 
         public JsonResult GetExchangeHouseInfo(string searchText)
         {
-            var exchangeHouses = from m in _context.EXHOUSE_INFO
+            var exchangeHouses = from m in db.EXHOUSE_INFO
                                  where m.EXNAME.Contains(searchText.ToUpper())
                                  select m;
             return Json(exchangeHouses.Select(p => new { EXCODE = p.EXCODE, EXNAME = p.EXNAME }), JsonRequestBehavior.AllowGet);
@@ -118,27 +134,33 @@ namespace Mvc.BondApp.Controllers
 
         public JsonResult GetBondScriptDenoInfo(string bondTypeIndex)
         {
-            var scriptDenoInfo = _context.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
+            var scriptDenoInfo = db.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
             return Json(scriptDenoInfo.Select(p => new { BONDVALUE = p.BONDVALUE, BONDPREFIX = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ClearBlock()
+        {
+            const string message = "successfully cleared";
+            Session["appScript"] = null;
+            return Json(message, JsonRequestBehavior.AllowGet);
+
         }
 
 
         public JsonResult GetBondScriptPrefixInfo(int denominationValue, string bondTypeIndex)
         {
-            var scriptDenoInfo = _context.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
+            var scriptDenoInfo = db.SCRIPTDENOINFOes.Where(p => p.BONDCODE.Equals(bondTypeIndex));
             var scriptPrefix = scriptDenoInfo.Where(x => x.BONDVALUE.Equals(denominationValue));
             return Json(scriptPrefix.Select(p => new { BONDPREFIX = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
         }
 
         //BOND SCRIPT GENERATION CALL
-
-
         public JsonResult GetBondScriptInfo(string prefix, int bondStartNo, int totalNoOfScriptForThisNominee,
-            string relation, string nomineeName, int totalNoOfScript, int denomination, int rowCount, string bondCode, int bondScn)
+            string relation, string nomineeName, int totalNoOfScript, int denomination, int rowCount, string bondCode, string bondScn)
         {
             List<NewApplicationBondScriptViewModel> model = new List<NewApplicationBondScriptViewModel>();
             List<APPSCRIPT> _appscripts = new List<APPSCRIPT>();
-            var _bondinfo = _context.BONDINFOes.Find(bondCode);
+            var _bondinfo = db.BONDINFOes.Find(bondCode);
             if (rowCount <= totalNoOfScript)
             {
                 scriptSerialNo = rowCount;
@@ -171,159 +193,188 @@ namespace Mvc.BondApp.Controllers
                         //BONDSTATUS = bondStatus
                     });
                     bondStartNo++;
-
                 }
             }
-            if (Session["appScript"] == null)
-            {
-                Session["appScript"] = _appscripts;
-            }
-            else
-            {
-                Session["appScript"] = null;
-            }
-
+            Session["appScript"] = _appscripts;
             return Json(model, JsonRequestBehavior.AllowGet);
         }
 
 
-
-        // GET: Application/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        #endregion
 
         // GET: Application/Create
         public ActionResult Create()
         {
+            //BOND APP NO
+            ViewBag.BONDSCN = new SelectList(db.BENEFICIARies, "BONDSCN", "BENNAME");
+            //PAYMENT MODE
+            ViewBag.PAYMODE = db.BONDPAYMODEs.ToList(); //new SelectList(db.BONDPAYMODEs, "PAYCODE", "PAYDESC");
+            ViewBag.BRCODE = db.BRANCHINFOes.ToList().OrderBy(o => o.BRNAME);//new SelectList(db.BRANCHINFOes, "BRCODE", "BRNAME");
+            ViewBag.CNTYCODE = db.COUNTRYINFOes.ToList().OrderBy(o => o.CNTYNAME); ; //new SelectList(db.COUNTRYINFOes, "CNTYCODE", "CNTYNAME");
+            ViewBag.DISTRICT = db.DISTINFOes.ToList().OrderBy(o => o.DISTDESC); //new SelectList(db.DISTINFOes, "DISTCODE", "DISTDESC");
+            ViewBag.EXBANKCODE = db.EXHOUSE_INFO.ToList().OrderBy(o => o.EXNAME);//new SelectList(db.EXHOUSE_INFO, "EXCODE", "EXNAME");
+            ViewBag.STATUSCODE = db.STATUSINFOes.ToList(); //new SelectList(db.STATUSINFOes, "STATUSCODE", "STATUSDESC");
+            ViewBag.LOCALTHANA = db.THANAINFOes.ToList().OrderBy(o => o.THANADESC);//new SelectList(db.THANAINFOes, "THANACODE", "THANADESC");
+            //=========ADDEDBYME========
+            ViewBag.CURRCODE = db.CURRINFOes.ToList();//new SelectList(db.CURRINFOes, "CURRCODE", "CURRNAME");
+            ViewBag.Denomination = db.SCRIPTDENOINFOes.ToList();//new SelectList(db.SCRIPTDENOINFOes, "BONDCODE", "BONDVALUE");
+            ViewBag.BONDCODE = db.BONDINFOes.ToList();//new SelectList(db.BONDINFOes, "BONDCODE", "BONDNAME");
+            ViewBag.FBRCODE = db.BRANCHINFOes.ToList().Where(p => p.BRCODE.Contains("15F")).OrderBy(o => o.BRNAME);
+            ViewBag.FCBRCODE = db.BRANCHINFOes.Where(p => p.BANKCODE.Equals("15")).OrderBy(o => o.BRNAME);
             return View();
         }
 
         // POST: Application/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(FormCollection application)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(BONDAPPLICATION bONDAPPLICATION)
+
         {
-            BENEFICIARY _beneficiary = new BENEFICIARY()
-            {
-                //BONDSCN = application[2],//bond applicaiton no
-                BENNAME = application[38],//beneficiary name
-                BENFNAME = application[39], //beneficiary fathers name
-                BENMNAME = application[40],//beneficiary mothers name
-                BENDOB = application[42].AsDateTime(),//beneficiary dateofbirth
-                BENADDR = application[41],//beneficiary address
-            };
+            var appScripts = Session["appScript"] as List<APPSCRIPT>;
+            db.APPSCRIPTs.AddRange(appScripts);
+            db.BONDAPPLICATIONs.Add(bONDAPPLICATION);
 
-            BONDAPPLICATION _bondapplication = new BONDAPPLICATION()
-            {
-                BONDCODE = application[1],
-                BONDSCN = application[2],//bond applicaiton no===SHOULD BE USED IN MULTIPLE PLACE
-                FILENO = application[3].AsInt(),
-                SCNDATE = application[4].AsDateTime(),
-                REINVDATE = application[5].AsDateTime(),
-                RESPONDDATE = application[6].AsDateTime(),
-                FBRCODE = application[7],//issueing branch
-                TOTALSCRIPT = (short?)application[8].AsInt(),//total script
-                BUYFNAME = application[9],//buyer first name
-                BUYMNAME = application[10],//buyier middle name
-                BUYLNAME = application[11],//buyer lastname
-                DOB = application[12].AsDateTime(),//buyer date of birth
-                SEX = application[13],//sex
-                DESIG = application[14],//designation
-                COMNAME = application[15],//organisation
-                COMADDR = application[16],//company address
-                ABOARDADDR = application[17],//foreign address
-                CNTYCODE = application[18],//country code
-                LOCALADDR = application[19],//local address
-                LOCALDIST = application[20],//district code
-                LOCALTHANA = application[21],//thana
-                PASSPORTNO = application[22],//passport no
-                ISSUEPLACE = application[23], //passport issue place
-                PASSISSUEDATE = application[24].AsDateTime(),//passport issue date
-                PAYMODE = application[25],//payment mode
-                FCACNO = application[26],//fc account no
-                FCBRCODE = application[27],//fc ac branch
-                CURRCODE = application[28],//currency code
-                VALUEDATE = application[29].AsDateTime(),//value date
-                EXRATE = application[30].AsDecimal(),//currency rate
-                AMOUNTFC = application[31].AsDecimal(),//amount in fc
-                AMOUNTCR = application[32].AsDecimal(),// amount for credit
-                FDDNO = application[33],//demand draft
-                EXBANKCODE = application[34],//exbankcode or bank
-                REMARKS = application[35],// remarks
-                                          //===================================BENEFICIARY======================================
-                                          //===================================OTHERS INFO======================================
-                FNAME = application[36],//others fathersname
-                MNAME = application[37],//others mothersname
-                APPSCRIPTs = Session["appScript"] as List<APPSCRIPT>,
-                BENEFICIARY = _beneficiary
-               
-        };
-            //===============================BOND HOLDERS INFO========================================
-         
-            //==========================BOND SCRIPT======================================================
-            //read the session
-            //var appScript = Session["appScript"] as List<APPSCRIPT>;
-
-
-            //add and save
-            _context.BONDAPPLICATIONs.Add(_bondapplication);
-            _context.SaveChanges();
-            //_context.BENEFICIARies.Add(_beneficiary);
-            //_context.SaveChanges();
-            //_context.APPSCRIPTs.AddRange(appScript);
-            //_context.SaveChanges();
-
-            //clear the session appScript
+            db.SaveChanges();
             Session["appScript"] = null;
+            return RedirectToAction("Succesfull");
 
-            return RedirectToAction("NewApplication");
 
 
+        }
+
+
+
+        public ActionResult EditSearch()
+        {
+
+            return View();
         }
 
         // GET: Application/Edit/5
-        public ActionResult Edit(int id)
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var bondapplication = db.BONDAPPLICATIONs.Find(id);
+            var appscripts = db.APPSCRIPTs.Where(b => b.BONDSCN.Equals(id)).ToList();
+            bondapplication.APPSCRIPTs.AddRange(appscripts);
+
+
+            ViewBag.BONDSCN = new SelectList(db.BENEFICIARies, "BONDSCN", "BENNAME");
+            ViewBag.PAYMODE = db.BONDPAYMODEs.ToList();
+            ViewBag.BRCODE = db.BRANCHINFOes.ToList().OrderBy(o => o.BRNAME);
+            ViewBag.CNTYCODE = db.COUNTRYINFOes.ToList().OrderBy(o => o.CNTYNAME);
+            ViewBag.DISTRICT = db.DISTINFOes.ToList().OrderBy(o => o.DISTDESC);
+            ViewBag.EXBANKCODE = db.EXHOUSE_INFO.ToList().OrderBy(o => o.EXNAME);
+            ViewBag.STATUSCODE = db.STATUSINFOes.ToList();
+            ViewBag.LOCALTHANA = db.THANAINFOes.ToList().OrderBy(o => o.THANADESC);
+            //=========ADDED BY ME===============================================================
+            ViewBag.CURRCODE = db.CURRINFOes.ToList();
+            ViewBag.Denomination = db.SCRIPTDENOINFOes.ToList();
+            ViewBag.BONDCODE = db.BONDINFOes.ToList();
+            ViewBag.FBRCODE = db.BRANCHINFOes.ToList().Where(p => p.BRCODE.Contains("15F")).OrderBy(o => o.BRNAME);
+            ViewBag.FCBRCODE = db.BRANCHINFOes.Where(p => p.BANKCODE.Equals("15")).OrderBy(o => o.BRNAME);
+            return View(bondapplication);
         }
 
         // POST: Application/Edit/5
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [ValidateAntiForgeryToken]
+        public ActionResult EditSave(BONDAPPLICATION bONDAPPLICATION)
         {
-            try
+            if (ModelState.IsValid)
             {
-                // TODO: Add update logic here
+                /*var appScripts;*/ /*= Session["appScript"] != null ? Session["appScript"] as List<APPSCRIPT> : db.APPSCRIPTs.Where(b => b.BONDSCN.Equals(bONDAPPLICATION.BONDSCN)) as List<APPSCRIPT>;*/
+                List<APPSCRIPT> appscripts = new List<APPSCRIPT>();
 
-                return RedirectToAction("Index");
+                if (Session["appScript"] != null)
+                {
+                    appscripts = Session["appScript"] as List<APPSCRIPT>;
+                }
+                else
+                {
+                    appscripts = db.APPSCRIPTs.Where(b => b.BONDSCN == bONDAPPLICATION.BONDSCN).ToList();
+                }
+                db.APPSCRIPTs.AddRange(appscripts);
+                db.BONDAPPLICATIONs.Add(bONDAPPLICATION);
+
+                db.Entry(bONDAPPLICATION).State = EntityState.Modified;
+                db.SaveChanges();
+                Session["appScript"] = null;
             }
-            catch
-            {
-                return View();
-            }
+
+            return View();
         }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "BONDSCN,SALEADVNO,CLIENTAPPNO,FILENO,BRCODE,BONDCODE,SCNDATE,PAYMODE," +
+        //                                           "BUYFNAME,BUYMNAME,BUYLNAME,LOCALADDR,LOCALTHANA,LOCALDIST,ABOARDADDR," +
+        //                                           "CNTYCODE,DOB,SEX,DESIG,COMNAME,COMADDR,PASSPORTNO,PASSISSUEDATE," +
+        //                                           "ISSUEPLACE,FCACNO,FCBRCODE,FDDNO,EXBANKCODE,AMOUNTFC,CURRCODE,EXRATE," +
+        //                                           "VALUEDATE,TOTALSCRIPT,STATUSCODE,REMARKS,USERID,ENTRYDATE,TERMINAL,AMOUNTCR," +
+        //                                           "PAYOFF,ISSUEDATE,FNAME,MNAME,BACKENTRY,REINVDATE,OLDFILENO,FBRCODE," +
+        //                                           "RESPONDDATE,BENEFICIARY.BENNAME,BENEFICIARY.BENFNAME,BENEFICIARY.BENMNAME,BENEFICIARY.BENADDR,BENEFICIARY.BENDOB")] BONDAPPLICATION bONDAPPLICATION)
+
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.BONDAPPLICATIONs.Add(bONDAPPLICATION);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.BONDCODE = new SelectList(db.BONDINFOes, "BONDCODE", "BONDNAME", bONDAPPLICATION.BONDCODE);
+        //    ViewBag.BONDSCN = new SelectList(db.BENEFICIARies, "BONDSCN", "BENNAME", bONDAPPLICATION.BONDSCN);
+        //    ViewBag.PAYMODE = new SelectList(db.BONDPAYMODEs, "PAYCODE", "PAYDESC", bONDAPPLICATION.PAYMODE);
+        //    ViewBag.BRCODE = new SelectList(db.BRANCHINFOes, "BRCODE", "BRNAME", bONDAPPLICATION.BRCODE);
+        //    ViewBag.CNTYCODE = new SelectList(db.COUNTRYINFOes, "CNTYCODE", "CNTYNAME", bONDAPPLICATION.CNTYCODE);
+        //    ViewBag.ISSUEPLACE = new SelectList(db.DISTINFOes, "DISTCODE", "DISTDESC", bONDAPPLICATION.ISSUEPLACE);
+        //    ViewBag.EXBANKCODE = new SelectList(db.EXHOUSE_INFO, "EXCODE", "EXNAME", bONDAPPLICATION.EXBANKCODE);
+        //    ViewBag.STATUSCODE = new SelectList(db.STATUSINFOes, "STATUSCODE", "STATUSDESC", bONDAPPLICATION.STATUSCODE);
+        //    ViewBag.LOCALTHANA = new SelectList(db.THANAINFOes, "THANACODE", "THANADESC", bONDAPPLICATION.LOCALTHANA);
+        //    return View(bONDAPPLICATION);
+        //}
 
         // GET: Application/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(string id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            BONDAPPLICATION bONDAPPLICATION = db.BONDAPPLICATIONs.Find(id);
+            if (bONDAPPLICATION == null)
+            {
+                return HttpNotFound();
+            }
+            return View(bONDAPPLICATION);
         }
 
         // POST: Application/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
         {
-            try
-            {
-                // TODO: Add delete logic here
+            BONDAPPLICATION bONDAPPLICATION = db.BONDAPPLICATIONs.Find(id);
+            db.BONDAPPLICATIONs.Remove(bONDAPPLICATION);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
-                return RedirectToAction("Index");
-            }
-            catch
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
             {
-                return View();
+                db.Dispose();
             }
+            base.Dispose(disposing);
         }
     }
 }

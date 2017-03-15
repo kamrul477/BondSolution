@@ -15,7 +15,7 @@ namespace templateMvc
         public int TotalScript { get; set; }
 
         //dont know where it come from
-        public int BondAppNo { get; set; }
+        public string BondAppNo { get; set; }
 
         public string IssueingBranch { get; set; }
 
