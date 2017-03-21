@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = "StatusChangePromped";
+}
+
+<div class="h1 text-center">Bond Status Change</div>
+
+
+@using (Html.BeginForm("StatusChangePromped", "Application", FormMethod.Get, htmlAttributes: new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-info">
+        <div class="panel-heading text-center">
+            @Ajax.ActionLink("Application No Wise", "ApplicationNoWise", "Application", new AjaxOptions()
+       {
+           UpdateTargetId = "statusViewPlaceHolder",
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET"
+       }, htmlAttributes: new { @class = "btn btn-primary" })
+
+            @Ajax.ActionLink("Bond No Wise", "BondNoWise", "Application", new AjaxOptions()
+       {
+           UpdateTargetId = "statusViewPlaceHolder",
+           InsertionMode = InsertionMode.Replace,
+           HttpMethod = "GET"
+       }, htmlAttributes: new { @class = "btn btn-primary" })
+        </div>
+        <div class="panel-body text-center">
+            <div class="col-md-12">
+                <div id="statusViewPlaceHolder"></div>
+            </div>
+            
+        </div>
+    </div>
+
+
+
+
+}
+

@@ -1,0 +1,84 @@
+﻿@model Mvc.BondApp.BONDAPPLICATION
+
+
+<div id="statusViewPlaceHolder col-md-12">
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Label("Bond App No", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.BONDSCN, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Bond app no" } })
+                @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Application Name", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.BUYFNAME, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Application Date", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.SCNDATE, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+                @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Current Status", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.STATUSCODE, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+                @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Local Address", htmlAttributes: new { @class = "control-label col-md-4" })
+            <div class="col-md-8">
+                @Html.EditorFor(model => model.LOCALADDR, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+                @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+ 
+
+      <div class="col-md-6">
+          <div class="form-group">
+              @Html.Label("Date Of Birth", htmlAttributes: new { @class = "control-label col-md-4" })
+              <div class="col-md-8">
+                  @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+                  @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+              </div>
+          </div>
+          <div class="form-group">
+              @Html.Label("Passport", htmlAttributes: new { @class = "control-label col-md-4" })
+              <div class="col-md-8">
+                  @Html.EditorFor(model => model.PASSPORTNO, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+                  @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+              </div>
+          </div>
+          <div class="form-group">
+              @Html.Label("Issue Date", htmlAttributes: new { @class = "control-label col-md-4" })
+              <div class="col-md-8">
+                  @Html.EditorFor(model => model.PASSISSUEDATE, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+                  @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+              </div>
+          </div>
+          <div class="form-group">
+              @Html.Label("Issue Place", htmlAttributes: new { @class = "control-label col-md-4" })
+              <div class="col-md-8">
+                  @Html.EditorFor(model => model.ISSUEPLACE, new { htmlAttributes = new { @class = "form-control col-md-4", required = "Required", @placeholder = "Buyer First Name" } })
+                  @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+              </div>
+          </div>
+          <div class="form-group">
+              @Html.Label("Change Status", htmlAttributes: new { @class = "control-label col-md-4" })
+              <div class="col-md-8">
+                  @Html.DropDownListFor(m => m.STATUSCODE,
+                new SelectList(ViewBag.Status, "STATUSCODE", "STATUSDESC"), "===Select Country====", new { @class = "form-control" })
+                  @Html.ValidationMessageFor(model => model.BUYFNAME, "", new { @class = "text-danger" })
+              </div>
+          </div>
+    </div>
+  
+
+
+</div>

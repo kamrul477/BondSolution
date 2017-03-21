@@ -202,6 +202,7 @@ namespace Mvc.BondApp.Controllers
 
         #endregion
 
+        #region CREATE OPERATION AREA
         // GET: Application/Create
         public ActionResult Create()
         {
@@ -224,9 +225,7 @@ namespace Mvc.BondApp.Controllers
             return View();
         }
 
-        // POST: Application/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(BONDAPPLICATION bONDAPPLICATION)
@@ -243,16 +242,9 @@ namespace Mvc.BondApp.Controllers
 
 
         }
+        #endregion
 
-
-
-        public ActionResult EditSearch()
-        {
-
-            return View();
-        }
-
-        // GET: Application/Edit/5
+        #region EDIT OPERATION AREA
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(string id)
@@ -262,8 +254,8 @@ namespace Mvc.BondApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var bondapplication = db.BONDAPPLICATIONs.Find(id);
-            var appscripts = db.APPSCRIPTs.Where(b => b.BONDSCN.Equals(id)).ToList();
-            bondapplication.APPSCRIPTs.AddRange(appscripts);
+            var appscripts = db.APPSCRIPTs.Where(b => b.BONDSCN.Equals(id)).OrderBy(b => b.BONDSL).ToList();
+            bondapplication.APPSCRIPTs = appscripts;
 
 
             ViewBag.BONDSCN = new SelectList(db.BENEFICIARies, "BONDSCN", "BENNAME");
@@ -301,11 +293,11 @@ namespace Mvc.BondApp.Controllers
                 }
                 else
                 {
-                    appscripts = db.APPSCRIPTs.Where(b => b.BONDSCN == bONDAPPLICATION.BONDSCN).ToList();
+                    // appscripts = db.APPSCRIPTs.Where(b => b.BONDSCN == bONDAPPLICATION.BONDSCN).ToList();
                 }
-                db.APPSCRIPTs.AddRange(appscripts);
+                //db.APPSCRIPTs.AddRange(appscripts);
                 db.BONDAPPLICATIONs.Add(bONDAPPLICATION);
-
+                db.Entry(bONDAPPLICATION.BENEFICIARY).State = EntityState.Modified;
                 db.Entry(bONDAPPLICATION).State = EntityState.Modified;
                 db.SaveChanges();
                 Session["appScript"] = null;
@@ -313,34 +305,41 @@ namespace Mvc.BondApp.Controllers
 
             return View();
         }
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "BONDSCN,SALEADVNO,CLIENTAPPNO,FILENO,BRCODE,BONDCODE,SCNDATE,PAYMODE," +
-        //                                           "BUYFNAME,BUYMNAME,BUYLNAME,LOCALADDR,LOCALTHANA,LOCALDIST,ABOARDADDR," +
-        //                                           "CNTYCODE,DOB,SEX,DESIG,COMNAME,COMADDR,PASSPORTNO,PASSISSUEDATE," +
-        //                                           "ISSUEPLACE,FCACNO,FCBRCODE,FDDNO,EXBANKCODE,AMOUNTFC,CURRCODE,EXRATE," +
-        //                                           "VALUEDATE,TOTALSCRIPT,STATUSCODE,REMARKS,USERID,ENTRYDATE,TERMINAL,AMOUNTCR," +
-        //                                           "PAYOFF,ISSUEDATE,FNAME,MNAME,BACKENTRY,REINVDATE,OLDFILENO,FBRCODE," +
-        //                                           "RESPONDDATE,BENEFICIARY.BENNAME,BENEFICIARY.BENFNAME,BENEFICIARY.BENMNAME,BENEFICIARY.BENADDR,BENEFICIARY.BENDOB")] BONDAPPLICATION bONDAPPLICATION)
 
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.BONDAPPLICATIONs.Add(bONDAPPLICATION);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-        //    ViewBag.BONDCODE = new SelectList(db.BONDINFOes, "BONDCODE", "BONDNAME", bONDAPPLICATION.BONDCODE);
-        //    ViewBag.BONDSCN = new SelectList(db.BENEFICIARies, "BONDSCN", "BENNAME", bONDAPPLICATION.BONDSCN);
-        //    ViewBag.PAYMODE = new SelectList(db.BONDPAYMODEs, "PAYCODE", "PAYDESC", bONDAPPLICATION.PAYMODE);
-        //    ViewBag.BRCODE = new SelectList(db.BRANCHINFOes, "BRCODE", "BRNAME", bONDAPPLICATION.BRCODE);
-        //    ViewBag.CNTYCODE = new SelectList(db.COUNTRYINFOes, "CNTYCODE", "CNTYNAME", bONDAPPLICATION.CNTYCODE);
-        //    ViewBag.ISSUEPLACE = new SelectList(db.DISTINFOes, "DISTCODE", "DISTDESC", bONDAPPLICATION.ISSUEPLACE);
-        //    ViewBag.EXBANKCODE = new SelectList(db.EXHOUSE_INFO, "EXCODE", "EXNAME", bONDAPPLICATION.EXBANKCODE);
-        //    ViewBag.STATUSCODE = new SelectList(db.STATUSINFOes, "STATUSCODE", "STATUSDESC", bONDAPPLICATION.STATUSCODE);
-        //    ViewBag.LOCALTHANA = new SelectList(db.THANAINFOes, "THANACODE", "THANADESC", bONDAPPLICATION.LOCALTHANA);
-        //    return View(bONDAPPLICATION);
-        //}
+        public ActionResult EditSearch()
+        {
+
+            return View();
+        }
+        #endregion
+
+
+        #region STATUS CHANGE AREA
+
+        public ActionResult StatusChangePromped()
+        {
+
+            return View();
+        }
+        public PartialViewResult ApplicationNoWise()
+        {
+            ViewBag.Status = db.STATUSINFOes.ToList();
+            return PartialView("_applicationNoWise");
+        }
+        public PartialViewResult BondNoWise()
+        {
+            return PartialView("_bondNoWise");
+        }
+        #endregion
+
+
+
+
+
+
+
+
+
 
         // GET: Application/Delete/5
         public ActionResult Delete(string id)
