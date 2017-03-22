@@ -45,7 +45,8 @@ namespace Mvc.BondApp.Controllers
             }
             return View(bONDAPPLICATION);
         }
-        #region Helper Ajax Code
+
+        #region HELPER AJAX CODE
 
 
         //public JsonResult GetBondInfo()
@@ -313,7 +314,6 @@ namespace Mvc.BondApp.Controllers
         }
         #endregion
 
-
         #region STATUS CHANGE AREA
 
         public ActionResult StatusChangePromped()
@@ -321,14 +321,43 @@ namespace Mvc.BondApp.Controllers
 
             return View();
         }
-        public PartialViewResult ApplicationNoWise()
+        public PartialViewResult ApplicationNoWise(string applicationNo)
         {
-            ViewBag.Status = db.STATUSINFOes.ToList();
-            return PartialView("_applicationNoWise");
+            var app = db.BONDAPPLICATIONs.Find(applicationNo);
+            string[] index = { "02", "03", "06", "07", "09" };
+            var list = index.Select(item => db.STATUSINFOes.Single(s => s.STATUSCODE.Equals(item))).ToList();
+
+            ViewBag.Status = list;
+            if (app == null)
+            {
+
+                return PartialView("_notFound");
+            }
+            return PartialView("_applicationNoWise", app);
         }
         public PartialViewResult BondNoWise()
         {
             return PartialView("_bondNoWise");
+        }
+        public PartialViewResult ApplicationNoWiseSearchBox()
+        {
+            return PartialView("_applicationNoWiseSearchBox");
+        }
+        public PartialViewResult BondNoWiseSearchBox()
+        {
+            return PartialView("_bondNoWiseSearchBox");
+        }
+
+        public JsonResult GetStatus(int statusCode)
+        {
+            var status = db.STATUSINFOes.Find(statusCode.ToString()).STATUSDESC;
+            return Json(status, JsonRequestBehavior.AllowGet);
+
+        }
+        public JsonResult GetPlace(int issuePlace)
+        {
+            var place = db.DISTINFOes.Find(issuePlace.ToString()).DISTDESC;
+            return Json(place, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
