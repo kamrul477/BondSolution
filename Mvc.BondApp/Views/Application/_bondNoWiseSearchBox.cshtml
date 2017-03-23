@@ -1,0 +1,98 @@
+﻿@using Share.Bonnet.AjaxDropDownList;
+
+<div id="fieldDiv">
+    @using (Ajax.BeginForm("BondNoWise", "Application",
+                                                                               new AjaxOptions
+                                                                               {
+                                                                                   HttpMethod = "POST",
+                                                                                   UpdateTargetId = "fieldDiv"
+                                                                               }, htmlAttributes: new { @class = "form-horizontal" }))
+    {
+
+       
+            <div class="form-group">
+                @Html.Label("Bond Type", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    @Html.DropDownList("BondCode",
+                        new SelectList(ViewBag.BONDCODE, "BONDCODE", "BONDNAME"), "====Select Bond Type====", new { @class = "form-control", required = "Required" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Bond Prefix", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    @Html.DropDownList("Prefix",new SelectList(String.Empty, "PrefixCode", "PrefixName"), new { @class = "form-control"})
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Bond No", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-6">
+                    @Html.Editor("bondNo", new { htmlAttributes = new { @class = "form-control col-md-4", @placeholder = "Relation With Nominee" } })
+                </div>
+            </div>
+        
+
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                Search Applicaiton
+            </button>
+
+        </div>
+    }
+
+
+
+
+
+</div>
+@*new SelectList(ViewBag.Prefix, "BONDCODE", "BONDNAME"), "====Select Bond Type===="*@
+
+
+<script>
+    //==================================GETTING THE DENOMINATION INFO IN FIELD PREFIX BASED ON BONDTYPE SELECTION VALUE===========
+        $("#BondCode").change(function () {
+        $("#Prefix").empty();
+
+            $.ajax({
+                type: "GET",
+                @*//url: '@Url.Action("GetBondScriptDenoInfo")',*@
+                url:"/Application/GetPrefix",
+                dataType: "json",
+                data: { bondCode: $("#BondCode").val() },
+                success: function (prefixes) {
+                    $.each(prefixes, function (i, item) {
+                        $("#Prefix").append("<option value=\"" + item.PrefixCode + "\">" + item.PrefixName + "</option>");
+                    });
+                },
+                error: function (ex) {
+                    alert("Failed to retrieve states." + ex);
+                }
+            });
+
+        });
+    //===========================GETTING THE EXHOUSE INFO IN FIELD EXHOUSE AUTOCOMPLETE==========================================
+    $("#bondNo").autocomplete({
+        source: function (request, response) {
+            $.ajax({
+                type: "GET",
+                url: '@Url.Action("GetBondNo")',
+                dataType: "json",
+                data: {
+                    searchText: request.term,
+                    bondCode: $("#BondCode").val(),
+                    prefix: $("#Prefix").val()
+                },
+                success: function (data) {
+                    response($.map(data, function (item) {
+                            return {
+                                label: item.bond,
+                                value: item.bond
+                            }
+                        })
+                    );
+                }
+            });
+        }
+    });
+    //========================================================================================================================
+</script>

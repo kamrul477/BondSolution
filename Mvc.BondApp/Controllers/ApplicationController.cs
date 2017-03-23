@@ -330,14 +330,14 @@ namespace Mvc.BondApp.Controllers
             ViewBag.Status = list;
             if (app == null)
             {
-
                 return PartialView("_notFound");
             }
             return PartialView("_applicationNoWise", app);
         }
         public PartialViewResult BondNoWise()
         {
-            return PartialView("_bondNoWise");
+            ViewBag.BONDCODE = db.BONDINFOes.ToList();
+            return PartialView("_bondNoWiseSearchBox");
         }
         public PartialViewResult ApplicationNoWiseSearchBox()
         {
@@ -345,7 +345,7 @@ namespace Mvc.BondApp.Controllers
         }
         public PartialViewResult BondNoWiseSearchBox()
         {
-            return PartialView("_bondNoWiseSearchBox");
+            return PartialView("_bondNoWise");
         }
 
         public JsonResult GetStatus(int statusCode)
@@ -359,6 +359,23 @@ namespace Mvc.BondApp.Controllers
             var place = db.DISTINFOes.Find(issuePlace.ToString()).DISTDESC;
             return Json(place, JsonRequestBehavior.AllowGet);
         }
+        public JsonResult GetPrefix(string bondCode)
+        {
+            var prefixes = db.SCRIPTDENOINFOes.Where(p => p.BONDCODE == bondCode);
+            return Json(prefixes.Select(p => new { PrefixCode = p.BONDPREFIX, PrefixName = p.BONDPREFIX }), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetBondNo(string searchText, string bondCode, string prefix)
+        {
+            //var bonds = from item in db.APPSCRIPTs
+            //    where item.BONDCODE == bondCode && item.BONDPREFIX == prefix && item.BONDNO == searchText
+            //    select item;
+            var firstSearch = db.APPSCRIPTs.Where(p => p.BONDCODE == bondCode).ToList();
+            var secondSort = firstSearch.Where(p => p.BONDPREFIX == prefix).ToList();
+            var thirdSort = secondSort.Where(p => p.BONDNO.StartsWith(searchText));
+                
+            return Json(thirdSort.Select(p=>new {bond = p.BONDNO }), JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
 

@@ -1390,10 +1390,11 @@
     <Content Include="Views\Application\EditSearch.cshtml" />
     <Content Include="Views\Application\EditSave.cshtml" />
     <Content Include="Views\Application\StatusChangePromped.cshtml" />
-    <Content Include="Views\Shared\_applicationNoWise.cshtml" />
-    <Content Include="Views\Shared\_bondNoWise.cshtml" />
+    <Content Include="Views\Application\_applicationNoWise.cshtml" />
+    <Content Include="Views\Application\_bondNoWise.cshtml" />
     <Content Include="Views\Application\_applicationNoWiseSearchBox.cshtml" />
     <Content Include="Views\Application\_notFound.cshtml" />
+    <Content Include="Views\Application\_bondNoWiseSearchBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
