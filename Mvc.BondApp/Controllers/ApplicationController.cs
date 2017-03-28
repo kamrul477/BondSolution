@@ -315,11 +315,15 @@ namespace Mvc.BondApp.Controllers
         #endregion
 
         #region STATUS CHANGE AREA
-
+        //EXECUTION TREE StatusChangePromped => ApplicationNoWiseSearchBox => ApplicationNoWise =>
+        //EXECUTION TREE StatusChangePromped => BondNoWiseSearchBox => BondNoWise =>
         public ActionResult StatusChangePromped()
         {
-
             return View();
+        }
+        public PartialViewResult ApplicationNoWiseSearchBox()
+        {
+            return PartialView("_applicationNoWiseSearchBox");
         }
         public PartialViewResult ApplicationNoWise(string applicationNo)
         {
@@ -339,15 +343,10 @@ namespace Mvc.BondApp.Controllers
             ViewBag.BONDCODE = db.BONDINFOes.ToList();
             return PartialView("_bondNoWiseSearchBox");
         }
-        public PartialViewResult ApplicationNoWiseSearchBox()
-        {
-            return PartialView("_applicationNoWiseSearchBox");
-        }
         public PartialViewResult BondNoWiseSearchBox()
         {
             return PartialView("_bondNoWise");
         }
-
         public JsonResult GetStatus(int statusCode)
         {
             var status = db.STATUSINFOes.Find(statusCode.ToString()).STATUSDESC;
@@ -369,11 +368,14 @@ namespace Mvc.BondApp.Controllers
             //var bonds = from item in db.APPSCRIPTs
             //    where item.BONDCODE == bondCode && item.BONDPREFIX == prefix && item.BONDNO == searchText
             //    select item;
-            var firstSearch = db.APPSCRIPTs.Where(p => p.BONDCODE == bondCode).ToList();
-            var secondSort = firstSearch.Where(p => p.BONDPREFIX == prefix).ToList();
-            var thirdSort = secondSort.Where(p => p.BONDNO.StartsWith(searchText));
-                
-            return Json(thirdSort.Select(p=>new {bond = p.BONDNO }), JsonRequestBehavior.AllowGet);
+            var firstSearch = db.APPSCRIPTs.Where(p => p.BONDCODE == bondCode).ToList()
+                                           .Where(p => p.BONDPREFIX == prefix).ToList()
+                                           .Where(p => p.BONDNO.StartsWith(searchText))
+                                           .OrderBy(o => o.BONDNO);
+            //var secondSort = firstSearch.Where(p => p.BONDPREFIX == prefix).ToList();
+            //var thirdSort = secondSort.Where(p => p.BONDNO.StartsWith(searchText)).OrderBy(o=>o.BONDNO);
+
+            return Json(firstSearch.Select(p => new { bond = p.BONDNO }), JsonRequestBehavior.AllowGet);
         }
 
         #endregion
