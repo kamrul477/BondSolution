@@ -4,74 +4,64 @@
 }
 
 <div class="h1 text-center">Bond Status Change</div>
-
-
-
-    <div class="panel panel-info">
-        <div class="panel-heading text-center">
-            @Ajax.ActionLink("Application No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        @Ajax.ActionLink("Application No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
        {
            UpdateTargetId = "statusViewPlaceHolder",
            InsertionMode = InsertionMode.Replace,
            HttpMethod = "GET"
        }, htmlAttributes: new { @class = "btn btn-primary" })
 
-            @Ajax.ActionLink("Bond No Wise", "BondNoWise", "Application", new AjaxOptions()
+        @Ajax.ActionLink("Bond No Wise", "BondNoWiseSearchBox", "Application", new AjaxOptions()
        {
            UpdateTargetId = "statusViewPlaceHolder",
            InsertionMode = InsertionMode.Replace,
            HttpMethod = "GET"
        }, htmlAttributes: new { @class = "btn btn-primary" })
-        </div>
-        <div class="panel-body text-center">
-            <div class="col-md-12">
-                <div id="statusViewPlaceHolder"></div>
-            </div>
-            
-        </div>
     </div>
+    <div class="panel-body text-center">
+        <div class="col-md-12">
+            <div id="statusViewPlaceHolder"></div>
+        </div>
 
-   
+    </div>
+</div>
+
+
 
 
 
 <script>
-    //=============================APPLICATION WISE====================================
+    //===================================================APPLICATION WISE===========================================================
 
-        $("#LOCALDIST").change(function () {
+    $("#LOCALDIST").change(function () {
 
-            $("#LOCALTHANA").empty();
-            var url = '/Application/GetCascadeThana';
-            $.ajax({
-                type: 'GET',
-                //url: '@Url.Action("GetCascadeThana","Application")',
-                url:url,
-                dataType: "json",
-                data: { district: $("#LOCALDIST").val() },
-                success: function (thanas) {
+        $("#LOCALTHANA").empty();
+        var url = '/Application/GetCascadeThana';
+        $.ajax({
+            type: 'GET',
+            //url: '@Url.Action("GetCascadeThana","Application")',
+            url: url,
+            dataType: "json",
+            data: { district: $("#LOCALDIST").val() },
+            success: function (thanas) {
 
-                    // states contains the JSON formatted list
+                // states contains the JSON formatted list
+                // of states passed from the controller
 
-                    // of states passed from the controller
+                $.each(thanas, function (i, thana) {
 
-                    $.each(thanas, function (i, thana) {
+                    $("#LOCALTHANA").append("<option value=\"" + thana.ThanaCode + "\">" + thana.ThanaName + "</option>");
+                });
+            },
 
-                        $("#LOCALTHANA").append("<option value=\"" + thana.ThanaCode + "\">" + thana.ThanaName + "</option>");
-
-                    });
-
-                },
-
-                error: function (ex) {
-
-                    alert("Failed to retrieve thana." + ex);
-
-                }
-
-            });
-
-            return false;
-
+            error: function (ex) {
+                alert("Failed to retrieve thana." + ex);
+            }
         });
-        //==================================================================================================================================
+
+        return false;
+    });
+    //==================================================================================================================================
 </script>

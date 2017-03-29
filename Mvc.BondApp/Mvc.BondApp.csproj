@@ -197,13 +197,16 @@
     <Compile Include="Models\TRANSCHD.cs" />
     <Compile Include="Models\TRANSMST.cs" />
     <Compile Include="Models\USERINFO.cs" />
+    <Compile Include="ViewModels\ApplicationNoWiseViewModel.cs" />
     <Compile Include="ViewModels\BankInfoViewModel.cs" />
+    <Compile Include="ViewModels\BondNoWiseViewModel.cs" />
     <Compile Include="ViewModels\BondTypeViewModel.cs" />
     <Compile Include="ViewModels\CurrencyRateViewModel.cs" />
     <Compile Include="ViewModels\FcAccountInfoViewModel.cs" />
     <Compile Include="ViewModels\NewApplication.cs" />
     <Compile Include="ViewModels\NewApplicationBondScriptViewModel.cs" />
     <Compile Include="ViewModels\NewApplicationInitialViewModel.cs" />
+    <Compile Include="ViewModels\ReportSortViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -1386,7 +1389,7 @@
     <Content Include="Views\Application\Details.cshtml" />
     <Content Include="Views\Application\Edit.cshtml" />
     <Content Include="Views\Application\Index.cshtml" />
-    <Content Include="Views\Application\Succesfull.cshtml" />
+    <Content Include="Views\Application\Successfull.cshtml" />
     <Content Include="Views\Application\EditSearch.cshtml" />
     <Content Include="Views\Application\EditSave.cshtml" />
     <Content Include="Views\Application\StatusChangePromped.cshtml" />
@@ -1395,6 +1398,7 @@
     <Content Include="Views\Application\_applicationNoWiseSearchBox.cshtml" />
     <Content Include="Views\Application\_notFound.cshtml" />
     <Content Include="Views\Application\_bondNoWiseSearchBox.cshtml" />
+    <Content Include="Views\Application\ReportPromped.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

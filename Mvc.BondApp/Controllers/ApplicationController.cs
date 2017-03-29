@@ -338,19 +338,62 @@ namespace Mvc.BondApp.Controllers
             }
             return PartialView("_applicationNoWise", app);
         }
-        public PartialViewResult BondNoWise()
+
+        [HttpPost]
+        public ActionResult ApplicationNoWiseSave(BONDAPPLICATION model)
+        {
+            var application = db.BONDAPPLICATIONs.SingleOrDefault(o => o.BONDSCN == model.BONDSCN);
+            if (application != null)
+            {
+                var singleOrDefault = db.STATUSINFOes.SingleOrDefault(o => o.STATUSCODE.Equals(model.STATUSCODE));
+                if (singleOrDefault != null)
+                    application.STATUSCODE = singleOrDefault.STATUSCODE;
+            }
+            db.Entry(application).State = EntityState.Modified;
+            db.SaveChanges();
+            return View("Successfull");
+        }
+        public PartialViewResult BondNoWise(string BondCode, string prefix, string bondNo)
+        {
+            var script = db.APPSCRIPTs.SingleOrDefault(o => o.BONDNO == bondNo);
+            var application = db.BONDAPPLICATIONs.Find(script.BONDSCN);
+            var model = new BondNoWiseViewModel()
+            {
+                BondType = db.BONDINFOes.Find(BondCode).BONDNAME,
+                BondNo = bondNo,
+                Prefix = prefix,
+                BondHolder = application.BUYFNAME + " " + application.BUYMNAME + " " + application.BUYLNAME,
+                ApplicationDate = application.SCNDATE,
+                CurrentStatus = db.STATUSINFOes.Single(o => o.STATUSCODE == script.BONDSTATUS).STATUSDESC,
+                AppNo = application.BONDSCN,
+                LocalAddress = application.LOCALADDR,
+                ForeignAddress = application.ABOARDADDR,
+                DateOfBirth = application.DOB,
+                PassportNo = application.PASSPORTNO,
+                IssueDate = application.PASSISSUEDATE
+            };
+            ViewBag.BondNoWiseStatus = db.STATUSINFOes.Where(o => o.STATUSCODE != application.STATUSCODE).ToList();
+            return PartialView("_bondNoWise", model);
+        }
+        public PartialViewResult BondNoWiseSearchBox()
         {
             ViewBag.BONDCODE = db.BONDINFOes.ToList();
             return PartialView("_bondNoWiseSearchBox");
         }
-        public PartialViewResult BondNoWiseSearchBox()
+
+        public ActionResult BondNoWiseSave(BondNoWiseViewModel model)
         {
-            return PartialView("_bondNoWise");
+            var script = db.APPSCRIPTs.SingleOrDefault(s => s.BONDNO == model.BondNo);
+            if (script != null) script.BONDSTATUS = model.ChangeStatus;
+            db.Entry(script).State = EntityState.Modified;
+            db.SaveChanges();
+            return View("Successfull");
         }
-        public JsonResult GetStatus(int statusCode)
+        public JsonResult GetStatus(string appNo)
         {
-            var status = db.STATUSINFOes.Find(statusCode.ToString()).STATUSDESC;
-            return Json(status, JsonRequestBehavior.AllowGet);
+            var application = db.BONDAPPLICATIONs.SingleOrDefault(o => o.BONDSCN.Equals(appNo)).STATUSCODE;
+            var statusDes = db.STATUSINFOes.Single(o => o.STATUSCODE == application).STATUSDESC;
+            return Json(statusDes, JsonRequestBehavior.AllowGet);
 
         }
         public JsonResult GetPlace(int issuePlace)
@@ -377,6 +420,18 @@ namespace Mvc.BondApp.Controllers
 
             return Json(firstSearch.Select(p => new { bond = p.BONDNO }), JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region REPORTING AREA
+        public ActionResult ReportPromped()
+        {
+            return View();
+        }
+
+
+
+
 
         #endregion
 

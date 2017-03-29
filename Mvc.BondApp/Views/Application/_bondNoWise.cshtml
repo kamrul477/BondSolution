@@ -1,6 +1,151 @@
-﻿@model Mvc.BondApp.BONDAPPLICATION
+﻿@model Mvc.BondApp.ViewModels.BondNoWiseViewModel
+
+@using (Html.BeginForm("BondNoWiseSave", "Application", FormMethod.Post, htmlAttributes: new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    <div id="statusViewPlaceHolder col-md-12">
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("App No", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.AppNo, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly", @placeholder = "Bond app no" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Bond Type", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.BondType, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly", @placeholder = "Bond app no" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Prefix", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Bond No", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.BondNo, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Bond Holder", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.BondHolder, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Application Date", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.ApplicationDate, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Current Status", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.CurrentStatus, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+
+                </div>
+            </div>
+
+        </div>
 
 
-<div id="statusViewPlaceHolder">
-    
-</div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Label("Local Address", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.LocalAddress, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Foreign Address", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.ForeignAddress, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Date Of Birth", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.DateOfBirth, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Passport", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.PassportNo, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Issue Date", htmlAttributes: new { @class = "control-label col-md-4" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.IssueDate, new { htmlAttributes = new { @class = "form-control col-md-4", @readonly = "readonly" } })
+                </div>
+            </div>
+            <div class="form-group">
+                    @Html.Label("Change Status", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.DropDownListFor(m => m.ChangeStatus,
+                            new SelectList(ViewBag.BondNoWiseStatus, "STATUSCODE", "STATUSDESC"), "===Select Status====", new { @class = "form-control" })
+
+                    </div>
+                </div>
+        </div>
+        <hr />
+        <div class="form-group">
+            <div class="">
+                <button type="submit" class="btn btn-danger" aria-label="Left Align">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                    Save
+                </button>
+                @*<button type="button" class="btn btn-danger" aria-label="Left Align" onclick="StatusFormResetFunction()" value="Reset form">
+                        <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                        Re-Set Form
+                    </button>*@
+            </div>
+        </div>
+
+
+
+
+    </div>
+}
+<script>
+    //=====================================GETTING THE BRANCH INFO IN FIELD FCBRANCH============================================
+    @*$.ajax({
+        type: "GET",
+        url: '@Url.Action("GetStatus")',
+        dataType: "json",
+        data: { statusCode: $("#STATUSCODE").val(), issuePlace: $("#ISSUEPLACE").val() },
+        success: function (status) {
+            $("#STATUSCODE").val(status);
+        },
+        error: function (ex) {
+            alert("Failed to retrieve states." + ex);
+        }
+
+    });
+    $.ajax({
+        type: "GET",
+        url: '@Url.Action("GetPlace")',
+        dataType: "json",
+        data: { issuePlace: $("#ISSUEPLACE").val() },
+        success: function (place) {
+            $("#ISSUEPLACE").val(place);
+        },
+        error: function (ex) {
+            alert("Failed to retrieve states." + ex);
+        }
+
+    });*@
+    //=======================================================================================================================
+
+
+
+</script>
+

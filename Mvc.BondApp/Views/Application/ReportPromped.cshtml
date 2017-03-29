@@ -1,0 +1,161 @@
+﻿@using Newtonsoft.Json.Linq
+@model Mvc.BondApp.ViewModels.ReportSortViewModel
+
+
+@{
+    ViewBag.Title = "ReportPromped";
+}
+
+
+<div class="h1 text-center">Sales Report</div>
+<div class="panel panel-info">
+    <div class="panel-heading text-center">
+        <h4>Report Generation By Different Options</h4>
+    </div>
+    <div class="panel-body text-center">
+
+        @using (Html.BeginForm("BondNoWiseSave", "Application", FormMethod.Post, htmlAttributes: new { @class = "" }))
+        {
+            <div class="col-md-3">
+                <fieldset class="bg-info">
+                    <legend>By Category</legend>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Bond Application Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Name Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("File No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Short Application Form", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                </fieldset>
+
+                <fieldset class="bg-success">
+                    <legend>By Variation</legend>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Print Bond (Normal)", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Print Bond [Above 1 Lack] First Page", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Print Bond [Above 1 Lack] 2nd Page", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Application No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                </fieldset>
+
+                <fieldset class="bg-info">
+                    <legend>Re-Investment</legend>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Application No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Application No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Application No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                    <div class="form-group">
+                        @Ajax.ActionLink("Application No Wise", "ApplicationNoWiseSearchBox", "Application", new AjaxOptions()
+                   {
+                       UpdateTargetId = "statusViewPlaceHolder",
+                       InsertionMode = InsertionMode.Replace,
+                       HttpMethod = "GET"
+                   }, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+                    </div>
+                </fieldset>
+
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    @Html.Label("fromDate", "From Date", htmlAttributes: new { @class = "control-label col-md-3" })
+                    @Html.TextBoxFor(model => model.FromDate,
+                            new { @class = "form-control ui-datepicker", @id = "fromDate", @placeholder = "MM/DD/YYYY" })
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("fromDate", "From Date", htmlAttributes: new { @class = "control-label col-md-3" })
+
+                    @Html.TextBoxFor(model => model.ToDate,
+                            new { @class = "form-control ui-datepicker", @id = "toDate", @placeholder = "MM/DD/YYYY" })
+
+
+                </div>
+                This form is incomplete. Further modification required
+                <div id="statusViewPlaceHolder"></div>
+            </div>
+
+        }
+
+
+
+
+    </div>
+</div>
+
+<script>
+    $('#fromDate').datepicker();
+    $('#toDate').datepicker();
+
+
+</script>
