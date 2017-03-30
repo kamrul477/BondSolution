@@ -153,6 +153,7 @@
     <Compile Include="Controllers\InsuranceRateConfigurationController.cs" />
     <Compile Include="Controllers\InterestRateConfigurationController.cs" />
     <Compile Include="Controllers\RateConfigurationController.cs" />
+    <Compile Include="Controllers\StockInfoController.cs" />
     <Compile Include="Controllers\UserInformationController.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\APPSCRIPT.cs" />
@@ -207,6 +208,7 @@
     <Compile Include="ViewModels\NewApplicationBondScriptViewModel.cs" />
     <Compile Include="ViewModels\NewApplicationInitialViewModel.cs" />
     <Compile Include="ViewModels\ReportSortViewModel.cs" />
+    <Compile Include="ViewModels\StockEntryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -1399,6 +1401,7 @@
     <Content Include="Views\Application\_notFound.cshtml" />
     <Content Include="Views\Application\_bondNoWiseSearchBox.cshtml" />
     <Content Include="Views\Application\ReportPromped.cshtml" />
+    <Content Include="Views\StockInfo\StockEntry.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

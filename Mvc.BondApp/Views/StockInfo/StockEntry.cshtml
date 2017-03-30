@@ -1,0 +1,105 @@
+﻿
+@model Mvc.BondApp.ViewModels.StockEntryViewModel
+
+@{
+    ViewBag.Title = "StockEntry";
+}
+
+@using (Html.BeginForm("StockEntry", "StockInfo", FormMethod.Post, new { @class = "form-horizontal", @id = "newApp" }))
+{
+
+    <div class="h1 text-center">Stock Information</div>
+    <div class="panel panel-info">
+        <div class="panel-heading text-center">
+            <h4>Bond Stock Information</h4>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BondCode, "Bond Code", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.DropDownListFor(m => m.BondCode,
+                        new SelectList(ViewBag.BondCodeForStockEntry, "BONDCODE", "BONDNAME"), "====Select Bond Type====", new { @class = "form-control", required = "Required" })
+                    </div>
+                </div>
+                @*INDENT NO*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IndentNo, "Indent No", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.IndentNo, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.IndentNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*INDENT DATE*@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.IndentDate, "Indent Date", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.IndentDate, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.IndentDate, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+         
+                @*TOTAL AMOUNT *@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TotalAmount, "Total Amount", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TotalScript, "Total Script", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.TotalScript, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.TotalScript, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*SCRIPT VALUE *@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ScriptValue, "Script Value", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.ScriptValue, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.ScriptValue, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*PREFIX *@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Prefix, "Prefix", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*STARTING SCRIPT NO *@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StartingScriptNo, "Starting Script No", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.StartingScriptNo, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.StartingScriptNo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*NO OF CONTINUOUS SCRIPT *@
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NoOfContinuousScript, "No Of Continuous Script", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.NoOfContinuousScript, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.ValidationMessageFor(model => model.NoOfContinuousScript, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="table table-bordered table-striped">
+                <div id="tableReplaced"></div>
+            </div>
+
+
+        </div>
+    </div>
+
+}
