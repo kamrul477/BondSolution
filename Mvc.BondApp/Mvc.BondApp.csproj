@@ -208,6 +208,7 @@
     <Compile Include="ViewModels\NewApplicationBondScriptViewModel.cs" />
     <Compile Include="ViewModels\NewApplicationInitialViewModel.cs" />
     <Compile Include="ViewModels\ReportSortViewModel.cs" />
+    <Compile Include="ViewModels\StockEntryBondDetailsViewModel.cs" />
     <Compile Include="ViewModels\StockEntryViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +645,7 @@
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js" />
     <Content Include="Scripts\jquery.bonnet.ajax-dropdownlist.min.js" />
+    <Content Include="Scripts\jquery.num2words.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />

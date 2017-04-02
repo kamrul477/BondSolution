@@ -22,3 +22,9 @@ select,
 textarea {
     max-width: 280px;
 }
+/*==========================================CUSTOM ADDITION BY KAMRUL==============================*/
+.ui-widget-header {
+    color: #722c2c;
+    font-weight: bold;
+}
+

@@ -73,8 +73,8 @@
                 <li class="dropdown">
                     @Html.ActionLink("Stock Info", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})
                     <ul class="dropdown-menu">
-                        <li>@Html.ActionLink("Stock Entry", "Index", "Home", new {@class = "dropdown-toggle", data_toggle = "dropdown"})</li>
-                        <li>@Html.ActionLink("Report", "About", "Home")</li>
+                        <li>@Html.ActionLink("Stock Entry", "StockEntry", "StockInfo"@*, new {@class = "dropdown-toggle", data_toggle = "dropdown"}*@)</li>
+                        <li>@Html.ActionLink("Report", "About", "StockInfo")</li>
 
                     </ul>
                 </li>

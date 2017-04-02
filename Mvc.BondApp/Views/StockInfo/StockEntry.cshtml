@@ -13,20 +13,20 @@
         <div class="panel-heading text-center">
             <h4>Bond Stock Information</h4>
         </div>
-        <div class="panel-body">
+        <div class="panel-body text-center">
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.BondCode, "Bond Code", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
                         @Html.DropDownListFor(m => m.BondCode,
-                        new SelectList(ViewBag.BondCodeForStockEntry, "BONDCODE", "BONDNAME"), "====Select Bond Type====", new { @class = "form-control", required = "Required" })
+                            new SelectList(ViewBag.BondCodeForStockEntry, "BONDCODE", "BONDNAME"), "====Select Bond Type====", new { @class = "form-control", required = "Required" })
                     </div>
                 </div>
                 @*INDENT NO*@
                 <div class="form-group">
                     @Html.LabelFor(model => model.IndentNo, "Indent No", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.IndentNo, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.EditorFor(model => model.IndentNo, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Must Be Number. Ex. 12345" } })
                         @Html.ValidationMessageFor(model => model.IndentNo, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -34,25 +34,36 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.IndentDate, "Indent Date", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.IndentDate, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.TextBoxFor(model => model.IndentDate,
+                            new { @class = "form-control ui-datepicker", @id = "IndentDate", @placeholder = "DD/MM/YYYY" })
+                        @*@Html.TextBoxFor(model => model.IndentDate, new { htmlAttributes = new { @class = "form-control ui-datepicker", required = "Required", @placeholder = "DD/MM/YYYY" } })*@
                         @Html.ValidationMessageFor(model => model.IndentDate, "", new { @class = "text-danger" })
                     </div>
                 </div>
-         
+
                 @*TOTAL AMOUNT *@
                 <div class="form-group">
                     @Html.LabelFor(model => model.TotalAmount, "Total Amount", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.TotalAmount, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
-                        @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                        <div class="input-group">
+                            
+                            @Html.EditorFor(model => model.TotalAmount,
+                            new { htmlAttributes = new { @class = "form-control", @id = "input", required = "Required", @placeholder = "" } })
+                            <div id="CurrencySymbol" class="input-group-addon"></div>
+                            <span id="errSpan" style="color: #FF0000;"></span>
+                            @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
+                            
+                        </div>
+                        <div id="resultDiv"></div>
                     </div>
+
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(model => model.TotalScript, "Total Script", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.TotalScript, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.EditorFor(model => model.TotalScript, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Total No Of Script", @type = "text" } })
                         @Html.ValidationMessageFor(model => model.TotalScript, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -60,7 +71,9 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.ScriptValue, "Script Value", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.ScriptValue, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.DropDownListFor(model => model.ScriptValue,
+                                new SelectList(string.Empty, "BONDCODE", "BONDVALUE"), "Select Denomination", new { @class = "form-control", })
+                        @*@Html.EditorFor(model => model.ScriptValue, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })*@
                         @Html.ValidationMessageFor(model => model.ScriptValue, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -68,7 +81,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.Prefix, "Prefix", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.EditorFor(model => model.Prefix, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                         @Html.ValidationMessageFor(model => model.Prefix, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -76,7 +89,7 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.StartingScriptNo, "Starting Script No", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.StartingScriptNo, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.EditorFor(model => model.StartingScriptNo, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "First Script Serial", @type = "text" } })
                         @Html.ValidationMessageFor(model => model.StartingScriptNo, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -84,22 +97,140 @@
                 <div class="form-group">
                     @Html.LabelFor(model => model.NoOfContinuousScript, "No Of Continuous Script", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
-                        @Html.EditorFor(model => model.NoOfContinuousScript, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })
+                        @Html.EditorFor(model => model.NoOfContinuousScript, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "No of Continuous Script", @type = "text" } })
                         @Html.ValidationMessageFor(model => model.NoOfContinuousScript, "", new { @class = "text-danger" })
                     </div>
                 </div>
             </div>
 
-
-
-
-
-            <div class="table table-bordered table-striped">
-                <div id="tableReplaced"></div>
+        </div>
+        <div class="table table-bordered table-striped">
+            <div id="tableReplaced">
+                @{
+                    for (int i = 0; i < UPPER; i++)
+                    {
+  
+                    }
+                }
             </div>
-
-
         </div>
     </div>
 
+
+
+
+
+
 }
+
+
+<script>
+    $("#IndentDate").datepicker({
+        dateFormat: "dd-mm-yy",
+        showAnim: "fold",
+        showButtonPanel: true,
+        //showOn: "button",
+        autoSize: true,
+        changeYear: true,
+        changeMonth: true,
+        showMonthAfterYear: true, //this is what you are looking for
+        maxDate: 0
+    });
+
+    //==========================================================
+
+
+
+    $(document).ready(function () {
+        $("#resultDiv").hide();
+        $("#input").focus();
+        $(document).keypress(function (e) {
+            if (e.keyCode === 27) {
+                clear();
+            };
+            if (e.keyCode === 13) {
+                translate();
+            };
+        });
+        $("#input").change(function () {
+
+            translate();
+        });
+        //$("#input").keyup(function (event) {
+
+        //    if (event.which >= 37 && event.which <= 40) return;
+
+        //    this.value = this.value.replace(/\D/g, '')
+        //                           .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        //});
+
+
+
+
+
+    });
+    //==================================GETTING THE DENOMINATION INFO IN FIELD PREFIX BASED ON BONDTYPE SELECTION VALUE===========
+    $("#BondCode").change(function () {
+        $("#CurrencySymbol").empty();
+        $("#ScriptValue").empty();
+        $("#Prefix").empty();
+
+        switch ($("#BondCode").val()) {
+            case "10":
+                $("#CurrencySymbol").html("TK");
+                break;
+            case "11":
+                $("#CurrencySymbol").html("USD");
+                break;
+            case "12":
+                $("#CurrencySymbol").html("USD");
+                break;
+            default:
+        }
+        $.ajax({
+            type: "GET",
+            //url: '@Url.Action("GetBondScriptDenoInfo")',
+            url: "/StockInfo/GetBondScriptDenoInfo",
+            dataType: "json",
+            data: { bondTypeIndex: $("#BondCode").val() },
+            success: function (scriptDenos) {
+                $.each(scriptDenos, function (i, item) {
+                    $("#ScriptValue").append("<option value=\"" + item.BONDVALUE + "\">" + item.BONDVALUE + "</option>");
+                    //$("#NewApplication_Prefix").append("<option value=\"" + item.BONDPREFIX + "\">" + item.BONDPREFIX + "</option>");
+
+                });
+            },
+            error: function (ex) {
+                alert("Failed to retrieve states." + ex);
+            }
+        });
+
+    });
+
+    $("#ScriptValue").change(function () {
+
+        $("#Prefix").empty();
+
+        $.ajax({
+            type: "GET",
+            //url: '@Url.Action("GetBondScriptPrefixInfo")',
+            url: '/Application/GetBondScriptPrefixInfo',
+            dataType: "json",
+            data: { denominationValue: $("#ScriptValue").val(), bondTypeIndex: $("#BondCode").val() },
+            success: function (scriptDenos) {
+                $.each(scriptDenos, function (i, item) {
+                    $("#Prefix").val(item.BONDPREFIX);
+                    $("#Prefix").text(item.BONDPREFIX);
+                });
+            },
+            error: function (ex) {
+                alert("Failed to retrieve states." + ex);
+            }
+        });
+
+    });
+
+    //========================================================================================================================
+
+
+</script>
