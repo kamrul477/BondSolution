@@ -1,0 +1,100 @@
+﻿@using System.Xml.Schema
+@model Mvc.BondApp.ViewModels.InstallmentPaymentViewModel
+@{
+    ViewBag.Title = "ApplicationSearch";
+}
+
+@using (Html.BeginForm("", "Transaction", FormMethod.Post, new { @class = "form-horizontal", @id = "transactionForm" }))
+{
+
+    <div class="h1 text-center">Installment Payment</div>
+    <div class="panel panel-info">
+        <div class="panel-heading text-center">
+            <h4>Installment Payment</h4>
+        </div>
+        <div class="panel-body text-center">
+            <div class="col-md-4">
+                @*APPLICATION NO*@
+                <div class="form-group">
+                    @Html.Label("Application No", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.BONDSCN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                </div>
+                @*FULL NAME*@
+                <div class="form-group">
+                    @Html.Label("Name", htmlAttributes: new {@class = "control-label  col-md-5"})
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.BUYFNAME, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                    </div>
+                </div>
+                @*LOCAL ADDRESS*@
+                <div class="form-group">
+                    @Html.Label("Local Address", htmlAttributes: new {@class = "control-label  col-md-5"})
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.LOCALADDR, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                    </div>
+                </div>
+                @*FOREIGN ADDRESS*@
+                <div class="form-group">
+                    @Html.Label("Foreign Address", htmlAttributes: new {@class = "control-label  col-md-5"})
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.ABOARDADDR, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                    </div>
+                </div>
+                @*APP DATE*@
+                <div class="form-group">
+                    @Html.Label("App Date", htmlAttributes: new {@class = "control-label  col-md-5"})
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.SCNDATE, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                    </div>
+                </div>
+                @*TOTAL NO OF BOND*@
+                <div class="form-group">
+                    @Html.Label("Total No Of Bond", htmlAttributes: new {@class = "control-label  col-md-5"})
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.t, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+
+            <div class="col-md-4">
+                @*APPLICATION NO*@
+                <div class="form-group">
+                    @Html.Label("Application No", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.BONDSCN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+                @*APPLICATION NO*@
+                <div class="form-group">
+                    @Html.Label("Application No", htmlAttributes: new { @class = "control-label  col-md-5" })
+                    <div class="col-md-7">
+                        @Html.EditorFor(model => model.Bondapplication.BONDSCN, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+}
+
+
+

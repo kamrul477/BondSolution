@@ -154,6 +154,7 @@
     <Compile Include="Controllers\InterestRateConfigurationController.cs" />
     <Compile Include="Controllers\RateConfigurationController.cs" />
     <Compile Include="Controllers\StockInfoController.cs" />
+    <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserInformationController.cs" />
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\APPSCRIPT.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="ViewModels\BondTypeViewModel.cs" />
     <Compile Include="ViewModels\CurrencyRateViewModel.cs" />
     <Compile Include="ViewModels\FcAccountInfoViewModel.cs" />
+    <Compile Include="ViewModels\InstallmentPaymentViewModel.cs" />
     <Compile Include="ViewModels\NewApplication.cs" />
     <Compile Include="ViewModels\NewApplicationBondScriptViewModel.cs" />
     <Compile Include="ViewModels\NewApplicationInitialViewModel.cs" />
@@ -1404,6 +1406,8 @@
     <Content Include="Views\Application\_bondNoWiseSearchBox.cshtml" />
     <Content Include="Views\Application\ReportPromped.cshtml" />
     <Content Include="Views\StockInfo\StockEntry.cshtml" />
+    <Content Include="Views\Transaction\Index.cshtml" />
+    <Content Include="Views\Transaction\ApplicationSearch.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

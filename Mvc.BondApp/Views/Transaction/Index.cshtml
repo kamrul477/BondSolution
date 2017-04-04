@@ -1,0 +1,40 @@
+﻿
+
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@using (Html.BeginForm("ApplicationSearch", "Transaction", FormMethod.Post, new { @class = "form-horizontal", @id = "transactionForm" }))
+{
+
+    <div class="h1 text-center">Installment Payment</div>
+    <div class="panel panel-info">
+        <div class="panel-heading text-center">
+            <h4>Application Search</h4>
+        </div>
+        <div class="panel-body text-center">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="form-group">
+                    @Html.Editor("applicationNo", new { htmlAttributes = new { @class = "form-control search-query col-md-6", required = "Required", @placeholder = "Bond Application No i.e 625/2009" } })
+                    <button type="submit" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search col-md-3" aria-hidden="true"></span>
+                        Search Applicaiton
+                    </button>
+                </div>
+            </div>
+           
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+
+}
+
