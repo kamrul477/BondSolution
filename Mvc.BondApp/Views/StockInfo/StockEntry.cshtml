@@ -46,13 +46,13 @@
                     @Html.LabelFor(model => model.TotalAmount, "Total Amount", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
                         <div class="input-group">
-                            
+
                             @Html.EditorFor(model => model.TotalAmount,
-                            new { htmlAttributes = new { @class = "form-control", @id = "input", required = "Required", @placeholder = "" } })
+                                new { htmlAttributes = new { @class = "form-control", @id = "input", required = "Required", @placeholder = "" } })
                             <div id="CurrencySymbol" class="input-group-addon"></div>
                             <span id="errSpan" style="color: #FF0000;"></span>
                             @Html.ValidationMessageFor(model => model.TotalAmount, "", new { @class = "text-danger" })
-                            
+
                         </div>
                         <div id="resultDiv"></div>
                     </div>
@@ -72,7 +72,7 @@
                     @Html.LabelFor(model => model.ScriptValue, "Script Value", htmlAttributes: new { @class = "control-label  col-md-5" })
                     <div class="col-md-7">
                         @Html.DropDownListFor(model => model.ScriptValue,
-                                new SelectList(string.Empty, "BONDCODE", "BONDVALUE"), "Select Denomination", new { @class = "form-control", })
+                            new SelectList(string.Empty, "BONDCODE", "BONDVALUE"), "Select Denomination", new { @class = "form-control", })
                         @*@Html.EditorFor(model => model.ScriptValue, new { htmlAttributes = new { @class = "form-control", required = "Required", @placeholder = "Ex. 530/2017 Or 256/2005" } })*@
                         @Html.ValidationMessageFor(model => model.ScriptValue, "", new { @class = "text-danger" })
                     </div>
@@ -101,19 +101,27 @@
                         @Html.ValidationMessageFor(model => model.NoOfContinuousScript, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group">
+                    <button class="btn btn-sm btn-primary" onclick="tableCreate()" id="generateBond">Send</button>
+                </div>
             </div>
 
         </div>
-        <div class="table table-bordered table-striped">
-            <div id="tableReplaced">
-                @{
-                    for (int i = 0; i < UPPER; i++)
-                    {
-  
-                    }
-                }
-            </div>
-        </div>
+        <fieldset>
+            <legend>Details Information</legend>
+            <table id="bondTable" class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <td>Bond Value</td>
+                        <td>Bond Prefix</td>
+                        <td>Bond No</td>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+        </fieldset>
+
     </div>
 
 
@@ -125,6 +133,7 @@
 
 
 <script>
+
     $("#IndentDate").datepicker({
         dateFormat: "dd-mm-yy",
         showAnim: "fold",
@@ -230,6 +239,47 @@
 
     });
 
+    //========================================================================================================================
+    //====================================TABLE CREATION======================================================================
+
+    //=============ADDING ZERO=============================================
+    function prependZeros(num, noOfDigit) {
+        var str = ("" + num);
+        return (Array(Math.max(noOfDigit - str.length, 0)).join("0") + str);
+    }
+
+
+
+    function tableCreate() {
+        //========INSIDE TABLE==================
+        var bondValue = $("#ScriptValue").val();
+        var bondPrefix = $("#Prefix").val();
+        var bondNo = $("#StartingScriptNo").val();
+
+        //=====SUPPORTING FIELDS=================
+        var totalScript = $("#TotalScript").val();
+        var noOfContinuousScript = $("#NoOfContinuousScript").val();
+        var totalAmount = $("#TotalAmount").val();
+
+        //==============COUNT AND FIX DIGIT OF STARTING SCRIPT============
+        var wordCount = $("StartingScriptNo").text().length;
+
+
+        //=====================ADDING ROW TO TABLE========
+        for (var i = 0; i <= noOfContinuousScript; i++) {
+            if (wordCount < 7) {
+                bondNo = prependZeros(bondNo, 7);
+            }
+            $("#bondTable > tbody").append("<tr><td>" + bondValue + "</td><td>" + bondPrefix + "</td><td>" + bondNo + "</td></tr>");
+            bondNo++;
+        }
+
+
+
+
+
+
+    }
     //========================================================================================================================
 
 
