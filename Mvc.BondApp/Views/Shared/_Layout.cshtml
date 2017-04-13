@@ -1,6 +1,7 @@
-﻿@using System
+﻿
+@using System
 @using System.Web.UI.WebControls
-@using Kendo.Mvc.UI
+
 
 <!DOCTYPE html>
 <html>
@@ -9,16 +10,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@ViewBag.Title - Bond Management Software</title>
     <link href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet"/>
-
+    <link href="~/Content/Gridmvc.css" rel="stylesheet" />
 	@Styles.Render("~/Content/css")
-	@Styles.Render("~/Content/kendo/css")
+	@*@Styles.Render("~/Content/kendo/css")*@
 	@Styles.Render("~/Content/menu/css")
     @*@Styles.Render("~/Content/themes/base")*@
 	@*script section*@
 
    
     @Scripts.Render("~/bundles/jquery")
-	@Scripts.Render("~/bundles/kendo")
+	@*@Scripts.Render("~/bundles/kendo")*@
 	@Scripts.Render("~/bundles/menu")
 	@Scripts.Render("~/bundles/custom")
 	@Scripts.Render("~/bundles/bootstrap")
@@ -31,6 +32,7 @@
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/Scripts/jquery.num2words.js"></script>
+    <script src="~/Scripts/gridmvc.js"></script>
 	<!-- Latest compiled and minified CSS -->
 	@*<script src="~/Scripts/jquery-3.1.1.min.js"></script>
 	<script src="~/Scripts/bootstrap.js"></script>

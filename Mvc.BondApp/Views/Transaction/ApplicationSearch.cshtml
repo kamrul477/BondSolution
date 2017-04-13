@@ -1,0 +1,201 @@
+﻿@using System.Xml.Schema
+@model Mvc.BondApp.ViewModels.InstallmentPaymentViewModel
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "ApplicationSearch";
+}
+@using (Html.BeginForm("", "Transaction", FormMethod.Post, new { @class = "form-horizontal", @id = "transactionForm" }))
+{
+
+    <div class="h1 text-center">Installment Payment</div>
+    <div class="panel panel-info">
+        <div class="panel-heading text-center">
+            <h4>Installment Payment</h4>
+        </div>
+        <div class="panel-body text-center">
+            <div class="">
+                <div class="row">
+                    <div class="col-md-6">
+                        @*APPLICATION NO*@
+                        <div class="form-group">
+                            @Html.Label("Application No", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Bondapplication.BONDSCN, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                        @*FULL NAME*@
+                        <div class="form-group">
+                            @Html.Label("Name", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Bondapplication.BUYFNAME, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                        @*LOCAL ADDRESS*@
+                        <div class="form-group">
+                            @Html.Label("Local Address", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Bondapplication.LOCALADDR, new {htmlAttributes = new {@class = "form-control col-md-12", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                        @*FOREIGN ADDRESS*@
+                        <div class="form-group">
+                            @Html.Label("Foreign Address", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Bondapplication.ABOARDADDR, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        @*PASSPORT NO*@
+                        <div class="form-group">
+                            @Html.Label("Passport No", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+
+                                @Html.EditorFor(model => model.Bondapplication.PASSPORTNO, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                        @*BENEFICIARY NAME*@
+                        <div class="form-group">
+                            @Html.Label("Beneficiary Name", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+
+                                @Html.EditorFor(model => model.Bondapplication.BENEFICIARY.BENFNAME, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                        @*BENEFICIARY ADDRESS*@
+                        <div class="form-group">
+                            @Html.Label("Beneficiary Address", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+
+                                @Html.EditorFor(model => model.Bondapplication.BENEFICIARY.BENADDR, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        @*TOTAL NO OF BOND*@
+                        <div class="form-group">
+                            @Html.Label("Total No Of Bond", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-8">
+                                @Html.EditorFor(model => model.Bondapplication.TOTALSCRIPT, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondInstallmentTransaction}})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @*PAYABLE NO OF BOND*@
+                        <div class="form-group">
+                            @Html.Label("Payable No Of Bond", htmlAttributes: new {@class = "control-label col-md-4"})
+                            <div class="col-md-8">
+                                @Html.Editor("payableNoOfBond", new {htmlAttributes = new {@class = "form-control", @readonly = "readonly", @Value = ViewBag.payNoOfBondTransaction}})
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row squeezeThird">
+                    <div class="col-md-3">
+                        @*APP DATE*@
+                        <div class="form-group">
+                            @Html.Label("App Date", htmlAttributes: new {@class = "control-label  col-md-5"})
+                            <div class="col-md-7">
+                                @Html.EditorFor(model => model.Bondapplication.SCNDATE, new {htmlAttributes = new {@class = "form-control", @readonly = "readonly"}})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        @*TOTAL AMOUNT IN APP*@
+                        <div class="form-group">
+                            @Html.Label("Total Amount In App", htmlAttributes: new {@class = "control-label  col-md-4"})
+                            <div class="col-md-7">
+                                <div class="col-md-8">
+                                    @Html.Editor("TotalAmountInApp",
+                                   new {htmlAttributes = new {@class = "form-control", @readonly = "readonly",@Value=ViewBag.TotalAmountTransaction}})
+                                </div>
+                                <div class="col-md-4">
+                                    @Html.Editor("currencyCode", new {htmlAttributes = new {@class = "form-control", @readonly = "readonly",@Value=ViewBag.CurrencyName}})
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        @*APP DATE*@
+                        <div class="form-group">
+                            @Html.Label("Paid Up Interest", htmlAttributes: new {@class = "control-label  col-md-6"})
+                            <div class="col-md-6">
+                                @Html.Editor("paidUpInterest", new {htmlAttributes = new {@class = "form-control", @readonly = "readonly",@Value=ViewBag.PaidUpInterestTransaction}})
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row squeezeRow">
+                    <div class="col-md-4">
+                        @*ACCOUNT NO*@
+                        <div class="form-group">
+                            @Html.Label("Account No", htmlAttributes: new {@class = "control-label  col-md-5"})
+                            <div class="col-md-7">
+                                @Html.Editor("AccountNo", new {htmlAttributes = new {@class = "form-control", @readonly = "readonly", @Value = ViewBag.AccNoTransaction}})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @*LAST TRANSACTION*@
+                        <div class="form-group">
+                            @Html.Label("Last Transation", htmlAttributes: new {@class = "control-label  col-md-5"})
+                            <div class="col-md-7">
+                                @Html.Editor("lastTransaction", new {htmlAttributes = new {@class = "form-control", @readonly = "readonly", @Value = ViewBag.LastTransactionDate}})
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        @*TOTAL AMT FOR THIS HOLDER*@
+                        <div class="form-group">
+                            @Html.Label("Total Amt For This Holder", htmlAttributes: new {@class = "control-label col-md-5"})
+                            <div class="col-md-7">
+                                @Html.Editor("totalAmountForThisHolder", new {htmlAttributes = new {@class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue}})
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <hr/>
+                <div class="row">
+                    <div class="col-md-6">
+                        <fieldset>
+                            <legend>Selection Grid</legend>
+                            @Html.Grid(Model.Bondapplication.APPSCRIPTs.Where(o => o.BONDSTATUS.Equals("02"))).Columns(column =>
+                            {
+                                column.Add(o => o.BONDSL).Titled("Sl No");
+                                column.Add(o => o.BONDPREFIX).Titled("Prefix");
+                                column.Add(o => o.BONDNO).Titled("Bond No");
+                                column.Add(o => o.BONDVALUE).Titled("Bond Value");
+                            }).WithPaging(10).Sortable(false)
+
+                        </fieldset>
+                        <hr />
+
+                    </div>
+                    <div class="col-md-6"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+
+}
+
+
+

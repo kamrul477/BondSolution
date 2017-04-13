@@ -50,11 +50,11 @@ namespace Mvc.BondApp
                //"~/Content/kendo/2015.2.902/kendo.bootstrap.min.css"
                ));
 
-            bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
-               "~/Content/kendo/2015.2.902/kendo.common.css",
-               "~/Content/kendo/2015.2.902/kendo.default.css",
-               "~/Content/kendo/2015.2.902/kendo.common-bootstrap.css",
-               "~/Content/kendo/2015.2.902/kendo.bootstrap.css"));
+            //bundles.Add(new StyleBundle("~/Content/kendo/css").Include(
+            //   "~/Content/kendo/2015.2.902/kendo.common.css",
+            //   "~/Content/kendo/2015.2.902/kendo.default.css",
+            //   "~/Content/kendo/2015.2.902/kendo.common-bootstrap.css",
+            //   "~/Content/kendo/2015.2.902/kendo.bootstrap.css"));
 
             bundles.Add(new StyleBundle("~/Content/menu/css").Include(
                "~/Content/menuCss.css"));

@@ -1,4 +1,4 @@
-﻿@using Kendo.Mvc.UI
+﻿@*@using Kendo.Mvc.UI
 
 @{
     ViewBag.Title = "About";
@@ -7,7 +7,7 @@
 <h3>@ViewBag.Message</h3>
 
 <p>Use this area to provide additional information.</p>
-@*@(Html.Kendo().DropDownList()
+@(Html.Kendo().DropDownList()
                       .Name("bondTypeDropDownList") //The name of the DropDownList is mandatory. It specifies the "id" attribute of the widget.
                       .DataTextField("BONDNAME") //Specify which property of the Product to be used by the DropDownList as a text.
                       .DataValueField("BONDCODE") //Specify which property of the Product to be used by the DropDownList as a value.
@@ -20,8 +20,8 @@
                               .ServerFiltering(false); //If true, the DataSource will not filter the data on the client.
                       })
                     .SelectedIndex(0) //Select the first item.
-      )*@
-<div id="dropdownlistcustom">
+      )
+@*<div id="dropdownlistcustom">
     @( 
    Html.Kendo().DropDownList() 
                .Name("bondTypeDropDownList") 
@@ -33,10 +33,10 @@
                }) 
                .OptionLabel("Select a category")
 ) 
-</div>
+</div>*@
 
 
-@( 
+@*@( 
    Html.Kendo().DropDownList() 
                .Name("kdropdownlistajax") 
                .DataTextField("Text") 
@@ -49,15 +49,15 @@
                }) 
                
                .OptionLabel("Select a category") 
-      )
+      )*@
 
 
 
 
-@(Html.Kendo().DatePicker().Name("datepicker"))
+@*@(Html.Kendo().DatePicker().Name("datepicker"))
 
 @Ajax.ActionLink("kamrul","kamrul",new AjaxOptions(
-    ))
+    ))*@
 
 
 @*@(Html.Kendo().DatePicker()
