@@ -6,5 +6,6 @@
         public BONDINFO Bondinfo { get; set; }
         public TRANSCHD Transchd { get; set; }
         public TRANSMST Transmst { get; set; }
+        public BONDPAYMODE Bondpaymode { get; set; }
     }
 }
