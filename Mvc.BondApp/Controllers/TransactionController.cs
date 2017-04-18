@@ -1,6 +1,7 @@
 ﻿using Mvc.BondApp.ViewModels;
 using Oracle.ManagedDataAccess.Client;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
@@ -24,6 +25,8 @@ namespace Mvc.BondApp.Controllers
 
             BondFunctions functions = new BondFunctions();
             var application = _context.BONDAPPLICATIONs.SingleOrDefault(a => a.BONDSCN.Equals(applicationNo));
+
+
             var model = new InstallmentPaymentViewModel()
             {
                 Bondapplication = application
@@ -55,7 +58,7 @@ namespace Mvc.BondApp.Controllers
             ViewBag.CurrencyName = functions.GET_APPCURR(application.BONDCODE, 'C', connection,
                 OracleCommand(currencySql, connection));
 
-            const string lastTransactionDate = "select GET_MAXTRANDATE(:PBONDSCN,:PC) as VDATE FROM DUAL";
+            const string lastTransactionDate = "select GET_MAXTRANDATE(:PBONDSCN) as VDATE FROM DUAL";
             ViewBag.LastTransactionDate = functions.GET_MAXTRANDATE(applicationNo, connection,
                 OracleCommand(lastTransactionDate, connection));
 
@@ -68,7 +71,12 @@ namespace Mvc.BondApp.Controllers
             ViewBag.TotalBondValue = functions.GET_TOTAL_BONDVALUE(application.PASSPORTNO, connection,
                 OracleCommand(bondValueSql, connection));
 
-
+            var object1 = _context.BONDPAYMODEs.Single(o => o.PAYCODE == "5");
+            var object2 = _context.BONDPAYMODEs.Single(o => o.PAYCODE == "6");
+            var object3 = _context.BONDPAYMODEs.Single(o => o.PAYCODE == "7");
+            var object4 = _context.BONDPAYMODEs.Single(o => o.PAYCODE == "8");
+            var list = new List<BONDPAYMODE> { object1, object2, object3, object4 };
+            ViewBag.PaymentMode = list;
 
 
 
@@ -80,6 +88,29 @@ namespace Mvc.BondApp.Controllers
 
 
         #endregion
+
+        #region HELPER AJAX AREA
+
+        public JsonResult GetBankList(string q)
+        {
+            var search = q.ToUpper();
+            var _bankList = _context.BANKINFOes.ToList();
+            var bankList = _bankList.Where(o => o.BANKNAME.Contains(search)).OrderBy(o => o.BANKNAME);
+            return Json(bankList.Select(p => new { bankCode = p.BANKCODE, bankName = p.BANKNAME }), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetBankName(string q)
+        {
+            var bankName = _context.BANKINFOes.Where(o => o.BANKCODE == "15");
+            return Json(bankName.Select(p => new { bankCode = p.BANKCODE, bankName = p.BANKNAME }), JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetBranchList(string bankCode)
+        {
+            var branchList = _context.BRANCHINFOes.Where(o => o.BANKCODE == bankCode);
+            return Json(branchList.Select(p => new { branchCode = p.BRCODE, branchName = p.BRNAME }), JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
 
 
         #region STORED PROCEDURE AREA

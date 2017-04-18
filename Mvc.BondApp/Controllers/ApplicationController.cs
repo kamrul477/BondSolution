@@ -398,7 +398,7 @@ namespace Mvc.BondApp.Controllers
         }
         public JsonResult GetPlace(int issuePlace)
         {
-            var place = db.DISTINFOes.Find(issuePlace.ToString()).DISTDESC;
+            var place = db.DISTINFOes.Find(o=>o.DISTCODE == issuePlace.ToString()).DISTDESC;
             return Json(place, JsonRequestBehavior.AllowGet);
         }
         public JsonResult GetPrefix(string bondCode)

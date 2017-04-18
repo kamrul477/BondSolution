@@ -161,7 +161,7 @@
                             <div class="form-group">
                                 @Html.Label("Total Amt For This Holder", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("totalAmountForThisHolder", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.Editor("totalAmountForThisHolder", new { htmlAttributes = new { @class = "form-control text-danger", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
                                 </div>
                             </div>
                         </div>
@@ -185,7 +185,8 @@
                             <div class="form-group">
                                 @Html.Label("Payment Mode", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("paymentMode", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.DropDownList("paymentMode",
+                                    new SelectList(ViewBag.PaymentMode, "PAYCODE", "PAYDESC"), "Select Bond Mode", new { @class = "form-control", required = "Required" })
                                 </div>
                             </div>
                             @*TOTAL AMT FOR THIS HOLDER*@
@@ -211,11 +212,11 @@
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             @*payment in currency*@
                             <div class="form-group">
-                                @Html.Label("Payment in Currency", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
+                                @Html.Label("Payment in Currency", htmlAttributes: new { @class = "control-label col-md-7" })
+                                <div class="col-md-5">
                                     @Html.Editor("paymentInCurrency", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
                                 </div>
                             </div>
@@ -247,42 +248,45 @@
                             <div class="form-group">
                                 @Html.Label("Bank Name", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("totalAmountForThisHolder", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.DropDownList("bankName",
+                                new SelectList(String.Empty, "bankCode", "bankName"), "===Select bank====", new { @class = "form-control bankName" })
+
                                 </div>
                             </div>
                             @*branch name*@
                             <div class="form-group">
                                 @Html.Label("Branch Name", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("branchName", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.DropDownList("branchName",
+                                new SelectList(String.Empty, "branchCode", "branchName"), "===Select Branch====", new { @class = "form-control branchName" })
                                 </div>
                             </div>
                             @*acc type*@
                             <div class="form-group">
                                 @Html.Label("A/C Type", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("accType", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.Editor("accType", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 </div>
                             </div>
                             @*Acc No*@
                             <div class="form-group">
                                 @Html.Label("A/C No", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("accNo", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.Editor("accNo", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", } })
                                 </div>
                             </div>
                             @*VOUCHER*@
                             <div class="form-group">
                                 @Html.Label("Voucher", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("voucher", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.Editor("voucher", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 </div>
                             </div>
                             @*DEBIT AMOUNT*@
                             <div class="form-group">
                                 @Html.Label("Debit Amount", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("debitAmount", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.Editor("debitAmount", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 </div>
                             </div>
                         </div>
@@ -293,7 +297,7 @@
 
                 <hr />
                 <div class="row">
-                    <div class="col-md-6 bg-warning">
+                    <div class="col-md-6 bg-warning text-center">
                         <fieldset>
                             <legend>Selection Grid</legend>
                             @Html.Grid(Model.Bondapplication.APPSCRIPTs.Where(o => o.BONDSTATUS.Equals("02"))).Columns(column =>
@@ -325,3 +329,102 @@
 
 
 
+<script>
+    $("#paymentMode").change(function () {
+        $("#bankName").empty();
+        if ($("#paymentMode").val() === "5" || $("#paymentMode").val() === "6") {
+
+            $.ajax({
+                type: "GET",
+                url: '/Transaction/GetBankName',
+                dataType: "json",
+                //data: { selectedMode: $("#paymentMode").val() },
+                success: function (items) {
+                    $.each(items, function (i, item) {
+                        $("#bankName").append("<option value=\"" + item.bankCode + "\">" + item.bankName + "</option>");
+                    });
+                },
+                error: function (ex) {
+                    alert("Failed to retrieve bank name." + ex);
+                }
+            });
+
+
+        } else {
+            $(".bankName").select2({
+
+                ajax: {
+                    type: "GET",
+                    url: "/Transaction/GetBankList",
+                    dataType: "json",
+                    delay: 250,
+                    data: function (params) {
+                        return {
+                            q: params.term
+                        };
+                    },
+                    processResults: function (data) {
+                        data = data.map(function (item) {
+                            return {
+                                bankCode: item.bankCode,
+                                bankName: item.bankName
+
+                            };
+                        });
+                        return { results: data };
+                    }
+
+                },
+                minimumResultsForSearch: 15,
+                minimumInputLength: 4,
+
+            });
+        }
+    });
+
+    $("#bankName").change(function () {
+
+        $("#branchName").val("").trigger("change");
+
+        $.ajax({
+            type: "GET",
+            //url: '@Url.Action("GetBranchList")',
+            url: '/Transaction/GetBranchList',
+            dataType: "json",
+            data: { bankCode: $("#bankName").val() },
+            success: function (scriptDenos) {
+                $.each(scriptDenos, function (i, item) {
+                    $("#branchName").val(item.branchCode);
+                    $("#branchName").text(item.branchName);
+                });
+            },
+            error: function (ex) {
+                alert("Failed to retrieve states." + ex);
+            }
+        });
+
+    });
+
+
+</script>
+
+
+
+
+
+@*$.ajax({
+        type: "GET",
+        // url: '@Url.Action("GetBankList")',
+        url: '/Transaction/GetBankList',
+        dataType: "json",
+        // data: { selectedMode: $("#paymentMode").val() },
+        success: function (bankNames) {
+            $.each(bankNames, function (i, item) {
+                $("#bankName").append("<option value=\"" + item.bankCode + "\">" + item.bankName + "</option>");
+            });
+
+        },
+        error: function (ex) {
+            alert("Failed to retrieve states." + ex);
+        }
+    });*@
