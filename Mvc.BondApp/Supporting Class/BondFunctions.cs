@@ -250,6 +250,41 @@ namespace Mvc.BondApp
 
 
 
+
+
+        public decimal GET_EXRATE(DateTime tranDate, string currCode, OracleConnection _connection, OracleCommand _oracleCommand)
+        {
+            decimal rate = 0;
+
+            var connection = _connection;
+            var oracleCommand = _oracleCommand;
+            oracleCommand.CommandType = CommandType.Text;
+            oracleCommand.Parameters.Add("PRDATE", OracleDbType.Date).Value = tranDate;
+            oracleCommand.Parameters.Add("PCURRCODE", OracleDbType.Varchar2).Value = currCode;
+
+            try
+            {
+                connection.Open();
+                OracleDataReader reader = oracleCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    rate = Convert.ToDecimal(reader["output"]);
+
+                }
+            }
+            catch (Exception es)
+            {
+                // ignored
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return rate;
+        }
+
+
+
         public decimal GET_TOTAL_BONDVALUE(string passportNo, OracleConnection _connection, OracleCommand _oracleCommand)
         {
             if (passportNo == null) throw new ArgumentNullException("passportNo");
@@ -283,8 +318,98 @@ namespace Mvc.BondApp
             return totalValue;
         }
 
+        public string IS_DAYEND(DateTime date, OracleConnection _connection, OracleCommand _oracleCommand)
+        {
+            string dayEndData = null;
+            var connection = _connection;
+            var oracleCommand = _oracleCommand;
+            oracleCommand.CommandType = CommandType.Text;
+            oracleCommand.Parameters.Add("PDATE", OracleDbType.Varchar2).Value = date;
+            try
+            {
+                connection.Open();
+                OracleDataReader reader = oracleCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    dayEndData = Convert.ToString(reader["X"]);
+                }
+            }
+            catch (Exception es)
+            {
+                // ignored
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return dayEndData;
+        }
 
+        public int SBDateDiff(DateTime GDate1, DateTime GDate2, string Qry, OracleConnection _connection, OracleCommand _oracleCommand)
+        {
+            int dayEndData = 0;
+            var connection = _connection;
+            var oracleCommand = _oracleCommand;
+            oracleCommand.CommandType = CommandType.Text;
+            oracleCommand.Parameters.Add("GDate1", OracleDbType.Date).Value = GDate1;
+            oracleCommand.Parameters.Add("GDate2", OracleDbType.Date).Value = GDate2;
+            oracleCommand.Parameters.Add("Qry", OracleDbType.Varchar2).Value = Qry;
 
+            connection.Open();
+            OracleDataReader reader = oracleCommand.ExecuteReader();
+            while (reader.Read())
+            {
+                dayEndData = Convert.ToInt32(reader["pdate"]);
+            }
+            connection.Close();
+            //try
+            //{
+            //    connection.Open();
+            //    OracleDataReader reader = oracleCommand.ExecuteReader();
+            //    while (reader.Read())
+            //    {
+            //        dayEndData = Convert.ToInt32(reader["pdate"]);
+            //    }
+            //}
+            //catch (Exception es)
+            //{
+            //    // ignored
+            //}
+            //finally
+            //{
+            //    connection.Close();
+            //}
+            return dayEndData;
+        }
+
+        public int GET_LASTINSTALLMENT(string PBONDSCN, string PBONDCODE, string PBONDNO, OracleConnection _connection, OracleCommand _oracleCommand)
+        {
+            int VNUMBER = 0;
+            var connection = _connection;
+            var oracleCommand = _oracleCommand;
+            oracleCommand.CommandType = CommandType.Text;
+            oracleCommand.Parameters.Add("PBONDSCN", OracleDbType.Varchar2).Value = PBONDSCN;
+            oracleCommand.Parameters.Add("PBONDCODE", OracleDbType.Varchar2).Value = PBONDCODE;
+            oracleCommand.Parameters.Add("PBONDNO", OracleDbType.Varchar2).Value = PBONDNO;
+            try
+            {
+                connection.Open();
+                OracleDataReader reader = oracleCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    VNUMBER = Convert.ToInt32(reader["VNUMBER"]);
+                }
+            }
+            catch (Exception es)
+            {
+                // ignored
+            }
+            finally
+            {
+                connection.Close();
+            }
+            return VNUMBER;
+        }
 
         //public Tuple<string,string,string>  LookupName(long id) // tuple return type
         //{

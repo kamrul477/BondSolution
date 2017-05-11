@@ -86,6 +86,10 @@
       <HintPath>..\packages\Grid.Mvc.3.1.0-ci1036\lib\net40\GridMvc.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="LiteDB, Version=3.1.0.0, Culture=neutral, PublicKeyToken=4ee40123013c9f27, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiteDB.3.1.0\lib\net35\LiteDB.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.3\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -108,6 +112,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
       <Private>True</Private>
@@ -169,6 +174,7 @@
   <ItemGroup>
     <Compile Include="Controllers\ApplicationController.cs" />
     <Compile Include="Controllers\ApplicationNewController.cs" />
+    <Compile Include="Controllers\BBPaymentController.cs" />
     <Compile Include="Controllers\BondTypeInformationController.cs" />
     <Compile Include="Controllers\BranchInformationController.cs" />
     <Compile Include="Controllers\CountryInformationController.cs" />
@@ -214,6 +220,7 @@
     <Compile Include="Models\INSURANCEINFO.cs" />
     <Compile Include="Models\INTRATEINFO.cs" />
     <Compile Include="Models\PAYMENTBB.cs" />
+    <Compile Include="Models\VOUCHERINFO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Models\RATEINFO.cs" />
     <Compile Include="Models\SCRIPTDENOINFO.cs" />
@@ -225,6 +232,8 @@
     <Compile Include="Models\TRANSMST.cs" />
     <Compile Include="Models\USERINFO.cs" />
     <Compile Include="Supporting Class\BondFunctions.cs" />
+    <Compile Include="Supporting Class\GridPayment.cs" />
+    <Compile Include="Supporting Class\MemoryDb.cs" />
     <Compile Include="Supporting Class\UtilityMethods.cs" />
     <Compile Include="ViewModels\ApplicationNoWiseViewModel.cs" />
     <Compile Include="ViewModels\BankInfoViewModel.cs" />
@@ -454,6 +463,8 @@
     <Content Include="Views\Transaction\ApplicationSearch.cshtml" />
     <Content Include="Views\Shared\_GridPager.cshtml" />
     <Content Include="Views\Shared\_Grid.cshtml" />
+    <Content Include="Views\Transaction\_GridDisplay.cshtml" />
+    <Content Include="Views\BBPayment\DataEntryInitialDisplay.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

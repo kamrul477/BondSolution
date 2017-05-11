@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Mvc.BondApp.Models;
 
 namespace Mvc.BondApp
 {
@@ -47,9 +48,15 @@ namespace Mvc.BondApp
         public virtual DbSet<TRANSMST> TRANSMSTs { get; set; }
         public virtual DbSet<USERINFO> USERINFOes { get; set; }
         public virtual DbSet<BENEFICIARY> BENEFICIARies { get; set; }
+        public virtual DbSet<VOUCHERINFO> VOUCHERINFOes { get; set; }
+        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<VOUCHERINFO>()
+                .Property(e => e.VCODE)
+                .IsUnicode(false);
+
             modelBuilder.Entity<APPSCRIPT>()
                 .Property(e => e.BONDSCN)
                 .IsUnicode(false);

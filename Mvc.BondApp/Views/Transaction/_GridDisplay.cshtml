@@ -1,0 +1,24 @@
+﻿
+
+@model    ICollection<APPSCRIPT>
+@using GridMvc.Html
+
+
+<fieldset>
+    <legend>Selection Grid</legend>
+
+    @{
+        if (Session["bondToGrid"] != null)
+        {
+            @Html.Grid(Model.Where(o => o.BONDSTATUS.Equals("02"))).Columns(column =>
+                            {
+                                column.Add(o => o.BONDSL).Titled("Sl No");
+                                column.Add(o => o.BONDPREFIX).Titled("Prefix");
+                                column.Add(o => o.BONDNO).Titled("Bond No");
+                                column.Add(o => o.BONDVALUE).Titled("Bond Value");
+                            }).WithPaging(10).Sortable(false)
+        }
+    }
+
+
+</fieldset>

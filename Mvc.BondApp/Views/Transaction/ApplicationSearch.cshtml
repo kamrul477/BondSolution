@@ -1,4 +1,5 @@
-﻿@using System.Xml.Schema
+﻿@using System.Web.Mvc.Ajax
+@using System.Xml.Schema
 @model Mvc.BondApp.ViewModels.InstallmentPaymentViewModel
 @using GridMvc.Html
 
@@ -193,21 +194,55 @@
                             <div class="form-group">
                                 @Html.Label("Transaction Date", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("transDate", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.Editor("transDate", new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
                             </div>
                             @*TOTAL AMT FOR THIS HOLDER*@
                             <div class="form-group">
                                 @Html.Label("Installment No", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("installmentNo", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+
+                                    @Html.DropDownList("installmentNo",
+                                new SelectList(String.Empty, "id", "text"), "", new { @class = "form-control installmentNo" })
+
                                 </div>
                             </div>
                             @*TOTAL AMT FOR THIS HOLDER*@
                             <div class="form-group">
                                 @Html.Label("Serial", htmlAttributes: new { @class = "control-label col-md-5" })
                                 <div class="col-md-7">
-                                    @Html.Editor("serial", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @{
+                                        var serialList = Model.Bondapplication.APPSCRIPTs.Where(o => o.BONDSTATUS.Equals("02")).Select(o => new { id = o.BONDSL, text = o.BONDSL });
+                                        @Html.DropDownList("serial", new SelectList(serialList, "id", "text"), "", new { @class = "form-control serial" })
+
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-8 col-md-offset-4 text-uppercase text-primary" id="bondDetailsText">
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-3 col-md-10">
+                                    @* ========================AJAX CALLS TO SUBMIT============================================== *@
+                                    @Ajax.ActionLink(
+                                    linkText: "Submit",
+                                    actionName: "SubmitButton",
+                                    routeValues: new { },
+                                    ajaxOptions: new AjaxOptions()
+                                    {
+                                        HttpMethod = "GET",
+                                        InsertionMode = InsertionMode.Replace,
+                                        UpdateTargetId = "replaceDivForGrid",
+                                        OnComplete = ""
+                                    },
+                                    htmlAttributes: new { @class = "btn btn-danger btn-sm" }
+                                    )
+
+
+                                    <input type="submit" value="Submit" class="btn btn-danger btn-sm" />
+                                    <input type="button" value="Submit All" onclick=" FormResetFunction() " class="btn btn-danger btn-sm" />
                                 </div>
                             </div>
                         </div>
@@ -217,37 +252,37 @@
                             <div class="form-group">
                                 @Html.Label("Payment in Currency", htmlAttributes: new { @class = "control-label col-md-7" })
                                 <div class="col-md-5">
-                                    @Html.Editor("paymentInCurrency", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                    @Html.Editor("paymentInCurrency", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.CurrencyCode } })
                                 </div>
                             </div>
                             @*exchange rate*@
                             <div class="form-group">
-                                @Html.Label("Exchange Rate", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
-                                    @Html.Editor("exchangeRate", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                @Html.Label("Exchange Rate", htmlAttributes: new { @class = "control-label col-md-7" })
+                                <div class="col-md-5">
+                                    @Html.Editor("exchangeRate", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 </div>
                             </div>
                             @*TOTAL AMT FOR THIS HOLDER*@
                             <div class="form-group">
-                                @Html.Label("Total Amt For This Holder", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
-                                    @Html.Editor("totalAmountForThisHolder", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
+                                @Html.Label("Last Installment No", htmlAttributes: new { @class = "control-label col-md-7" })
+                                <div class="col-md-5">
+                                    @Html.Editor("lastInstallmentNo", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 </div>
                             </div>
                             @*TOTAL AMT FOR THIS HOLDER*@
                             <div class="form-group">
-                                @Html.Label("Total Amt For This Holder", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
+                                @Html.Label("Total Amt For This Holder", htmlAttributes: new { @class = "control-label col-md-7" })
+                                <div class="col-md-5">
                                     @Html.Editor("totalAmountForThisHolder", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", @Value = ViewBag.TotalBondValue } })
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-5">
                             @*Bank Code*@
                             <div class="form-group">
                                 @Html.Label("Bank Name", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
+                                <div class="col-md-6">
                                     @Html.DropDownList("bankName",
                                 new SelectList(String.Empty, "bankCode", "bankName"), "===Select bank====", new { @class = "form-control bankName" })
 
@@ -256,7 +291,7 @@
                             @*branch name*@
                             <div class="form-group">
                                 @Html.Label("Branch Name", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
+                                <div class="col-md-6">
                                     @Html.DropDownList("branchName",
                                 new SelectList(String.Empty, "branchCode", "branchName"), "===Select Branch====", new { @class = "form-control branchName" })
                                 </div>
@@ -264,31 +299,39 @@
                             @*acc type*@
                             <div class="form-group">
                                 @Html.Label("A/C Type", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
-                                    @Html.Editor("accType", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                <div class="col-md-6">
+                                    @Html.DropDownList("accType",
+                                        new SelectList(new[]
+                                        {
+                                            new { Value = "S", Text = "Savings A/C" },
+                                            new { Value = "C", Text = "Current A/C" },
+                                            new { Value = "L", Text = "Loan A/C" },
+                                        }, "Value", "Text", "2"), "Select A/C Type", new { @class = "form-control accType" })
                                 </div>
                             </div>
                             @*Acc No*@
                             <div class="form-group">
                                 @Html.Label("A/C No", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
-                                    @Html.Editor("accNo", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly", } })
+                                <div class="col-md-6">
+                                    @Html.Editor("accNo", new { htmlAttributes = new { @class = "form-control" } })
                                 </div>
                             </div>
                             @*VOUCHER*@
                             <div class="form-group">
                                 @Html.Label("Voucher", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
-                                    @Html.Editor("voucher", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                <div class="col-md-6">
+                                    @Html.DropDownList("voucher",
+                                    new SelectList(ViewBag.Voucher, "VCODE", "VDESC"), "Select Voucher", new { @class = "form-control", required = "Required" })
                                 </div>
                             </div>
                             @*DEBIT AMOUNT*@
                             <div class="form-group">
                                 @Html.Label("Debit Amount", htmlAttributes: new { @class = "control-label col-md-5" })
-                                <div class="col-md-7">
+                                <div class="col-md-6">
                                     @Html.Editor("debitAmount", new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
                                 </div>
                             </div>
+
                         </div>
                     </div>
 
@@ -298,19 +341,10 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-6 bg-warning text-center">
-                        <fieldset>
-                            <legend>Selection Grid</legend>
-                            @Html.Grid(Model.Bondapplication.APPSCRIPTs.Where(o => o.BONDSTATUS.Equals("02"))).Columns(column =>
-                    {
-                        column.Add(o => o.BONDSL).Titled("Sl No");
-                        column.Add(o => o.BONDPREFIX).Titled("Prefix");
-                        column.Add(o => o.BONDNO).Titled("Bond No");
-                        column.Add(o => o.BONDVALUE).Titled("Bond Value");
-                    }).WithPaging(10).Sortable(false)
-
-                        </fieldset>
+                        <div id="replaceDivForGrid">
+                            @Html.Partial("_GridDisplay", Model.Bondapplication.APPSCRIPTs)
+                        </div>
                         <hr />
-
                     </div>
                     <div class="col-md-6"></div>
                 </div>
@@ -325,12 +359,13 @@
 
 
 
-}
+                                        }
 
 
 
 <script>
     $("#paymentMode").change(function () {
+        $(".accType").select2();
         $("#bankName").empty();
         if ($("#paymentMode").val() === "5" || $("#paymentMode").val() === "6") {
 
@@ -343,14 +378,14 @@
                     $.each(items, function (i, item) {
                         $("#bankName").append("<option value=\"" + item.bankCode + "\">" + item.bankName + "</option>");
                     });
+                    $("#bankName").attr("disabled", true);
                 },
                 error: function (ex) {
                     alert("Failed to retrieve bank name." + ex);
                 }
             });
-
-
         } else {
+            $("#bankName").attr("disabled", false);
             $(".bankName").select2({
 
                 ajax: {
@@ -364,67 +399,144 @@
                         };
                     },
                     processResults: function (data) {
-                        data = data.map(function (item) {
-                            return {
-                                bankCode: item.bankCode,
-                                bankName: item.bankName
 
-                            };
-                        });
                         return { results: data };
                     }
-
                 },
                 minimumResultsForSearch: 15,
-                minimumInputLength: 4,
+                minimumInputLength: 4
+
 
             });
         }
     });
 
+
     $("#bankName").change(function () {
 
-        $("#branchName").val("").trigger("change");
+        $(".branchName").select2({
+
+            ajax: {
+                type: "GET",
+                url: "/Transaction/GetBranchList",
+                dataType: "json",
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term, bankCode: $("#bankName").val()
+                    };
+                },
+                //data: { q: $("#bankName").val() },
+                processResults: function (data) {
+
+                    return { results: data };
+                }
+            },
+
+            minimumResultsForSearch: -1,
+            minimumInputLength: 4
+
+
+        });
+
+    });
+
+    $("#voucher").select2();
+
+    $("#transDate").datepicker({
+        //changeMonth: true,
+        //changeYear: true,
+        //dateFormat:'dd-mm-yy'
+
+    });
+
+    $("#transDate").change(function () {
+
+        $(".installmentNo").select2({
+            minimumResultsForSearch: 20, // at least 20 results must be displayed
+            ajax: {
+                type: "GET",
+                url: "/Transaction/GetInstallmentNoList",
+                dataType: "json",
+                delay: 250,
+                data: function (params) {
+                    return {
+                        q: params.term,
+                        bondScn: $("#Bondapplication_BONDSCN").val(),
+                        trnDate: $("#transDate").val(),
+                        scanDate: $("#Bondapplication_SCNDATE").val()
+                    };
+                },
+                processResults: function (data) {
+
+                    return { results: data };
+                }
+            }
+            //minimumInputLength: 1
+        });
 
         $.ajax({
             type: "GET",
-            //url: '@Url.Action("GetBranchList")',
-            url: '/Transaction/GetBranchList',
+            url: '/Transaction/GetExchangeRate',
             dataType: "json",
-            data: { bankCode: $("#bankName").val() },
-            success: function (scriptDenos) {
-                $.each(scriptDenos, function (i, item) {
-                    $("#branchName").val(item.branchCode);
-                    $("#branchName").text(item.branchName);
-                });
+            data: { tranDate: $("#transDate").val(), currCode: $("#paymentInCurrency").val() },
+            success: function (item) {
+                $("#exchangeRate").val(item);
+                $("#exchangeRate").html(item);
             },
             error: function (ex) {
-                alert("Failed to retrieve states." + ex);
+                alert("Failed to retrieve bank name." + ex);
             }
         });
 
     });
 
+    $("#installmentNo").change(function () {
+        $(".serial").select2();
+    });
+
+    $("#serial").change(function () {
+        $("#bondDetailsText").empty();
+        if ($("#installmentNo").val() != null) {
+            $.ajax({
+                type: "GET",
+                url: '/Transaction/GetBondSpecific',
+                dataType: "json",
+                data: { serialNo: $("#serial").val(), applicationNo: $("#Bondapplication_BONDSCN").val() },
+                success: function (item) {
+                    $("#bondDetailsText").append("<label>" + item.prefix + "---" + item.bondNo + "---" + item.bondValue + "</label>");
+                    $("#lastInstallmentNo").val(item.lastInstallmentNo);
+
+
+                },
+                error: function (ex) {
+                    alert("Failed to retrieve bond." + ex);
+                }
+            });
+         
+        }
+
+    });
+
+     //$.ajax({
+     //                   type: "GET",
+     //                   url: '/Transaction/GetLastInstallmentNo',
+     //                   dataType: "json",
+     //                   data: { pBondScn: $("#Bondapplication_BONDSCN").val(), pBondCode:item.bondCode, pBondNo: item.bondNo  },
+     //                   success: function (item) {
+     //                       $("#lastInstallmentNo").html(item)
+     //                   },
+     //                   error: function (ex) {
+     //                       alert("Failed to retrieve bond." + ex);
+     //                   }
+     //               });
+
+
+
+
+
+
 
 </script>
 
 
-
-
-
-@*$.ajax({
-        type: "GET",
-        // url: '@Url.Action("GetBankList")',
-        url: '/Transaction/GetBankList',
-        dataType: "json",
-        // data: { selectedMode: $("#paymentMode").val() },
-        success: function (bankNames) {
-            $.each(bankNames, function (i, item) {
-                $("#bankName").append("<option value=\"" + item.bankCode + "\">" + item.bankName + "</option>");
-            });
-
-        },
-        error: function (ex) {
-            alert("Failed to retrieve states." + ex);
-        }
-    });*@
