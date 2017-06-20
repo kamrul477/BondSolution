@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using Mvc.BondApp;
+using System.Linq;
 using System.Web.Mvc;
-using Mvc.BondApp;
 
 namespace templateMvc.Controllers
 {

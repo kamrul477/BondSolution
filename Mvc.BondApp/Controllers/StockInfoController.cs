@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using Mvc.BondApp.ViewModels;
+﻿using Mvc.BondApp.ViewModels;
+using System.Linq;
 using System.Web.Mvc;
 
 namespace Mvc.BondApp.Controllers

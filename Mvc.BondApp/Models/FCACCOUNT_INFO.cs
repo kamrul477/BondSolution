@@ -1,10 +1,7 @@
 namespace Mvc.BondApp
 {
-    using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     [Table("BOND.FCACCOUNT_INFO")]
     public partial class FCACCOUNT_INFO

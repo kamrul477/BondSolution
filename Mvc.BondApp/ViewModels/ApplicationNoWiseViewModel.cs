@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace Mvc.BondApp.ViewModels
+﻿namespace Mvc.BondApp.ViewModels
 {
     public class ApplicationNoWiseViewModel
     {

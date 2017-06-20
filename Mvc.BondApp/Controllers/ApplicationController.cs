@@ -1,4 +1,4 @@
-﻿using Kendo.Mvc.Extensions;
+﻿
 using Mvc.BondApp.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace Mvc.BondApp.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
             BONDAPPLICATION bONDAPPLICATION = db.BONDAPPLICATIONs.Find(id);
             if (bONDAPPLICATION == null)
@@ -252,7 +252,7 @@ namespace Mvc.BondApp.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
             var bondapplication = db.BONDAPPLICATIONs.Find(id);
             var appscripts = db.APPSCRIPTs.Where(b => b.BONDSCN.Equals(id)).OrderBy(b => b.BONDSL).ToList();
@@ -449,7 +449,7 @@ namespace Mvc.BondApp.Controllers
         {
             if (id == null)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult((int)HttpStatusCode.BadRequest);
             }
             BONDAPPLICATION bONDAPPLICATION = db.BONDAPPLICATIONs.Find(id);
             if (bONDAPPLICATION == null)
