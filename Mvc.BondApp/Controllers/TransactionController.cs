@@ -99,7 +99,8 @@ namespace Mvc.BondApp.Controllers
 
         private void CreateMemoryCollection(BONDAPPLICATION application/*, MemoryDb memoryDb*/)
         {
-            var collection = application.APPSCRIPTs.Where(o => o.BONDSTATUS.Equals("02")).Select(o => new GridPayment()
+            var collection = application.APPSCRIPTs.Where(o => o.BONDSTATUS.Equals("02"))
+                .Select(o => new GridPayment()
             {
                 BONDNO = o.BONDNO,
                 BONDSL = o.BONDSL.ToString(),

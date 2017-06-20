@@ -32,7 +32,7 @@ namespace Mvc.BondApp
         public virtual DbSet<COUNTRYINFO> COUNTRYINFOes { get; set; }
         public virtual DbSet<CURRINFO> CURRINFOes { get; set; }
         public virtual DbSet<DAYEND> DAYENDs { get; set; }
-        public virtual List<DISTINFO> DISTINFOes { get; set; }
+        public virtual DbSet<DISTINFO> DISTINFOes { get; set; }
         public virtual DbSet<EXHOUSE_INFO> EXHOUSE_INFO { get; set; }
         public virtual DbSet<FCACCOUNT_INFO> FCACCOUNT_INFO { get; set; }
         public virtual DbSet<INSURANCEINFO> INSURANCEINFOes { get; set; }

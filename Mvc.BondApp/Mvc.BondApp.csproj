@@ -237,6 +237,7 @@
     <Compile Include="Supporting Class\UtilityMethods.cs" />
     <Compile Include="ViewModels\ApplicationNoWiseViewModel.cs" />
     <Compile Include="ViewModels\BankInfoViewModel.cs" />
+    <Compile Include="ViewModels\BBPaymentViewModel.cs" />
     <Compile Include="ViewModels\BondNoWiseViewModel.cs" />
     <Compile Include="ViewModels\BondTypeViewModel.cs" />
     <Compile Include="ViewModels\CurrencyRateViewModel.cs" />

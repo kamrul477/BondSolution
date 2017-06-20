@@ -1,7 +1,29 @@
-﻿
+﻿@model Mvc.BondApp.ViewModels.BBPaymentViewModel
 @{
     ViewBag.Title = "DataEntryInitialDisplay";
 }
 
 <h2>Data Entry Initial Display</h2>
 
+
+@using (Html.BeginForm("action", "controller", FormMethod.Post, new { @class = "form-horizontal", @id = "newApp" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="panel panel-danger col-md-12">
+        <div class="panel-body">
+            <fieldset>
+                <legend class="text-info">Bangladehs Bank Payment</legend>
+            </fieldset>
+            <div class="col-md-6">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Bondinfo.BONDCODE, "Bond Type", htmlAttributes: new { @class = "control-label" })
+                    <div class="col-md-6">
+                        @Html.DropDownListFor(m => m.Bondinfo.BONDCODE,
+                                new SelectList(ViewBag.BONDCODE, "BONDCODE", "BONDNAME"), "====Select Bond Type====", new { @class = "form-control", required = "Required" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

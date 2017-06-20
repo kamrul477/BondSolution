@@ -1,13 +1,17 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 
 namespace Mvc.BondApp.Controllers
 {
     public class BBPaymentController : Controller
     {
+        private BondModel _context = new BondModel();
+
         #region BBPAYMENT + DATA ENTRY
 
         public ActionResult DataEntryInitialDisplay()
         {
+            ViewBag.BONDCODE = _context.BONDINFOes.ToList();
             return View();
         }
 
